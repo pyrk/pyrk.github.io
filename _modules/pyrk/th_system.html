@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.th_system &mdash; pyrk  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../pyrk.html">PyRK package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#input-subpackage">Input Subpackage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#data-subpackage">Data Subpackage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#utils-subpackage">Utils Subpackage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.driver">pyrk.driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#pyrk-neutronics">pyrk.neutronics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.reactivity_insertion">pyrk.reactivity_insertion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.th_component">pyrk.th_component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.th_system">pyrk.th_system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.material">pyrk.material</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.graphite">pyrk.graphite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.flibe">pyrk.flibe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.kernel">pyrk.kernel</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">PyRK License</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyrk.th_system</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for pyrk.th_system</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">ur</span> <span class="kn">import</span> <span class="n">units</span>
+
+
+<div class="viewcode-block" id="THSystem"><a class="viewcode-back" href="../../pyrk.html#pyrk.th_system.THSystem">[docs]</a><span class="k">class</span> <span class="nc">THSystem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class handles calculations and data related to the</span>
+<span class="sd">    thermal hydraulics subblock</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="THSystem.__init__"><a class="viewcode-back" href="../../pyrk.html#pyrk.th_system.THSystem.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">components</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">=</span> <span class="n">kappa</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">components</span> <span class="o">=</span> <span class="n">components</span>
+</div>
+<div class="viewcode-block" id="THSystem.dtempdt"><a class="viewcode-back" href="../../pyrk.html#pyrk.th_system.THSystem.dtempdt">[docs]</a>    <span class="k">def</span> <span class="nf">dtempdt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omegas</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">):</span>
+        <span class="n">to_ret</span> <span class="o">=</span> <span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">second</span>
+        <span class="n">cap</span> <span class="o">=</span> <span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span><span class="n">t_idx</span><span class="p">)</span><span class="o">*</span><span class="n">component</span><span class="o">.</span><span class="n">cp</span><span class="o">*</span><span class="n">component</span><span class="o">.</span><span class="n">vol</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">component</span><span class="o">.</span><span class="n">heatgen</span><span class="p">:</span>
+            <span class="n">to_ret</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heatgen</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omegas</span><span class="p">)</span><span class="o">/</span><span class="n">cap</span>
+        <span class="k">for</span> <span class="n">interface</span><span class="p">,</span> <span class="n">area</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">cond</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_from_name</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+            <span class="n">to_ret</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conduction</span><span class="p">(</span><span class="n">t_b</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
+                                      <span class="n">t_env</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
+                                      <span class="n">k</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">k</span><span class="p">,</span>
+                                      <span class="n">L</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">vol</span><span class="o">/</span><span class="n">area</span><span class="p">,</span>
+                                      <span class="n">A</span><span class="o">=</span><span class="n">area</span><span class="p">)</span><span class="o">/</span><span class="n">cap</span>
+        <span class="k">for</span> <span class="n">interface</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">conv</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_from_name</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+            <span class="n">to_ret</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convection</span><span class="p">(</span><span class="n">t_b</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
+                                      <span class="n">t_env</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
+                                      <span class="n">h</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;h&#39;</span><span class="p">],</span>
+                                      <span class="n">A</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;area&#39;</span><span class="p">])</span><span class="o">/</span><span class="n">cap</span>
+        <span class="k">return</span> <span class="n">to_ret</span>
+</div>
+<div class="viewcode-block" id="THSystem.comp_from_name"><a class="viewcode-back" href="../../pyrk.html#pyrk.th_system.THSystem.comp_from_name">[docs]</a>    <span class="k">def</span> <span class="nf">comp_from_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the component with the matching name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">comp</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">comp</span>
+        <span class="c"># uh oh, none was found</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;There is no component with the name: &quot;</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="n">name</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="THSystem.heatgen"><a class="viewcode-back" href="../../pyrk.html#pyrk.th_system.THSystem.heatgen">[docs]</a>    <span class="k">def</span> <span class="nf">heatgen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omegas</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">power_tot</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">kappa</span><span class="p">)</span><span class="o">*</span><span class="n">power</span> <span class="o">+</span>
+                                      <span class="nb">sum</span><span class="p">(</span><span class="n">omegas</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="THSystem.convection"><a class="viewcode-back" href="../../pyrk.html#pyrk.th_system.THSystem.convection">[docs]</a>    <span class="k">def</span> <span class="nf">convection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_b</span><span class="p">,</span> <span class="n">t_env</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param t_b: The temperature of the body</span>
+<span class="sd">        :type t_b: float.</span>
+<span class="sd">        :param t_env: The temperature of the environment</span>
+<span class="sd">        :type t_env: float.</span>
+<span class="sd">        :param h: the heat transfer coefficient between environment and body</span>
+<span class="sd">        :type h: float.</span>
+<span class="sd">        :param A: the surface area of heat transfer</span>
+<span class="sd">        :type A: float.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_b</span><span class="o">-</span><span class="n">t_env</span><span class="p">)</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">A</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">num</span><span class="o">/</span><span class="n">denom</span>
+</div>
+<div class="viewcode-block" id="THSystem.conduction"><a class="viewcode-back" href="../../pyrk.html#pyrk.th_system.THSystem.conduction">[docs]</a>    <span class="k">def</span> <span class="nf">conduction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_b</span><span class="p">,</span> <span class="n">t_env</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param t_b: The temperature of the body</span>
+<span class="sd">        :type t_b: float.</span>
+<span class="sd">        :param t_env: The temperature of the environment</span>
+<span class="sd">        :type t_env: float.</span>
+<span class="sd">        :param L: the length scale of the body</span>
+<span class="sd">        :type L: float.</span>
+<span class="sd">        :param k: the thermal conductivity</span>
+<span class="sd">        :type k: float.</span>
+<span class="sd">        :param A: the surface area of heat transfer</span>
+<span class="sd">        :type A: float.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_b</span><span class="o">-</span><span class="n">t_env</span><span class="p">)</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">A</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">num</span><span class="o">/</span><span class="n">denom</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

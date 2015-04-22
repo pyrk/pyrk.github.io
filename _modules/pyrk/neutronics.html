@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.neutronics &mdash; pyrk  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../pyrk.html">PyRK package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#input-subpackage">Input Subpackage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#data-subpackage">Data Subpackage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#utils-subpackage">Utils Subpackage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.driver">pyrk.driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#pyrk-neutronics">pyrk.neutronics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.reactivity_insertion">pyrk.reactivity_insertion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.th_component">pyrk.th_component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.th_system">pyrk.th_system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.material">pyrk.material</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.graphite">pyrk.graphite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.flibe">pyrk.flibe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.kernel">pyrk.kernel</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">PyRK License</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyrk.neutronics</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for pyrk.neutronics</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD-style license</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">inp</span> <span class="kn">import</span> <span class="n">validation</span> <span class="k">as</span> <span class="n">v</span>
+
+<span class="kn">from</span> <span class="nn">data</span> <span class="kn">import</span> <span class="n">precursors</span> <span class="k">as</span> <span class="n">pr</span>
+<span class="kn">from</span> <span class="nn">data</span> <span class="kn">import</span> <span class="n">decay_heat</span> <span class="k">as</span> <span class="n">dh</span>
+<span class="kn">from</span> <span class="nn">reactivity_insertion</span> <span class="kn">import</span> <span class="n">ReactivityInsertion</span>
+<span class="kn">from</span> <span class="nn">timer</span> <span class="kn">import</span> <span class="n">Timer</span>
+
+<div class="viewcode-block" id="Neutronics"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics">[docs]</a><span class="k">class</span> <span class="nc">Neutronics</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class handles calculations and data related to the</span>
+<span class="sd">    neutronics subblock</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Neutronics.__init__"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iso</span><span class="o">=</span><span class="s">&quot;u235&quot;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="s">&quot;thermal&quot;</span><span class="p">,</span> <span class="n">n_precursors</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_decay</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
+                 <span class="n">timer</span><span class="o">=</span><span class="n">Timer</span><span class="p">(),</span> <span class="n">rho_ext</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">feedback</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a Neutronics object that holds the neutronics simulation</span>
+<span class="sd">        information.</span>
+
+<span class="sd">        :param iso: The fissioning isotope. &#39;u235&#39; or &#39;pu239&#39; are supported.</span>
+<span class="sd">        :type iso: str.</span>
+<span class="sd">        :param e: The energy spectrum &#39;thermal&#39; or &#39;fast&#39; are supported.</span>
+<span class="sd">        :type e: str.</span>
+<span class="sd">        :param n_precursors: Number of neutron precursor groups. 6 is supported.</span>
+<span class="sd">        :type n_precursors: int.</span>
+<span class="sd">        :param n_decay: The number of decay heat groups. 11 is supported.</span>
+<span class="sd">        :type n_decay: int.</span>
+<span class="sd">        :param rho_ext: External reactivity, a function of time</span>
+<span class="sd">        :type rho_ext: function</span>
+<span class="sd">        :returns: A Neutronics object that holds neutronics simulation info</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iso</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;iso&quot;</span><span class="p">,</span> <span class="n">iso</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;u235&#39;</span><span class="p">,</span> <span class="s">&#39;pu239&#39;</span><span class="p">])</span>
+        <span class="sd">&quot;&quot;&quot;_iso (str): Fissioning isotope. &#39;u235&#39; or &#39;pu239&#39; are supported.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_e</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;e&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;thermal&#39;</span><span class="p">,</span> <span class="s">&#39;fast&#39;</span><span class="p">])</span>
+        <span class="sd">&quot;&quot;&quot;_e (str): Energy spectrum &#39;thermal&#39; or &#39;fast&#39; are supported.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_npg</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;n_precursors&quot;</span><span class="p">,</span> <span class="n">n_precursors</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="sd">&quot;&quot;&quot;_npg (int): Number of neutron precursor groups. 6 is supported.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ndg</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;n_decay&quot;</span><span class="p">,</span> <span class="n">n_decay</span><span class="p">,</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="sd">&quot;&quot;&quot;_ndg (int): Number of decay heat groups. 11 is supported.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">PrecursorData</span><span class="p">(</span><span class="n">iso</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">n_precursors</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;_pd (PrecursorData): A data.precursors.PrecursorData object&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dd</span> <span class="o">=</span> <span class="n">dh</span><span class="o">.</span><span class="n">DecayData</span><span class="p">(</span><span class="n">iso</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">n_decay</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;_dd (DecayData): A data.decay_heat.DecayData object&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span> <span class="o">=</span> <span class="n">timer</span>
+        <span class="sd">&quot;&quot;&quot;_timer: the time instance object&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">timesteps</span><span class="p">())</span>
+        <span class="sd">&quot;&quot;&quot;_rho (ndarray): An array of reactivity values for each timestep.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rho_ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_rho_ext</span><span class="p">(</span><span class="n">rho_ext</span><span class="p">)</span><span class="o">.</span><span class="n">reactivity</span>
+        <span class="sd">&quot;&quot;&quot;_rho_ext (ReactivityInsertion): Reactivity function from the</span>
+<span class="sd">        reactivity insertion model&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span> <span class="o">=</span>  <span class="n">feedback</span>
+        <span class="sd">&quot;&quot;&quot;feedback (bool): False if no reactivity feedbacks, true otherwise&quot;&quot;&quot;</span>
+</div>
+<div class="viewcode-block" id="Neutronics.init_rho_ext"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics.init_rho_ext">[docs]</a>    <span class="k">def</span> <span class="nf">init_rho_ext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho_ext</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">rho_ext</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">rho_ext</span> <span class="o">=</span> <span class="n">ReactivityInsertion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rho_ext</span>
+</div>
+<div class="viewcode-block" id="Neutronics.dpdt"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics.dpdt">[docs]</a>    <span class="k">def</span> <span class="nf">dpdt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">zetas</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculates the power term. The first in the neutronics block.</span>
+<span class="sd">        :param t: the time</span>
+<span class="sd">        :type t: float.</span>
+<span class="sd">        :param dt: the timestep</span>
+<span class="sd">        :type dt: float.</span>
+<span class="sd">        :param components: the THComponents making up this reactor</span>
+<span class="sd">        :type components: list of THComponent objects</span>
+<span class="sd">        :param power: the current reactor power in Watts (timestep t-1 ?)</span>
+<span class="sd">        :type power: float.</span>
+<span class="sd">        :param zetas: the current delayed neutron precursor populations, zeta_i</span>
+<span class="sd">        :type zetas: np.ndarray.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reactivity</span><span class="p">(</span><span class="n">t_idx</span><span class="p">,</span> <span class="n">components</span><span class="p">)</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">beta</span><span class="p">()</span>
+        <span class="n">lams</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()</span>
+        <span class="n">Lambda</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">Lambda</span><span class="p">()</span>
+        <span class="n">precursors</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lams</span><span class="p">)):</span>
+            <span class="n">precursors</span> <span class="o">+=</span> <span class="n">lams</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">zetas</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="n">power</span><span class="o">*</span><span class="p">(</span><span class="n">rho</span> <span class="o">-</span> <span class="n">beta</span><span class="p">)</span><span class="o">/</span><span class="n">Lambda</span> <span class="o">+</span> <span class="n">precursors</span>
+        <span class="k">return</span> <span class="n">dp</span>
+</div>
+<div class="viewcode-block" id="Neutronics.dzetadt"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics.dzetadt">[docs]</a>    <span class="k">def</span> <span class="nf">dzetadt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param t: time</span>
+<span class="sd">        :type t: float, units of seconds</span>
+<span class="sd">        :param power: the reactor power at this timestep</span>
+<span class="sd">        :type power: float, in units of watts</span>
+<span class="sd">        :param zeta: $\zeta_j$, the concentration for precursor group j</span>
+<span class="sd">        :type zeta: float #TODO units?</span>
+<span class="sd">        :param j: the precursor group index</span>
+<span class="sd">        :type j: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Lambda</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">Lambda</span><span class="p">()</span>
+        <span class="n">lambda_j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">beta_j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">betas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">beta_j</span><span class="o">*</span><span class="n">power</span><span class="o">/</span><span class="n">Lambda</span> <span class="o">-</span> <span class="n">lambda_j</span><span class="o">*</span><span class="n">zeta</span>
+</div>
+<div class="viewcode-block" id="Neutronics.dwdt"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics.dwdt">[docs]</a>    <span class="k">def</span> <span class="nf">dwdt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the change in decay heat for $\omega_k$ at a certain power</span>
+<span class="sd">        :param power: the reactor power at this timestep</span>
+<span class="sd">        :type power: float, in units of watts</span>
+<span class="sd">        :param omega: $\omega_k$ for fission product decay heat group k</span>
+<span class="sd">        :type omega: float, in units of watts #TODO check</span>
+<span class="sd">        :param k: the fission product decay heat group index</span>
+<span class="sd">        :type k: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kappa</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="o">.</span><span class="n">kappas</span><span class="p">()[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">power</span>
+        <span class="n">lam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()[</span><span class="n">k</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">kappa</span><span class="o">*</span><span class="n">p</span><span class="o">-</span><span class="n">lam</span><span class="o">*</span><span class="n">omega</span>
+</div>
+<div class="viewcode-block" id="Neutronics.reactivity"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics.reactivity">[docs]</a>    <span class="k">def</span> <span class="nf">reactivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">,</span> <span class="n">components</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the reactivity, in $\Delta k$, at time t</span>
+<span class="sd">        :param t: time</span>
+<span class="sd">        :type t: float, units of seconds</span>
+<span class="sd">        :param dt: timestep size, units of seconds</span>
+<span class="sd">        :type dt: float, units of seconds</span>
+<span class="sd">        :param components: thermal hydraulic component objects</span>
+<span class="sd">        :type components: list of THComponent objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
+                <span class="n">rho</span><span class="p">[</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">temp_reactivity</span><span class="p">()</span>
+        <span class="n">rho</span><span class="p">[</span><span class="s">&quot;external&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rho_ext</span><span class="p">(</span><span class="n">t_idx</span><span class="o">=</span><span class="n">t_idx</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;delta_k&#39;</span><span class="p">)</span>
+        <span class="n">to_ret</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rho</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rho</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">to_ret</span>
+        <span class="k">return</span> <span class="n">to_ret</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

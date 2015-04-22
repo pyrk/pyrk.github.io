@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.thermal_hydraulics &mdash; pyrk  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../pyrk.html">PyRK package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#input-subpackage">Input Subpackage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#data-subpackage">Data Subpackage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#utils-subpackage">Utils Subpackage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.driver">pyrk.driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#pyrk-neutronics">pyrk.neutronics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.reactivity_insertion">pyrk.reactivity_insertion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.th_component">pyrk.th_component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.th_system">pyrk.th_system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.material">pyrk.material</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.graphite">pyrk.graphite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.flibe">pyrk.flibe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.kernel">pyrk.kernel</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">PyRK License</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyrk.thermal_hydraulics</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for pyrk.thermal_hydraulics</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">th_params</span>
+
+<div class="viewcode-block" id="ThermalHydraulics"><a class="viewcode-back" href="../../pyrk.html#pyrk.thermal_hydraulics.ThermalHydraulics">[docs]</a><span class="k">class</span> <span class="nc">ThermalHydraulics</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class handles calculations and data related to the</span>
+<span class="sd">    thermal_hydraulics subblock</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ThermalHydraulics.__init__"><a class="viewcode-back" href="../../pyrk.html#pyrk.thermal_hydraulics.ThermalHydraulics.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_params</span> <span class="o">=</span> <span class="n">th_params</span><span class="o">.</span><span class="n">THParams</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="ThermalHydraulics.dtempdt"><a class="viewcode-back" href="../../pyrk.html#pyrk.thermal_hydraulics.ThermalHydraulics.dtempdt">[docs]</a>    <span class="k">def</span> <span class="nf">dtempdt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">temps</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omegas</span><span class="p">,</span> <span class="n">component_names</span><span class="p">):</span>
+        <span class="n">tfuel</span> <span class="o">=</span> <span class="n">temps</span><span class="p">[</span><span class="n">component_names</span><span class="p">[</span><span class="s">&quot;fuel&quot;</span><span class="p">]]</span>
+        <span class="n">tcool</span> <span class="o">=</span> <span class="n">temps</span><span class="p">[</span><span class="n">component_names</span><span class="p">[</span><span class="s">&quot;cool&quot;</span><span class="p">]]</span>
+        <span class="n">tmod</span> <span class="o">=</span> <span class="n">temps</span><span class="p">[</span><span class="n">component_names</span><span class="p">[</span><span class="s">&quot;mod&quot;</span><span class="p">]]</span>
+        <span class="n">trefl</span> <span class="o">=</span> <span class="n">temps</span><span class="p">[</span><span class="n">component_names</span><span class="p">[</span><span class="s">&quot;refl&quot;</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">==</span> <span class="s">&quot;fuel&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtempfueldt</span><span class="p">(</span><span class="n">power</span><span class="p">,</span> <span class="n">omegas</span><span class="p">,</span> <span class="n">tfuel</span><span class="p">,</span> <span class="n">tcool</span><span class="p">,</span> <span class="n">tmod</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">component</span> <span class="o">==</span> <span class="s">&quot;cool&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtempcooldt</span><span class="p">(</span><span class="n">tfuel</span><span class="p">,</span> <span class="n">tcool</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">component</span> <span class="o">==</span> <span class="s">&quot;mod&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtempmoddt</span><span class="p">(</span><span class="n">tfuel</span><span class="p">,</span> <span class="n">tmod</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">component</span> <span class="o">==</span> <span class="s">&quot;refl&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtemprefldt</span><span class="p">(</span><span class="n">tfuel</span><span class="p">,</span> <span class="n">trefl</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;This work only supports fuel, cool, mod, and </span><span class="se">\</span>
+<span class="s">                    refl keys&quot;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ThermalHydraulics.dtempfueldt"><a class="viewcode-back" href="../../pyrk.html#pyrk.thermal_hydraulics.ThermalHydraulics.dtempfueldt">[docs]</a>    <span class="k">def</span> <span class="nf">dtempfueldt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omegas</span><span class="p">,</span> <span class="n">tfuel</span><span class="p">,</span> <span class="n">tcool</span><span class="p">,</span> <span class="n">tmod</span><span class="p">):</span>
+        <span class="c"># check this, it may not get things quite right...</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span><span class="s">&quot;fuel&quot;</span><span class="p">,</span> <span class="n">tfuel</span><span class="p">)</span>
+        <span class="n">cp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="s">&quot;fuel&quot;</span><span class="p">)</span>
+        <span class="n">vol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">vol</span><span class="p">(</span><span class="s">&quot;fuel&quot;</span><span class="p">)</span>
+        <span class="n">rm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">r</span><span class="p">(</span><span class="s">&quot;mod&quot;</span><span class="p">)</span>
+        <span class="n">amod</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">area</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="s">&quot;mod&quot;</span><span class="p">,</span> <span class="s">&quot;fuel&quot;</span><span class="p">]))</span>
+        <span class="n">afuel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">area</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="s">&quot;fuel&quot;</span><span class="p">,</span> <span class="s">&quot;cool&quot;</span><span class="p">]))</span>
+        <span class="n">kf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">k</span><span class="p">(</span><span class="s">&quot;fuel&quot;</span><span class="p">,</span> <span class="n">tfuel</span><span class="p">)</span>
+        <span class="n">hf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="s">&quot;fuel&quot;</span><span class="p">)</span>
+        <span class="n">power_tot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">_power_tot</span>
+        <span class="c"># heat_gen = (power_tot/vol/rho/cp)*((1-self._params._kappa)*power +</span>
+        <span class="c"># sum(omegas))</span>
+        <span class="n">heat_gen</span> <span class="o">=</span> <span class="p">(</span><span class="n">power_tot</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">power</span><span class="o">-</span><span class="nb">sum</span><span class="p">(</span><span class="n">omegas</span><span class="p">))</span>
+        <span class="n">cond_mod</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conduction</span><span class="p">(</span><span class="n">tfuel</span><span class="p">,</span> <span class="n">tmod</span><span class="p">,</span> <span class="n">rm</span><span class="p">,</span> <span class="n">kf</span><span class="p">,</span> <span class="n">amod</span><span class="p">)</span>
+        <span class="n">conv_cool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convection</span><span class="p">(</span><span class="n">tfuel</span><span class="p">,</span> <span class="n">tcool</span><span class="p">,</span> <span class="n">hf</span><span class="p">,</span> <span class="n">afuel</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">heat_gen</span> <span class="o">-</span> <span class="n">cond_mod</span> <span class="o">-</span> <span class="n">conv_cool</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">rho</span><span class="o">*</span><span class="n">cp</span><span class="o">*</span><span class="n">vol</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ThermalHydraulics.dtempcooldt"><a class="viewcode-back" href="../../pyrk.html#pyrk.thermal_hydraulics.ThermalHydraulics.dtempcooldt">[docs]</a>    <span class="k">def</span> <span class="nf">dtempcooldt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tfuel</span><span class="p">,</span> <span class="n">tcool</span><span class="p">):</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">_core_height</span>
+        <span class="n">tinlet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">_t_inlet</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">_vel_cool</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span><span class="s">&quot;cool&quot;</span><span class="p">,</span> <span class="n">tcool</span><span class="p">)</span>
+        <span class="n">cp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="s">&quot;cool&quot;</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">res</span><span class="p">(</span><span class="s">&quot;cool&quot;</span><span class="p">,</span> <span class="s">&quot;fuel&quot;</span><span class="p">)</span>
+        <span class="n">convection</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">v</span><span class="o">/</span><span class="n">h</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">tcool</span><span class="o">-</span><span class="n">tinlet</span><span class="p">)</span>
+        <span class="n">afuel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">area</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="s">&quot;fuel&quot;</span><span class="p">,</span> <span class="s">&quot;cool&quot;</span><span class="p">]))</span>  <span class="c"># this is one pebble?</span>
+        <span class="n">aflow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">flow_area</span><span class="p">()</span>  <span class="c"># this is the flow path cross section</span>
+        <span class="n">conduction</span> <span class="o">=</span> <span class="p">(</span><span class="n">afuel</span><span class="o">/</span><span class="n">aflow</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">tfuel</span> <span class="o">-</span> <span class="n">tcool</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">rho</span><span class="o">*</span><span class="n">cp</span><span class="o">*</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">conduction</span> <span class="o">-</span> <span class="n">convection</span>
+</div>
+<div class="viewcode-block" id="ThermalHydraulics.dtempmoddt"><a class="viewcode-back" href="../../pyrk.html#pyrk.thermal_hydraulics.ThermalHydraulics.dtempmoddt">[docs]</a>    <span class="k">def</span> <span class="nf">dtempmoddt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tfuel</span><span class="p">,</span> <span class="n">tmod</span><span class="p">):</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span><span class="s">&quot;mod&quot;</span><span class="p">,</span> <span class="n">tmod</span><span class="p">)</span>
+        <span class="n">cp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="s">&quot;mod&quot;</span><span class="p">)</span>
+        <span class="n">res_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">res</span><span class="p">(</span><span class="s">&quot;mod&quot;</span><span class="p">,</span> <span class="s">&quot;fuel&quot;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">tmod</span><span class="o">-</span><span class="n">tfuel</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">rho</span><span class="o">*</span><span class="n">cp</span><span class="o">*</span><span class="n">res_m</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">f</span>
+</div>
+<div class="viewcode-block" id="ThermalHydraulics.dtemprefldt"><a class="viewcode-back" href="../../pyrk.html#pyrk.thermal_hydraulics.ThermalHydraulics.dtemprefldt">[docs]</a>    <span class="k">def</span> <span class="nf">dtemprefldt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tcool</span><span class="p">,</span> <span class="n">trefl</span><span class="p">):</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span><span class="s">&quot;refl&quot;</span><span class="p">,</span> <span class="n">trefl</span><span class="p">)</span>
+        <span class="n">cp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="s">&quot;refl&quot;</span><span class="p">)</span>
+        <span class="n">res_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">res</span><span class="p">(</span><span class="s">&quot;refl&quot;</span><span class="p">,</span> <span class="s">&quot;cool&quot;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">trefl</span> <span class="o">-</span> <span class="n">tcool</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">rho</span><span class="o">*</span><span class="n">cp</span><span class="o">*</span><span class="n">res_m</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">f</span>
+</div>
+<div class="viewcode-block" id="ThermalHydraulics.convection"><a class="viewcode-back" href="../../pyrk.html#pyrk.thermal_hydraulics.ThermalHydraulics.convection">[docs]</a>    <span class="k">def</span> <span class="nf">convection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_b</span><span class="p">,</span> <span class="n">t_env</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param t_b: The temperature of the body</span>
+<span class="sd">        :type t_b: float.</span>
+<span class="sd">        :param t_env: The temperature of the environment</span>
+<span class="sd">        :type t_env: float.</span>
+<span class="sd">        :param h: the heat transfer coefficient between environment and body</span>
+<span class="sd">        :type h: float.</span>
+<span class="sd">        :param A: the surface area of heat transfer</span>
+<span class="sd">        :type A: float.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_b</span><span class="o">-</span><span class="n">t_env</span><span class="p">)</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">A</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">num</span><span class="o">/</span><span class="n">denom</span>
+</div>
+<div class="viewcode-block" id="ThermalHydraulics.conduction"><a class="viewcode-back" href="../../pyrk.html#pyrk.thermal_hydraulics.ThermalHydraulics.conduction">[docs]</a>    <span class="k">def</span> <span class="nf">conduction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_b</span><span class="p">,</span> <span class="n">t_env</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param t_b: The temperature of the body</span>
+<span class="sd">        :type t_b: float.</span>
+<span class="sd">        :param t_env: The temperature of the environment</span>
+<span class="sd">        :type t_env: float.</span>
+<span class="sd">        :param L: the length scale of the body</span>
+<span class="sd">        :type L: float.</span>
+<span class="sd">        :param k: the thermal conductivity</span>
+<span class="sd">        :type k: float.</span>
+<span class="sd">        :param A: the surface area of heat transfer</span>
+<span class="sd">        :type A: float.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_b</span><span class="o">-</span><span class="n">t_env</span><span class="p">)</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">A</span><span class="p">)</span><span class="o">/</span><span class="n">L</span>
+        <span class="k">return</span> <span class="n">num</span><span class="o">/</span><span class="n">denom</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
