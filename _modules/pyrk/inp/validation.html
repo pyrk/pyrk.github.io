@@ -12,6 +12,8 @@
 
   
   
+    <link rel="shortcut icon" href="../../../_static/logo.ico"/>
+  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -63,23 +65,18 @@
           
           
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../pyrk.html">PyRK package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#input-subpackage">Input Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#data-subpackage">Data Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#utils-subpackage">Utils Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.driver">pyrk.driver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#pyrk-neutronics">pyrk.neutronics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.reactivity_insertion">pyrk.reactivity_insertion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.th_component">pyrk.th_component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.th_system">pyrk.th_system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.material">pyrk.material</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.graphite">pyrk.graphite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.flibe">pyrk.flibe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.kernel">pyrk.kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-future">The Future</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">PyRK Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">PyRK License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/index.html">PyRK API</a></li>
 </ul>
 
           
@@ -116,10 +113,10 @@
           <div role="main" class="document">
             
   <h1>Source code for pyrk.inp.validation</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">ur</span> <span class="kn">import</span> <span class="n">units</span>
+<span class="kn">from</span> <span class="nn">utilities.ur</span> <span class="kn">import</span> <span class="n">units</span>
 
 
-<div class="viewcode-block" id="validate_ge"><a class="viewcode-back" href="../../../pyrk.inp.html#pyrk.inp.validation.validate_ge">[docs]</a><span class="k">def</span> <span class="nf">validate_ge</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">llim</span><span class="p">):</span>
+<div class="viewcode-block" id="validate_ge"><a class="viewcode-back" href="../../../src/pyrk.inp.validation.html#pyrk.inp.validation.validate_ge">[docs]</a><span class="k">def</span> <span class="nf">validate_ge</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">llim</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Raises errors if the value is less than the lower limit (llim) or if it</span>
 <span class="sd">    is of the wrong type</span>
 
@@ -140,7 +137,7 @@
         <span class="k">return</span> <span class="n">val</span>
 
 </div>
-<div class="viewcode-block" id="validate_le"><a class="viewcode-back" href="../../../pyrk.inp.html#pyrk.inp.validation.validate_le">[docs]</a><span class="k">def</span> <span class="nf">validate_le</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">ulim</span><span class="p">):</span>
+<div class="viewcode-block" id="validate_le"><a class="viewcode-back" href="../../../src/pyrk.inp.validation.html#pyrk.inp.validation.validate_le">[docs]</a><span class="k">def</span> <span class="nf">validate_le</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">ulim</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Raises errors if the value is greater than the upper limit (ulim) or if it</span>
 <span class="sd">    is of the wrong type</span>
 
@@ -160,7 +157,7 @@
     <span class="k">return</span> <span class="n">val</span>
 
 </div>
-<div class="viewcode-block" id="validate_num"><a class="viewcode-back" href="../../../pyrk.inp.html#pyrk.inp.validation.validate_num">[docs]</a><span class="k">def</span> <span class="nf">validate_num</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<div class="viewcode-block" id="validate_num"><a class="viewcode-back" href="../../../src/pyrk.inp.validation.html#pyrk.inp.validation.validate_num">[docs]</a><span class="k">def</span> <span class="nf">validate_num</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Checks that val is a number</span>
 
 <span class="sd">    :param valname: the name of the value being validated</span>
@@ -183,7 +180,7 @@
     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="validate_not_none"><a class="viewcode-back" href="../../../pyrk.inp.html#pyrk.inp.validation.validate_not_none">[docs]</a><span class="k">def</span> <span class="nf">validate_not_none</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<div class="viewcode-block" id="validate_not_none"><a class="viewcode-back" href="../../../src/pyrk.inp.validation.html#pyrk.inp.validation.validate_not_none">[docs]</a><span class="k">def</span> <span class="nf">validate_not_none</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Checks that val is not None</span>
 
 <span class="sd">    :param valname: the name of the value being validated</span>
@@ -199,7 +196,7 @@
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="validate_supported"><a class="viewcode-back" href="../../../pyrk.inp.html#pyrk.inp.validation.validate_supported">[docs]</a><span class="k">def</span> <span class="nf">validate_supported</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">supported</span><span class="p">):</span>
+<div class="viewcode-block" id="validate_supported"><a class="viewcode-back" href="../../../src/pyrk.inp.validation.html#pyrk.inp.validation.validate_supported">[docs]</a><span class="k">def</span> <span class="nf">validate_supported</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">supported</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Checks that val is not None</span>
 
 <span class="sd">    :param valname: the name of the value being validated</span>
@@ -257,7 +254,7 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

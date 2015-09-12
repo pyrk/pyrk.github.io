@@ -1,0 +1,7 @@
+pyrk.utilities.exceptions module
+================================
+
+.. automodule:: pyrk.utilities.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:

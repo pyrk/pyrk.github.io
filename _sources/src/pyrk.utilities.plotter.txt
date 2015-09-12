@@ -1,0 +1,7 @@
+pyrk.utilities.plotter module
+=============================
+
+.. automodule:: pyrk.utilities.plotter
+    :members:
+    :undoc-members:
+    :show-inheritance:

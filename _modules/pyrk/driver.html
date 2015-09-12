@@ -12,6 +12,8 @@
 
   
   
+    <link rel="shortcut icon" href="../../_static/logo.ico"/>
+  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -63,23 +65,18 @@
           
           
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../pyrk.html">PyRK package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#input-subpackage">Input Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#data-subpackage">Data Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#utils-subpackage">Utils Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.driver">pyrk.driver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#pyrk-neutronics">pyrk.neutronics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.reactivity_insertion">pyrk.reactivity_insertion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.th_component">pyrk.th_component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.th_system">pyrk.th_system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.material">pyrk.material</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.graphite">pyrk.graphite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.flibe">pyrk.flibe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.kernel">pyrk.kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#the-future">The Future</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">PyRK Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../authors.html">PyRK License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../src/index.html">PyRK API</a></li>
 </ul>
 
           
@@ -116,6 +113,8 @@
           <div role="main" class="document">
             
   <h1>Source code for pyrk.driver</h1><div class="highlight"><pre>
+<span class="c">#! /usr/bin/env python</span>
+
 <span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This is an example driver for the simulation. It should soon be refactored to</span>
@@ -126,32 +125,16 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">ode</span>
 <span class="kn">import</span> <span class="nn">importlib</span>
-
-<span class="kn">from</span> <span class="nn">utils.logger</span> <span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">utilities</span> <span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">from</span> <span class="nn">utilities.logger</span> <span class="kn">import</span> <span class="n">pyrklog</span>
 <span class="kn">from</span> <span class="nn">inp</span> <span class="kn">import</span> <span class="n">sim_info</span>
-<span class="kn">from</span> <span class="nn">ur</span> <span class="kn">import</span> <span class="n">units</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">plotter</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
-
-<span class="n">infile</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s">&quot;input&quot;</span><span class="p">)</span>
-
-<span class="n">si</span> <span class="o">=</span> <span class="n">sim_info</span><span class="o">.</span><span class="n">SimInfo</span><span class="p">(</span><span class="n">timer</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">ti</span><span class="p">,</span>
-                      <span class="n">components</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">components</span><span class="p">,</span>
-                      <span class="n">iso</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">fission_iso</span><span class="p">,</span>
-                      <span class="n">e</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">spectrum</span><span class="p">,</span>
-                      <span class="n">n_precursors</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">n_pg</span><span class="p">,</span>
-                      <span class="n">n_decay</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">n_dg</span><span class="p">,</span>
-                      <span class="n">kappa</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">kappa</span><span class="p">,</span>
-                      <span class="n">feedback</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">feedback</span><span class="p">,</span>
-                      <span class="n">rho_ext</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">rho_ext</span><span class="p">)</span>
-
-<span class="n">n_components</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">components</span><span class="p">)</span>
-
-<span class="n">_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">timesteps</span><span class="p">(),</span> <span class="n">si</span><span class="o">.</span><span class="n">n_entries</span><span class="p">()),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">utilities.ur</span> <span class="kn">import</span> <span class="n">units</span>
+<span class="kn">from</span> <span class="nn">utilities</span> <span class="kn">import</span> <span class="n">plotter</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 
-<div class="viewcode-block" id="update_n"><a class="viewcode-back" href="../../pyrk.html#pyrk.driver.update_n">[docs]</a><span class="k">def</span> <span class="nf">update_n</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y_n</span><span class="p">):</span>
+<div class="viewcode-block" id="update_n"><a class="viewcode-back" href="../../src/pyrk.driver.html#pyrk.driver.update_n">[docs]</a><span class="k">def</span> <span class="nf">update_n</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y_n</span><span class="p">,</span> <span class="n">si</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function updates the neutronics block.</span>
 
 <span class="sd">    :param t: the time [s] at which the update is occuring.</span>
@@ -161,14 +144,15 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">t_idx</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_idx</span><span class="p">(</span><span class="n">t</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">)</span>
     <span class="n">n_n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_n</span><span class="p">)</span>
-    <span class="n">_y</span><span class="p">[</span><span class="n">t_idx</span><span class="p">][:</span><span class="n">n_n</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_n</span>
+    <span class="n">si</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">t_idx</span><span class="p">][:</span><span class="n">n_n</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_n</span>
 
 </div>
-<div class="viewcode-block" id="update_th"><a class="viewcode-back" href="../../pyrk.html#pyrk.driver.update_th">[docs]</a><span class="k">def</span> <span class="nf">update_th</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y_n</span><span class="p">,</span> <span class="n">y_th</span><span class="p">):</span>
+<div class="viewcode-block" id="update_th"><a class="viewcode-back" href="../../src/pyrk.driver.html#pyrk.driver.update_th">[docs]</a><span class="k">def</span> <span class="nf">update_th</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y_n</span><span class="p">,</span> <span class="n">y_th</span><span class="p">,</span> <span class="n">si</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function updates the thermal hydraulics block.</span>
 
 <span class="sd">    :param t: the time [s] at which the update is occuring.</span>
 <span class="sd">    :type t: float.</span>
+
 <span class="sd">    :param y_th: The array that solves thermal hydraulics block at time t</span>
 <span class="sd">    :type y_th: np.ndarray.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -176,15 +160,15 @@
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">components</span><span class="p">):</span>
         <span class="n">comp</span><span class="o">.</span><span class="n">update_temp</span><span class="p">(</span><span class="n">t_idx</span><span class="p">,</span> <span class="n">y_th</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)</span>
     <span class="n">n_n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_n</span><span class="p">)</span>
-    <span class="n">_y</span><span class="p">[</span><span class="n">t_idx</span><span class="p">][</span><span class="n">n_n</span><span class="p">:]</span> <span class="o">=</span> <span class="n">y_th</span>
+    <span class="n">si</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">t_idx</span><span class="p">][</span><span class="n">n_n</span><span class="p">:]</span> <span class="o">=</span> <span class="n">y_th</span>
 
 </div>
-<div class="viewcode-block" id="f_n"><a class="viewcode-back" href="../../pyrk.html#pyrk.driver.f_n">[docs]</a><span class="k">def</span> <span class="nf">f_n</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="f_n"><a class="viewcode-back" href="../../src/pyrk.driver.html#pyrk.driver.f_n">[docs]</a><span class="k">def</span> <span class="nf">f_n</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the neutronics block solution at time t</span>
 
 <span class="sd">    :param t: the time [s] at which the update is occuring.</span>
 <span class="sd">    :type t: float.</span>
-<span class="sd">    :param y: TODO</span>
+<span class="sd">    :param y: solution vector</span>
 <span class="sd">    :type y: np.ndarray</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n_n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">n_dg</span>
@@ -202,21 +186,23 @@
     <span class="k">return</span> <span class="n">f</span>
 
 </div>
-<div class="viewcode-block" id="f_th"><a class="viewcode-back" href="../../pyrk.html#pyrk.driver.f_th">[docs]</a><span class="k">def</span> <span class="nf">f_th</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y_th</span><span class="p">):</span>
+<div class="viewcode-block" id="f_th"><a class="viewcode-back" href="../../src/pyrk.driver.html#pyrk.driver.f_th">[docs]</a><span class="k">def</span> <span class="nf">f_th</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y_th</span><span class="p">,</span> <span class="n">si</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns the thermal hydraulics solution at time t</span>
 
 <span class="sd">    :param t: the time [s] at which the update is occuring.</span>
 <span class="sd">    :type t: float.</span>
-<span class="sd">    :param y: TODO</span>
+<span class="sd">    :param y: the solution vector</span>
 <span class="sd">    :type y: np.ndarray</span>
+<span class="sd">    :param si: the simulation info object</span>
+<span class="sd">    :type si: SimInfo</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">t_idx</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_idx</span><span class="p">(</span><span class="n">t</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">)</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_components</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">n_components</span><span class="p">(),),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
                        <span class="s">&#39;kelvin / second&#39;</span><span class="p">)</span>
-    <span class="n">power</span> <span class="o">=</span> <span class="n">_y</span><span class="p">[</span><span class="n">t_idx</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">power</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">t_idx</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">o_i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">+</span><span class="n">si</span><span class="o">.</span><span class="n">n_pg</span>
     <span class="n">o_f</span> <span class="o">=</span> <span class="mi">1</span><span class="o">+</span><span class="n">si</span><span class="o">.</span><span class="n">n_pg</span><span class="o">+</span><span class="n">si</span><span class="o">.</span><span class="n">n_dg</span>
-    <span class="n">omegas</span> <span class="o">=</span> <span class="n">_y</span><span class="p">[</span><span class="n">t_idx</span><span class="p">][</span><span class="n">o_i</span><span class="p">:</span><span class="n">o_f</span><span class="p">]</span>
+    <span class="n">omegas</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">t_idx</span><span class="p">][</span><span class="n">o_i</span><span class="p">:</span><span class="n">o_f</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">components</span><span class="p">):</span>
         <span class="n">f</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">th</span><span class="o">.</span><span class="n">dtempdt</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="n">comp</span><span class="p">,</span>
                                <span class="n">power</span><span class="o">=</span><span class="n">power</span><span class="p">,</span>
@@ -225,11 +211,15 @@
     <span class="k">return</span> <span class="n">f</span>
 
 </div>
-<div class="viewcode-block" id="y0"><a class="viewcode-back" href="../../pyrk.html#pyrk.driver.y0">[docs]</a><span class="k">def</span> <span class="nf">y0</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;The initial conditions for y&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="y0"><a class="viewcode-back" href="../../src/pyrk.driver.html#pyrk.driver.y0">[docs]</a><span class="k">def</span> <span class="nf">y0</span><span class="p">(</span><span class="n">si</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The initial conditions for y</span>
+
+<span class="sd">    :param si: the simulation info object</span>
+<span class="sd">    :type si: SimInfo</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">n_entries</span><span class="p">(),),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-    <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c"># real power is 236 MWth, but normalized is 1</span>
+    <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c"># power is normalized is 1</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span><span class="p">):</span>
         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">betas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">Lambda</span><span class="p">())</span>
@@ -239,66 +229,119 @@
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">components</span><span class="p">):</span>
         <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">comp</span><span class="o">.</span><span class="n">T0</span><span class="o">.</span><span class="n">magnitude</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">==</span> <span class="n">si</span><span class="o">.</span><span class="n">n_entries</span><span class="p">()</span>
-    <span class="n">_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span>
+    <span class="n">si</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span>
     <span class="k">return</span> <span class="n">f</span>
 
 </div>
-<div class="viewcode-block" id="y0_n"><a class="viewcode-back" href="../../pyrk.html#pyrk.driver.y0_n">[docs]</a><span class="k">def</span> <span class="nf">y0_n</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;The initial conditions for y_n, the neutronics sub-block of y&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="y0_n"><a class="viewcode-back" href="../../src/pyrk.driver.html#pyrk.driver.y0_n">[docs]</a><span class="k">def</span> <span class="nf">y0_n</span><span class="p">(</span><span class="n">si</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Initial conditions for y_n, the neutronics sub-block of y</span>
+
+<span class="sd">    :param si: the simulation info object</span>
+<span class="sd">    :type si: SimInfo</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">idx</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span><span class="o">+</span><span class="n">si</span><span class="o">.</span><span class="n">n_dg</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">y0</span><span class="p">()[:</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y0</span><span class="p">(</span><span class="n">si</span><span class="p">)[:</span><span class="n">idx</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">y</span>
 
 </div>
-<div class="viewcode-block" id="y0_th"><a class="viewcode-back" href="../../pyrk.html#pyrk.driver.y0_th">[docs]</a><span class="k">def</span> <span class="nf">y0_th</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;The initial conditions for y_th, the thermal hydraulics sub-block of</span>
-<span class="sd">    y&quot;&quot;&quot;</span>
-    <span class="n">tidx</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span><span class="o">+</span><span class="n">si</span><span class="o">.</span><span class="n">n_dg</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">y0</span><span class="p">()[</span><span class="n">tidx</span><span class="p">:]</span>
+<div class="viewcode-block" id="y0_th"><a class="viewcode-back" href="../../src/pyrk.driver.html#pyrk.driver.y0_th">[docs]</a><span class="k">def</span> <span class="nf">y0_th</span><span class="p">(</span><span class="n">si</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Initial conditions for y_th, the thermal hydraulics sub-block of y</span>
+
+<span class="sd">    :param si: the simulation info object</span>
+<span class="sd">    :type si: SimInfo</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">thidx</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span><span class="o">+</span><span class="n">si</span><span class="o">.</span><span class="n">n_dg</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y0</span><span class="p">(</span><span class="n">si</span><span class="p">)[</span><span class="n">thidx</span><span class="p">:]</span>
     <span class="k">return</span> <span class="n">y</span>
 
 </div>
-<div class="viewcode-block" id="solve"><a class="viewcode-back" href="../../pyrk.html#pyrk.driver.solve">[docs]</a><span class="k">def</span> <span class="nf">solve</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Conducts the solution step, based on the dopri5 integrator in scipy&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="solve"><a class="viewcode-back" href="../../src/pyrk.driver.html#pyrk.driver.solve">[docs]</a><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">si</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">infile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Conducts the solution step, based on the dopri5 integrator in scipy</span>
+
+<span class="sd">    :param si: the simulation info object</span>
+<span class="sd">    :type si: SimInfo</span>
+<span class="sd">    :param y: the solution vector</span>
+<span class="sd">    :type y: np.ndarray</span>
+<span class="sd">    :param infile: the imported infile module</span>
+<span class="sd">    :type infile: imported module</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">ode</span><span class="p">(</span><span class="n">f_n</span><span class="p">)</span><span class="o">.</span><span class="n">set_integrator</span><span class="p">(</span><span class="s">&#39;dopri5&#39;</span><span class="p">)</span>
-    <span class="n">n</span><span class="o">.</span><span class="n">set_initial_value</span><span class="p">(</span><span class="n">y0_n</span><span class="p">(),</span> <span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t0</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">set_initial_value</span><span class="p">(</span><span class="n">y0_n</span><span class="p">(</span><span class="n">si</span><span class="p">),</span> <span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span>
+                        <span class="n">t0</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">set_f_params</span><span class="p">(</span><span class="n">si</span><span class="p">)</span>
     <span class="n">th</span> <span class="o">=</span> <span class="n">ode</span><span class="p">(</span><span class="n">f_th</span><span class="p">)</span><span class="o">.</span><span class="n">set_integrator</span><span class="p">(</span><span class="s">&#39;dopri5&#39;</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">nsteps</span><span class="p">)</span>
-    <span class="n">th</span><span class="o">.</span><span class="n">set_initial_value</span><span class="p">(</span><span class="n">y0_th</span><span class="p">(),</span> <span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t0</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+    <span class="n">th</span><span class="o">.</span><span class="n">set_initial_value</span><span class="p">(</span><span class="n">y0_th</span><span class="p">(</span><span class="n">si</span><span class="p">),</span> <span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t0</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+    <span class="n">th</span><span class="o">.</span><span class="n">set_f_params</span><span class="p">(</span><span class="n">si</span><span class="p">)</span>
     <span class="k">while</span> <span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">successful</span><span class="p">()</span>
            <span class="ow">and</span> <span class="n">n</span><span class="o">.</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">tf</span><span class="o">.</span><span class="n">magnitude</span>
            <span class="ow">and</span> <span class="n">th</span><span class="o">.</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">tf</span><span class="o">.</span><span class="n">magnitude</span><span class="p">):</span>
         <span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">advance_one_timestep</span><span class="p">()</span>
         <span class="n">n</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">current_time</span><span class="p">()</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
-        <span class="n">update_n</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">update_n</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">)</span>
         <span class="n">th</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">current_time</span><span class="p">()</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
-        <span class="n">update_th</span><span class="p">(</span><span class="n">th</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">th</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">_y</span>
+        <span class="n">update_th</span><span class="p">(</span><span class="n">th</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">th</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">si</span><span class="o">.</span><span class="n">y</span>
 
 </div>
-<div class="viewcode-block" id="log_results"><a class="viewcode-back" href="../../pyrk.html#pyrk.driver.log_results">[docs]</a><span class="k">def</span> <span class="nf">log_results</span><span class="p">():</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Reactivity : </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_rho</span><span class="p">))</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Final Result : </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">array_str</span><span class="p">(</span><span class="n">_y</span><span class="p">))</span>
+<div class="viewcode-block" id="log_results"><a class="viewcode-back" href="../../src/pyrk.driver.html#pyrk.driver.log_results">[docs]</a><span class="k">def</span> <span class="nf">log_results</span><span class="p">(</span><span class="n">si</span><span class="p">):</span>
+    <span class="n">pyrklog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Reactivity : </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_rho</span><span class="p">))</span>
+    <span class="n">pyrklog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Final Result : </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">array_str</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">si</span><span class="o">.</span><span class="n">components</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">comp</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array_str</span><span class="p">(</span><span class="n">comp</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">magnitude</span><span class="p">))</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Precursor lambdas: </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()))</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Delayed neutron frac: </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">beta</span><span class="p">()))</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Precursor betas: </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">betas</span><span class="p">()))</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Decay kappas: </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_dd</span><span class="o">.</span><span class="n">kappas</span><span class="p">()))</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Decay lambdas: </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_dd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()))</span>
+        <span class="n">pyrklog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">comp</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array_str</span><span class="p">(</span><span class="n">comp</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">magnitude</span><span class="p">))</span>
+    <span class="n">pyrklog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Precursor lambdas: </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()))</span>
+    <span class="n">pyrklog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Delayed neutron frac: </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">beta</span><span class="p">()))</span>
+    <span class="n">pyrklog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Precursor betas: </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">betas</span><span class="p">()))</span>
+    <span class="n">pyrklog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Decay kappas: </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_dd</span><span class="o">.</span><span class="n">kappas</span><span class="p">()))</span>
+    <span class="n">pyrklog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Decay lambdas: </span><span class="se">\n</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_dd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()))</span>
+
+</div>
+<div class="viewcode-block" id="print_logo"><a class="viewcode-back" href="../../src/pyrk.driver.html#pyrk.driver.print_logo">[docs]</a><span class="k">def</span> <span class="nf">print_logo</span><span class="p">(</span><span class="n">curr_dir</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">curr_dir</span><span class="p">,</span> <span class="s">&#39;logo.txt&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">logo</span><span class="p">:</span>
+        <span class="n">pyrklog</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Welcome to PyRK.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span>
+                         <span class="s">&quot;(c) Kathryn D. Huff</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span>
+                         <span class="s">&quot;Your simulation is starting.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span>
+                         <span class="s">&quot;Perhaps it&#39;s time for a coffee.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span>
+                         <span class="n">logo</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+</div>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../src/pyrk.driver.html#pyrk.driver.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">curr_dir</span><span class="p">):</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">set_up_pyrklog</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">logfile</span><span class="p">)</span>
+    <span class="n">infile</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">infile</span><span class="p">)</span>
+
+    <span class="n">si</span> <span class="o">=</span> <span class="n">sim_info</span><span class="o">.</span><span class="n">SimInfo</span><span class="p">(</span><span class="n">timer</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">ti</span><span class="p">,</span>
+                          <span class="n">components</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">components</span><span class="p">,</span>
+                          <span class="n">iso</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">fission_iso</span><span class="p">,</span>
+                          <span class="n">e</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">spectrum</span><span class="p">,</span>
+                          <span class="n">n_precursors</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">n_pg</span><span class="p">,</span>
+                          <span class="n">n_decay</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">n_dg</span><span class="p">,</span>
+                          <span class="n">kappa</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">kappa</span><span class="p">,</span>
+                          <span class="n">feedback</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">feedback</span><span class="p">,</span>
+                          <span class="n">rho_ext</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">rho_ext</span><span class="p">,</span>
+                          <span class="n">plotdir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">plotdir</span><span class="p">)</span>
+    <span class="n">print_logo</span><span class="p">(</span><span class="n">curr_dir</span><span class="p">)</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">si</span><span class="o">=</span><span class="n">si</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">si</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">infile</span><span class="o">=</span><span class="n">infile</span><span class="p">)</span>
+    <span class="n">log_results</span><span class="p">(</span><span class="n">si</span><span class="p">)</span>
+    <span class="n">plotter</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">si</span><span class="p">)</span>
+    <span class="n">pyrklog</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Simulation succeeded.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
 
 </div>
 <span class="sd">&quot;&quot;&quot;Run it as a script&quot;&quot;&quot;</span>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;logo.txt&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">logo</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Welcome to PyRK.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span>
-                        <span class="s">&quot;(c) Kathryn D. Huff</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span>
-                        <span class="s">&quot;Your simulation is starting.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span>
-                        <span class="s">&quot;Perhaps it&#39;s time for a coffee.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span>
-                        <span class="n">logo</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-    <span class="n">sol</span> <span class="o">=</span> <span class="n">solve</span><span class="p">()</span>
-    <span class="n">log_results</span><span class="p">()</span>
-    <span class="n">plotter</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">si</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Simulation succeeded.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="n">curr_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+    <span class="n">ap</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">&#39;PyRK parameters&#39;</span><span class="p">)</span>
+    <span class="n">ap</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--infile&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;the name of the input file&#39;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="s">&#39;input&#39;</span><span class="p">)</span>
+    <span class="n">ap</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--logfile&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;the name of the log file&#39;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="s">&#39;pyrk.log&#39;</span><span class="p">)</span>
+    <span class="n">ap</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--plotdir&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;the name of the directory of output </span><span class="se">\</span>
+<span class="s">                    plots&#39;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="s">&#39;images&#39;</span><span class="p">)</span>
+    <span class="n">ap</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--outfile&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;the name of the output database&#39;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="s">&#39;pyrk.h5&#39;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">ap</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">curr_dir</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -339,7 +382,7 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

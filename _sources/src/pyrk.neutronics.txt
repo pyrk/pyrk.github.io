@@ -1,0 +1,7 @@
+pyrk.neutronics module
+======================
+
+.. automodule:: pyrk.neutronics
+    :members:
+    :undoc-members:
+    :show-inheritance:

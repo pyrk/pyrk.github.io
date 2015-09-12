@@ -12,6 +12,8 @@
 
   
   
+    <link rel="shortcut icon" href="../../_static/logo.ico"/>
+  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -63,23 +65,18 @@
           
           
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../pyrk.html">PyRK package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#input-subpackage">Input Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#data-subpackage">Data Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#utils-subpackage">Utils Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.driver">pyrk.driver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#pyrk-neutronics">pyrk.neutronics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.reactivity_insertion">pyrk.reactivity_insertion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.th_component">pyrk.th_component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.th_system">pyrk.th_system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.material">pyrk.material</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.graphite">pyrk.graphite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.flibe">pyrk.flibe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.kernel">pyrk.kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#the-future">The Future</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">PyRK Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../authors.html">PyRK License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../src/index.html">PyRK API</a></li>
 </ul>
 
           
@@ -116,10 +113,10 @@
           <div role="main" class="document">
             
   <h1>Source code for pyrk.reactivity_insertion</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">ur</span> <span class="kn">import</span> <span class="n">units</span>
+<span class="kn">from</span> <span class="nn">utilities.ur</span> <span class="kn">import</span> <span class="n">units</span>
 
 
-<div class="viewcode-block" id="ReactivityInsertion"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.ReactivityInsertion">[docs]</a><span class="k">class</span> <span class="nc">ReactivityInsertion</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="ReactivityInsertion"><a class="viewcode-back" href="../../src/pyrk.reactivity_insertion.html#pyrk.reactivity_insertion.ReactivityInsertion">[docs]</a><span class="k">class</span> <span class="nc">ReactivityInsertion</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This is the default reactivity insertion object class from whence all</span>
 <span class="sd">    others are derived.</span>
 
@@ -131,7 +128,7 @@
 <span class="sd">             t0                                tf</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ReactivityInsertion.__init__"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.ReactivityInsertion.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a reactivity insertion object for driving the transient.</span>
 
@@ -140,15 +137,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">timer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">t_idx</span><span class="p">)</span> <span class="k">for</span> <span class="n">t_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">timer</span><span class="o">.</span><span class="n">timesteps</span><span class="p">())]</span>
-</div>
-<div class="viewcode-block" id="ReactivityInsertion.f"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.ReactivityInsertion.f">[docs]</a>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ReactivityInsertion.f"><a class="viewcode-back" href="../../src/pyrk.reactivity_insertion.html#pyrk.reactivity_insertion.ReactivityInsertion.f">[docs]</a>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">delta_k</span>
 </div>
-<div class="viewcode-block" id="ReactivityInsertion.reactivity"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.ReactivityInsertion.reactivity">[docs]</a>    <span class="k">def</span> <span class="nf">reactivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">):</span>
+<div class="viewcode-block" id="ReactivityInsertion.reactivity"><a class="viewcode-back" href="../../src/pyrk.reactivity_insertion.html#pyrk.reactivity_insertion.ReactivityInsertion.reactivity">[docs]</a>    <span class="k">def</span> <span class="nf">reactivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vals</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span>
 
 </div></div>
-<div class="viewcode-block" id="StepReactivityInsertion"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.StepReactivityInsertion">[docs]</a><span class="k">class</span> <span class="nc">StepReactivityInsertion</span><span class="p">(</span><span class="n">ReactivityInsertion</span><span class="p">):</span>
+<div class="viewcode-block" id="StepReactivityInsertion"><a class="viewcode-back" href="../../src/pyrk.reactivity_insertion.html#pyrk.reactivity_insertion.StepReactivityInsertion">[docs]</a><span class="k">class</span> <span class="nc">StepReactivityInsertion</span><span class="p">(</span><span class="n">ReactivityInsertion</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a Heaviside step function::</span>
 
@@ -164,7 +161,7 @@
 
 <span class="sd">                           t_step</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="StepReactivityInsertion.__init__"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.StepReactivityInsertion.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">timer</span><span class="p">,</span>
                  <span class="n">t_step</span><span class="o">=</span><span class="mf">1.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">,</span>
                  <span class="n">rho_init</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">delta_k</span><span class="p">,</span>
@@ -185,15 +182,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rho_final</span> <span class="o">=</span> <span class="n">rho_final</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;delta_k&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">t_step</span> <span class="o">=</span> <span class="n">t_step</span>
         <span class="n">ReactivityInsertion</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer</span><span class="o">=</span><span class="n">timer</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="StepReactivityInsertion.f"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.StepReactivityInsertion.f">[docs]</a>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+
+<div class="viewcode-block" id="StepReactivityInsertion.f"><a class="viewcode-back" href="../../src/pyrk.reactivity_insertion.html#pyrk.reactivity_insertion.StepReactivityInsertion.f">[docs]</a>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_idx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t_step</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_init</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_final</span>
 
 </div></div>
-<div class="viewcode-block" id="ImpulseReactivityInsertion"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.ImpulseReactivityInsertion">[docs]</a><span class="k">class</span> <span class="nc">ImpulseReactivityInsertion</span><span class="p">(</span><span class="n">ReactivityInsertion</span><span class="p">):</span>
+<div class="viewcode-block" id="ImpulseReactivityInsertion"><a class="viewcode-back" href="../../src/pyrk.reactivity_insertion.html#pyrk.reactivity_insertion.ImpulseReactivityInsertion">[docs]</a><span class="k">class</span> <span class="nc">ImpulseReactivityInsertion</span><span class="p">(</span><span class="n">ReactivityInsertion</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns an impulse with a width::</span>
 
@@ -210,7 +207,7 @@
 
 <span class="sd">                            t_start         t_end</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="ImpulseReactivityInsertion.__init__"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.ImpulseReactivityInsertion.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">timer</span><span class="p">,</span>
                  <span class="n">t_start</span><span class="o">=</span><span class="mf">1.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">,</span>
                  <span class="n">t_end</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">,</span>
@@ -221,8 +218,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rho_init</span> <span class="o">=</span> <span class="n">rho_init</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rho_max</span> <span class="o">=</span> <span class="n">rho_max</span>
         <span class="n">ReactivityInsertion</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer</span><span class="o">=</span><span class="n">timer</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="ImpulseReactivityInsertion.f"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.ImpulseReactivityInsertion.f">[docs]</a>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ImpulseReactivityInsertion.f"><a class="viewcode-back" href="../../src/pyrk.reactivity_insertion.html#pyrk.reactivity_insertion.ImpulseReactivityInsertion.f">[docs]</a>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_idx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t_start</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_init</span>
         <span class="k">elif</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_idx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
@@ -231,7 +228,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_init</span>
 
 </div></div>
-<div class="viewcode-block" id="RampReactivityInsertion"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.RampReactivityInsertion">[docs]</a><span class="k">class</span> <span class="nc">RampReactivityInsertion</span><span class="p">(</span><span class="n">ReactivityInsertion</span><span class="p">):</span>
+<div class="viewcode-block" id="RampReactivityInsertion"><a class="viewcode-back" href="../../src/pyrk.reactivity_insertion.html#pyrk.reactivity_insertion.RampReactivityInsertion">[docs]</a><span class="k">class</span> <span class="nc">RampReactivityInsertion</span><span class="p">(</span><span class="n">ReactivityInsertion</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a ramp::</span>
 
@@ -246,7 +243,7 @@
 <span class="sd">     rho_init ______________/</span>
 <span class="sd">                         t_start    t_end</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="RampReactivityInsertion.__init__"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.RampReactivityInsertion.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">timer</span><span class="p">,</span>
                  <span class="n">t_start</span><span class="o">=</span><span class="mf">1.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">,</span>
                  <span class="n">t_end</span><span class="o">=</span><span class="mf">2.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">,</span>
@@ -259,8 +256,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rho_rise</span> <span class="o">=</span> <span class="n">rho_rise</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rho_final</span> <span class="o">=</span> <span class="n">rho_final</span>
         <span class="n">ReactivityInsertion</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timer</span><span class="o">=</span><span class="n">timer</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="RampReactivityInsertion.f"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.RampReactivityInsertion.f">[docs]</a>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+
+<div class="viewcode-block" id="RampReactivityInsertion.f"><a class="viewcode-back" href="../../src/pyrk.reactivity_insertion.html#pyrk.reactivity_insertion.RampReactivityInsertion.f">[docs]</a>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_idx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t_start</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_init</span>
         <span class="k">elif</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_idx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t_end</span><span class="p">):</span>
@@ -269,7 +266,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_final</span>
 </div>
-<div class="viewcode-block" id="RampReactivityInsertion.slope"><a class="viewcode-back" href="../../pyrk.html#pyrk.reactivity_insertion.RampReactivityInsertion.slope">[docs]</a>    <span class="k">def</span> <span class="nf">slope</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="RampReactivityInsertion.slope"><a class="viewcode-back" href="../../src/pyrk.reactivity_insertion.html#pyrk.reactivity_insertion.RampReactivityInsertion.slope">[docs]</a>    <span class="k">def</span> <span class="nf">slope</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">rise</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_rise</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_init</span>
         <span class="n">run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_idx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t_end</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_idx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t_start</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rise</span><span class="o">/</span><span class="n">run</span></div></div>
@@ -313,7 +310,7 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

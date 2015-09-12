@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.driver module &mdash; pyrk  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/logo.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#the-future">The Future</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">PyRK API</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>pyrk.driver module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/src/pyrk.driver.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="module-pyrk.driver">
+<span id="pyrk-driver-module"></span><h1>pyrk.driver module<a class="headerlink" href="#module-pyrk.driver" title="Permalink to this headline">¶</a></h1>
+<p>This is an example driver for the simulation. It should soon be refactored to
+result in an input file, an input parser, a solver interface, and output
+scripts.</p>
+<dl class="function">
+<dt id="pyrk.driver.f_n">
+<code class="descclassname">pyrk.driver.</code><code class="descname">f_n</code><span class="sig-paren">(</span><em>t</em>, <em>y</em>, <em>si</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/driver.html#f_n"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.driver.f_n" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the neutronics block solution at time t</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>t</strong> (<em>float.</em>) &#8211; the time [s] at which the update is occuring.</li>
+<li><strong>y</strong> (<em>np.ndarray</em>) &#8211; solution vector</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyrk.driver.f_th">
+<code class="descclassname">pyrk.driver.</code><code class="descname">f_th</code><span class="sig-paren">(</span><em>t</em>, <em>y_th</em>, <em>si</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/driver.html#f_th"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.driver.f_th" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the thermal hydraulics solution at time t</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>t</strong> (<em>float.</em>) &#8211; the time [s] at which the update is occuring.</li>
+<li><strong>y</strong> (<em>np.ndarray</em>) &#8211; the solution vector</li>
+<li><strong>si</strong> (<a class="reference internal" href="pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo" title="pyrk.inp.sim_info.SimInfo"><em>SimInfo</em></a>) &#8211; the simulation info object</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyrk.driver.log_results">
+<code class="descclassname">pyrk.driver.</code><code class="descname">log_results</code><span class="sig-paren">(</span><em>si</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/driver.html#log_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.driver.log_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyrk.driver.main">
+<code class="descclassname">pyrk.driver.</code><code class="descname">main</code><span class="sig-paren">(</span><em>args</em>, <em>curr_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/driver.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.driver.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyrk.driver.print_logo">
+<code class="descclassname">pyrk.driver.</code><code class="descname">print_logo</code><span class="sig-paren">(</span><em>curr_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/driver.html#print_logo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.driver.print_logo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyrk.driver.solve">
+<code class="descclassname">pyrk.driver.</code><code class="descname">solve</code><span class="sig-paren">(</span><em>si</em>, <em>y</em>, <em>infile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/driver.html#solve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.driver.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conducts the solution step, based on the dopri5 integrator in scipy</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>si</strong> (<a class="reference internal" href="pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo" title="pyrk.inp.sim_info.SimInfo"><em>SimInfo</em></a>) &#8211; the simulation info object</li>
+<li><strong>y</strong> (<em>np.ndarray</em>) &#8211; the solution vector</li>
+<li><strong>infile</strong> (<em>imported module</em>) &#8211; the imported infile module</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyrk.driver.update_n">
+<code class="descclassname">pyrk.driver.</code><code class="descname">update_n</code><span class="sig-paren">(</span><em>t</em>, <em>y_n</em>, <em>si</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/driver.html#update_n"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.driver.update_n" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function updates the neutronics block.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>t</strong> (<em>float.</em>) &#8211; the time [s] at which the update is occuring.</li>
+<li><strong>y_n</strong> (<em>np.ndarray.</em>) &#8211; The array that solves the neutronics block at time t</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyrk.driver.update_th">
+<code class="descclassname">pyrk.driver.</code><code class="descname">update_th</code><span class="sig-paren">(</span><em>t</em>, <em>y_n</em>, <em>y_th</em>, <em>si</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/driver.html#update_th"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.driver.update_th" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function updates the thermal hydraulics block.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>t</strong> (<em>float.</em>) &#8211; the time [s] at which the update is occuring.</li>
+<li><strong>y_th</strong> (<em>np.ndarray.</em>) &#8211; The array that solves thermal hydraulics block at time t</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyrk.driver.y0">
+<code class="descclassname">pyrk.driver.</code><code class="descname">y0</code><span class="sig-paren">(</span><em>si</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/driver.html#y0"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.driver.y0" title="Permalink to this definition">¶</a></dt>
+<dd><p>The initial conditions for y</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>si</strong> (<a class="reference internal" href="pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo" title="pyrk.inp.sim_info.SimInfo"><em>SimInfo</em></a>) &#8211; the simulation info object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyrk.driver.y0_n">
+<code class="descclassname">pyrk.driver.</code><code class="descname">y0_n</code><span class="sig-paren">(</span><em>si</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/driver.html#y0_n"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.driver.y0_n" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initial conditions for y_n, the neutronics sub-block of y</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>si</strong> (<a class="reference internal" href="pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo" title="pyrk.inp.sim_info.SimInfo"><em>SimInfo</em></a>) &#8211; the simulation info object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyrk.driver.y0_th">
+<code class="descclassname">pyrk.driver.</code><code class="descname">y0_th</code><span class="sig-paren">(</span><em>si</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/driver.html#y0_th"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.driver.y0_th" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initial conditions for y_th, the thermal hydraulics sub-block of y</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>si</strong> (<a class="reference internal" href="pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo" title="pyrk.inp.sim_info.SimInfo"><em>SimInfo</em></a>) &#8211; the simulation info object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

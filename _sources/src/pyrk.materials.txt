@@ -1,0 +1,24 @@
+pyrk.materials package
+======================
+
+Submodules
+----------
+
+.. toctree::
+
+   pyrk.materials.flibe
+   pyrk.materials.graphite
+   pyrk.materials.kernel
+   pyrk.materials.material
+   pyrk.materials.sfrmetal
+   pyrk.materials.sodium
+   pyrk.materials.ss316
+   pyrk.materials.trisos
+
+Module contents
+---------------
+
+.. automodule:: pyrk.materials
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,7 @@
+pyrk.materials.flibe module
+===========================
+
+.. automodule:: pyrk.materials.flibe
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,7 @@
+pyrk.version module
+===================
+
+.. automodule:: pyrk.version
+    :members:
+    :undoc-members:
+    :show-inheritance:

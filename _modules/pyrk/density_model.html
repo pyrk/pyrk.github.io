@@ -1,0 +1,243 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.density_model &mdash; pyrk  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/logo.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#the-future">The Future</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../src/index.html">PyRK API</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyrk.density_model</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for pyrk.density_model</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">utilities.ur</span> <span class="kn">import</span> <span class="n">units</span>
+
+
+<div class="viewcode-block" id="DensityModel"><a class="viewcode-back" href="../../src/pyrk.density_model.html#pyrk.density_model.DensityModel">[docs]</a><span class="k">class</span> <span class="nc">DensityModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class has a public api supporting just one function, rho(temp).</span>
+<span class="sd">    If the temperature is irrelevant to the model, so be it.</span>
+<span class="sd">    TODO: It would be great to implement a model that handles dpa.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kg</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span>
+                 <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kg</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span>
+                 <span class="n">model</span><span class="o">=</span><span class="s">&quot;linear&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the DensityModel object.</span>
+
+<span class="sd">        :param model: The keyword for a model type.</span>
+<span class="sd">        :type model: string</span>
+<span class="sd">        :param a: first coefficient of the model</span>
+<span class="sd">        :type a: float.</span>
+<span class="sd">        :param b: second coefficient of the model.</span>
+<span class="sd">        :type b: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">implemented</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;constant&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">constant</span><span class="p">,</span>
+                            <span class="s">&#39;linear&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">implemented</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">NotImplemented</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;Density model type &quot;</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="n">model</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="s">&quot; is not an implemented density model. Options are:&quot;</span>
+            <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">implemented</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="n">m</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DensityModel.rho"><a class="viewcode-back" href="../../src/pyrk.density_model.html#pyrk.density_model.DensityModel.rho">[docs]</a>    <span class="k">def</span> <span class="nf">rho</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the density based on the temperature and the irradiation.</span>
+
+<span class="sd">        :param temp: the temperature</span>
+<span class="sd">        :type temp: float.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">implemented</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">](</span><span class="n">temp</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DensityModel.constant"><a class="viewcode-back" href="../../src/pyrk.density_model.html#pyrk.density_model.DensityModel.constant">[docs]</a>    <span class="k">def</span> <span class="nf">constant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a constant density, a.</span>
+
+<span class="sd">        :param temp: The temperature of the object</span>
+<span class="sd">        :type temp: float.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">kg</span><span class="o">/</span><span class="nb">pow</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="DensityModel.linear"><a class="viewcode-back" href="../../src/pyrk.density_model.html#pyrk.density_model.DensityModel.linear">[docs]</a>    <span class="k">def</span> <span class="nf">linear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a linear dependence on temperature ($ a + b*temp$) .</span>
+
+<span class="sd">        :param temp: The temperature of the object</span>
+<span class="sd">        :type temp: float. units of kelvin</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="o">*</span><span class="n">temp</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">kg</span><span class="o">/</span><span class="nb">pow</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.utilities.plotter &mdash; pyrk  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/logo.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-future">The Future</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/index.html">PyRK API</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyrk.utilities.plotter</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for pyrk.utilities.plotter</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD-style license - see LiCENSE.rst</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">&quot;Agg&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.cm</span> <span class="kn">as</span> <span class="nn">cmx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.colors</span> <span class="kn">as</span> <span class="nn">colors</span>
+
+
+<div class="viewcode-block" id="my_colors"><a class="viewcode-back" href="../../../src/pyrk.utilities.plotter.html#pyrk.utilities.plotter.my_colors">[docs]</a><span class="k">def</span> <span class="nf">my_colors</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a nice looking color map&quot;&quot;&quot;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">jet</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s">&#39;jet&#39;</span><span class="p">)</span>
+    <span class="n">c_norm</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">scalar_map</span> <span class="o">=</span> <span class="n">cmx</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">c_norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">jet</span><span class="p">)</span>
+    <span class="n">color_val</span> <span class="o">=</span> <span class="n">scalar_map</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">num</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">color_val</span>
+
+</div>
+<div class="viewcode-block" id="plot"><a class="viewcode-back" href="../../../src/pyrk.utilities.plotter.html#pyrk.utilities.plotter.plot">[docs]</a><span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates plots for interesting values in the simulation.</span>
+<span class="sd">    :param y: The full solution array</span>
+<span class="sd">    :type y: np.ndarray&quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">series</span><span class="o">.</span><span class="n">magnitude</span>
+    <span class="n">plot_power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">)</span>
+    <span class="n">plot_reactivity</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">si</span><span class="p">)</span>
+    <span class="n">plot_power_w_reactivity</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="o">=</span><span class="n">si</span><span class="p">)</span>
+    <span class="n">plot_zetas</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_ndg</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">plot_omegas</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">)</span>
+    <span class="n">plot_temps_together</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">)</span>
+    <span class="n">plot_temps_separately</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="plot_reactivity"><a class="viewcode-back" href="../../../src/pyrk.utilities.plotter.html#pyrk.utilities.plotter.plot_reactivity">[docs]</a><span class="k">def</span> <span class="nf">plot_reactivity</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">si</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plots the reactivity</span>
+<span class="sd">    :param x: The time series</span>
+<span class="sd">    :type x: np.ndarray&quot;&quot;&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_rho</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">my_colors</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_rho</span><span class="p">)),</span>
+             <span class="n">marker</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&quot;Time [s]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&quot;Reactivity [$\Delta k/k$]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&quot;Reactivity [$\Delta k/k$]&quot;</span><span class="p">)</span>
+    <span class="n">saveplot</span><span class="p">(</span><span class="s">&quot;reactivity&quot;</span><span class="p">,</span> <span class="n">plt</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">plotdir</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="plot_power"><a class="viewcode-back" href="../../../src/pyrk.utilities.plotter.html#pyrk.utilities.plotter.plot_power">[docs]</a><span class="k">def</span> <span class="nf">plot_power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">):</span>
+    <span class="n">power</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">my_colors</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)),</span> <span class="n">marker</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&quot;Time [s]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&quot;Power [units]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&quot;Power [units]&quot;</span><span class="p">)</span>
+    <span class="n">saveplot</span><span class="p">(</span><span class="s">&quot;power&quot;</span><span class="p">,</span> <span class="n">plt</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">plotdir</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="plot_power_w_reactivity"><a class="viewcode-back" href="../../../src/pyrk.utilities.plotter.html#pyrk.utilities.plotter.plot_power_w_reactivity">[docs]</a><span class="k">def</span> <span class="nf">plot_power_w_reactivity</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">si</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">power</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_rho</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">my_colors</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Power&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">my_colors</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">,</span>
+             <span class="n">label</span><span class="o">=</span><span class="s">&quot;External Reactivity&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&quot;Time [s]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&quot;Power and Reactivity [$\Delta k$]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&quot;Power and Reactivity [$\Delta k$]&quot;</span><span class="p">)</span>
+    <span class="n">saveplot</span><span class="p">(</span><span class="s">&quot;pow_and_rho&quot;</span><span class="p">,</span> <span class="n">plt</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">plotdir</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="plot_temps_together"><a class="viewcode-back" href="../../../src/pyrk.utilities.plotter.html#pyrk.utilities.plotter.plot_temps_together">[docs]</a><span class="k">def</span> <span class="nf">plot_temps_together</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">components</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_npg</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_ndg</span> <span class="o">+</span> <span class="n">num</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">comp</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="n">my_colors</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">components</span><span class="p">)),</span> <span class="n">marker</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&quot;Time [s]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&quot;Temperature [K]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&quot;Temperature of Each Component&quot;</span><span class="p">)</span>
+    <span class="n">saveplot</span><span class="p">(</span><span class="s">&quot;temps&quot;</span><span class="p">,</span> <span class="n">plt</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">plotdir</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="plot_temps_separately"><a class="viewcode-back" href="../../../src/pyrk.utilities.plotter.html#pyrk.utilities.plotter.plot_temps_separately">[docs]</a><span class="k">def</span> <span class="nf">plot_temps_separately</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">components</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_npg</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_ndg</span> <span class="o">+</span> <span class="n">num</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">comp</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="n">my_colors</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">components</span><span class="p">)),</span> <span class="n">marker</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&quot;Time [s]&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&quot;Temperature [K]&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&quot;Temperature of &quot;</span><span class="o">+</span><span class="n">comp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">saveplot</span><span class="p">(</span><span class="n">comp</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s">&quot; Temp[K]&quot;</span><span class="p">,</span> <span class="n">plt</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">plotdir</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="plot_zetas"><a class="viewcode-back" href="../../../src/pyrk.utilities.plotter.html#pyrk.utilities.plotter.plot_zetas">[docs]</a><span class="k">def</span> <span class="nf">plot_zetas</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_npg</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">num</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">my_colors</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_npg</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">,</span>
+                 <span class="n">label</span><span class="o">=</span><span class="s">&quot;i = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">r&#39;Time $[s]$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&quot;Concentration of Neutron Precursors, $\zeta_i [\#/dr^3]$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&quot;Concentration of Neutron Precursors, $\zeta_i [\#/dr^3]$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">saveplot</span><span class="p">(</span><span class="s">&quot;zetas&quot;</span><span class="p">,</span> <span class="n">plt</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">plotdir</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="plot_omegas"><a class="viewcode-back" href="../../../src/pyrk.utilities.plotter.html#pyrk.utilities.plotter.plot_omegas">[docs]</a><span class="k">def</span> <span class="nf">plot_omegas</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_ndg</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_npg</span> <span class="o">+</span> <span class="n">num</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">my_colors</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_ndg</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">,</span>
+                 <span class="n">label</span><span class="o">=</span><span class="s">&quot;i = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">r&#39;Time $[s]$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">r&#39;Decay Heat Fractions, $\omega_i [\#/dr^3]$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">r&#39;Decay Heat Fractions, $\omega_i [\#/dr^3]$&#39;</span><span class="p">)</span>
+    <span class="n">saveplot</span><span class="p">(</span><span class="s">&quot;omegas&quot;</span><span class="p">,</span> <span class="n">plt</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="saveplot"><a class="viewcode-back" href="../../../src/pyrk.utilities.plotter.html#pyrk.utilities.plotter.saveplot">[docs]</a><span class="k">def</span> <span class="nf">saveplot</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">plt</span><span class="p">,</span> <span class="n">plotdir</span><span class="o">=</span><span class="s">&#39;images&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">plotdir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">plotdir</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">plotdir</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="n">name</span><span class="o">+</span><span class="s">&#39;.pdf&#39;</span><span class="p">),</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">&#39;tight&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">plotdir</span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="n">name</span><span class="o">+</span><span class="s">&#39;.eps&#39;</span><span class="p">),</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">&#39;tight&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

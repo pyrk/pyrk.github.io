@@ -1,0 +1,7 @@
+pyrk.materials.trisos module
+============================
+
+.. automodule:: pyrk.materials.trisos
+    :members:
+    :undoc-members:
+    :show-inheritance:

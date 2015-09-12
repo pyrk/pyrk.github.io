@@ -1,0 +1,228 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.materials.kernel module &mdash; pyrk  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/logo.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#the-future">The Future</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">PyRK API</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>pyrk.materials.kernel module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/src/pyrk.materials.kernel.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="module-pyrk.materials.kernel">
+<span id="pyrk-materials-kernel-module"></span><h1>pyrk.materials.kernel module<a class="headerlink" href="#module-pyrk.materials.kernel" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyrk.materials.kernel.Kernel">
+<em class="property">class </em><code class="descclassname">pyrk.materials.kernel.</code><code class="descname">Kernel</code><span class="sig-paren">(</span><em>name='kernel'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/kernel.html#Kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.kernel.Kernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyrk.materials.material.html#pyrk.materials.material.Material" title="pyrk.materials.material.Material"><code class="xref py py-class docutils literal"><span class="pre">pyrk.materials.material.Material</span></code></a></p>
+<p>This class represents a material of the system it has material
+properties essential to thermal modeling and heat transfer in
+support of calculations related to the thermal hydraulics subblock</p>
+<dl class="method">
+<dt id="pyrk.materials.kernel.Kernel.density">
+<code class="descname">density</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/kernel.html#Kernel.density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.kernel.Kernel.density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kernel density for TRISO kernel is 10500.0kg/m^3</p>
+<p>A constant density model appears sufficiently accurate according to
+most sources - Andreades et al in particular:</p>
+<p>Andreades, C., A.T. Cisneros, J.K. Choi, A.Y.K Chong, David L.
+Krumwiede, Lakshana Huddar, Kathryn D. Huff, et al. 2014. Technical
+Description of the &#8216;Mark 1&#8217; Pebble-Bed, Fluoride-Salt-Cooled,
+High-Temperature Reactor Power Plant. Thermal Hydraulics Group
+UCBTH-14-002. FHR Project. Berkeley, CA: University of California,
+Berkeley, Department of Nuclear Engineering.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.materials.kernel.Kernel.specific_heat_capacity">
+<code class="descname">specific_heat_capacity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/kernel.html#Kernel.specific_heat_capacity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.kernel.Kernel.specific_heat_capacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specific heat capacity for TRISO kernel [J/kg/K]</p>
+<p>The value 0.3 J/g/K was extracted from Ortensi et al in Figure 11, page
+12.</p>
+<p>Ortensi, J., and A. M. Ougouag. 2009. &#8220;Improved Prediction of the
+Doppler Effect in TRISO Fuel.&#8221; In Proceedings of International
+Conference on Mathematics, Computational Methods, and Reactor Physics
+(M&amp;C 2009), Saratoga Springs, NY.
+<a class="reference external" href="http://www.inl.gov/technicalpublications/Documents/4187480.pdf">http://www.inl.gov/technicalpublications/Documents/4187480.pdf</a>.</p>
+<p>Note that a temperature dependent model could be implemented based on
+that work.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.materials.kernel.Kernel.thermal_conductivity">
+<code class="descname">thermal_conductivity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/kernel.html#Kernel.thermal_conductivity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.kernel.Kernel.thermal_conductivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>TRISO Kernel thermal conductivity in [W/m-K]</p>
+<p>A first order, constant value approximation was made
+based on Petti, Martin, Phelip, Fig 1.11</p>
+<p>Petti, Martin, Phelip et al
+<a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S0022311510003284#bib9">http://www.sciencedirect.com/science/article/pii/S0022311510003284#bib9</a></p>
+<p>Note that temperature dependent thermal conductivity model could be
+implemented in the place of this constant model based on Powers and
+Wirth:
+<a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S0022311510003284">http://www.sciencedirect.com/science/article/pii/S0022311510003284</a></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

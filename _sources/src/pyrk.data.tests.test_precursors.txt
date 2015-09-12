@@ -1,0 +1,7 @@
+pyrk.data.tests.test_precursors module
+======================================
+
+.. automodule:: pyrk.data.tests.test_precursors
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -12,6 +12,8 @@
 
   
   
+    <link rel="shortcut icon" href="../../../_static/logo.ico"/>
+  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -63,23 +65,18 @@
           
           
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../pyrk.html">PyRK package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#input-subpackage">Input Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#data-subpackage">Data Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#utils-subpackage">Utils Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.driver">pyrk.driver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#pyrk-neutronics">pyrk.neutronics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.reactivity_insertion">pyrk.reactivity_insertion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.th_component">pyrk.th_component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.th_system">pyrk.th_system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.material">pyrk.material</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.graphite">pyrk.graphite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.flibe">pyrk.flibe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.kernel">pyrk.kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-future">The Future</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">PyRK Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">PyRK License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/index.html">PyRK API</a></li>
 </ul>
 
           
@@ -119,9 +116,9 @@
 <span class="kn">import</span> <span class="nn">math</span>
 
 
-<div class="viewcode-block" id="PrecursorData"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.precursors.PrecursorData">[docs]</a><span class="k">class</span> <span class="nc">PrecursorData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="PrecursorData"><a class="viewcode-back" href="../../../src/pyrk.data.precursors.html#pyrk.data.precursors.PrecursorData">[docs]</a><span class="k">class</span> <span class="nc">PrecursorData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
-<div class="viewcode-block" id="PrecursorData.__init__"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.precursors.PrecursorData.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;initializes the precursor group data for the fissioning nuclide. e</span>
 <span class="sd">        should be &#39;thermal&#39; or &#39;fast&#39; to indicate the energy spectrum.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_betas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_betas</span><span class="p">(</span><span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
@@ -129,39 +126,39 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_Lambda</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_Lambda</span><span class="p">(</span><span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nuc</span> <span class="o">=</span> <span class="n">nuc</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_e</span> <span class="o">=</span> <span class="n">e</span>
-</div>
-<div class="viewcode-block" id="PrecursorData.beta"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.precursors.PrecursorData.beta">[docs]</a>    <span class="k">def</span> <span class="nf">beta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PrecursorData.beta"><a class="viewcode-back" href="../../../src/pyrk.data.precursors.html#pyrk.data.precursors.PrecursorData.beta">[docs]</a>    <span class="k">def</span> <span class="nf">beta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The Big Beta is the fraction of all fission neutrons that are delayed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_betas</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="PrecursorData.betas"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.precursors.PrecursorData.betas">[docs]</a>    <span class="k">def</span> <span class="nf">betas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PrecursorData.betas"><a class="viewcode-back" href="../../../src/pyrk.data.precursors.html#pyrk.data.precursors.PrecursorData.betas">[docs]</a>    <span class="k">def</span> <span class="nf">betas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The betas are populations of neutron precursors.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_betas</span>
 </div>
-<div class="viewcode-block" id="PrecursorData.lambdas"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.precursors.PrecursorData.lambdas">[docs]</a>    <span class="k">def</span> <span class="nf">lambdas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PrecursorData.lambdas"><a class="viewcode-back" href="../../../src/pyrk.data.precursors.html#pyrk.data.precursors.PrecursorData.lambdas">[docs]</a>    <span class="k">def</span> <span class="nf">lambdas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The lambdas are the decay constants for the neutron precursor groups.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lambdas</span>
 </div>
-<div class="viewcode-block" id="PrecursorData.Lambda"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.precursors.PrecursorData.Lambda">[docs]</a>    <span class="k">def</span> <span class="nf">Lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PrecursorData.Lambda"><a class="viewcode-back" href="../../../src/pyrk.data.precursors.html#pyrk.data.precursors.PrecursorData.Lambda">[docs]</a>    <span class="k">def</span> <span class="nf">Lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Lambda</span>
 </div>
-<div class="viewcode-block" id="PrecursorData.v_d"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.precursors.PrecursorData.v_d">[docs]</a>    <span class="k">def</span> <span class="nf">v_d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<div class="viewcode-block" id="PrecursorData.v_d"><a class="viewcode-back" href="../../../src/pyrk.data.precursors.html#pyrk.data.precursors.PrecursorData.v_d">[docs]</a>    <span class="k">def</span> <span class="nf">v_d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TODO: figure out why you felt you needed this</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">nuc</span> <span class="o">==</span> <span class="s">&quot;u235&quot;</span> <span class="ow">and</span> <span class="n">e</span> <span class="o">==</span> <span class="s">&quot;thermal&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="mf">0.01668</span>
 </div>
-<div class="viewcode-block" id="PrecursorData._get_betas"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.precursors.PrecursorData._get_betas">[docs]</a>    <span class="k">def</span> <span class="nf">_get_betas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<div class="viewcode-block" id="PrecursorData._get_betas"><a class="viewcode-back" href="../../../src/pyrk.data.precursors.html#pyrk.data.precursors.PrecursorData._get_betas">[docs]</a>    <span class="k">def</span> <span class="nf">_get_betas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieves the values for beta_i</span>
 <span class="sd">        Data for u235 was obtained from http://arxiv.org/pdf/1001.4100.pdf</span>
@@ -169,15 +166,17 @@
         <span class="n">beta_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">beta_dict</span><span class="p">[</span><span class="s">&quot;u235&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">beta_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">beta_dict</span><span class="p">[</span><span class="s">&quot;sfr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">beta_dict</span><span class="p">[</span><span class="s">&quot;u235&quot;</span><span class="p">][</span><span class="s">&quot;thermal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.00247</span><span class="p">,</span> <span class="mf">0.0013845</span><span class="p">,</span> <span class="mf">0.001222</span><span class="p">,</span>
                                         <span class="mf">0.0026455</span><span class="p">,</span> <span class="mf">0.000832</span><span class="p">,</span> <span class="mf">0.000169</span><span class="p">]</span>
         <span class="n">beta_dict</span><span class="p">[</span><span class="s">&quot;u235&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.000266</span><span class="p">,</span> <span class="mf">0.001491</span><span class="p">,</span> <span class="mf">0.001316</span><span class="p">,</span> <span class="mf">0.002849</span><span class="p">,</span>
                                      <span class="mf">0.000896</span><span class="p">,</span> <span class="mf">0.000182</span><span class="p">]</span>
         <span class="n">beta_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">][</span><span class="s">&quot;thermal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
         <span class="n">beta_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+        <span class="n">beta_dict</span><span class="p">[</span><span class="s">&quot;sfr&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.009</span><span class="p">,</span> <span class="mf">0.087</span><span class="p">,</span> <span class="mf">0.070</span><span class="p">,</span> <span class="mf">0.0014</span><span class="p">,</span> <span class="mf">0.0060</span><span class="p">,</span> <span class="mf">0.0055</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">beta_dict</span><span class="p">[</span><span class="n">nuc</span><span class="p">][</span><span class="n">e</span><span class="p">]</span>
 </div>
-<div class="viewcode-block" id="PrecursorData._get_lambdas"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.precursors.PrecursorData._get_lambdas">[docs]</a>    <span class="k">def</span> <span class="nf">_get_lambdas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<div class="viewcode-block" id="PrecursorData._get_lambdas"><a class="viewcode-back" href="../../../src/pyrk.data.precursors.html#pyrk.data.precursors.PrecursorData._get_lambdas">[docs]</a>    <span class="k">def</span> <span class="nf">_get_lambdas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieves the values for lambda_i</span>
 <span class="sd">        Data for u235 was obtained from http://arxiv.org/pdf/1001.4100.pdf</span>
@@ -185,25 +184,29 @@
         <span class="n">lambda_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;u235&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;sfr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;u235&quot;</span><span class="p">][</span><span class="s">&quot;thermal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span>
                                           <span class="p">[</span><span class="mf">54.51</span><span class="p">,</span> <span class="mf">21.84</span><span class="p">,</span> <span class="mf">6.00</span><span class="p">,</span> <span class="mf">2.23</span><span class="p">,</span> <span class="mf">0.496</span><span class="p">,</span>
                                            <span class="mf">0.179</span><span class="p">]]</span>
         <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;u235&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0127</span><span class="p">,</span> <span class="mf">0.0317</span><span class="p">,</span> <span class="mf">0.155</span><span class="p">,</span> <span class="mf">0.311</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mf">3.87</span><span class="p">]</span>
         <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">][</span><span class="s">&quot;thermal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
         <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+        <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;sfr&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0124</span><span class="p">,</span> <span class="mf">0.0305</span><span class="p">,</span> <span class="mf">0.111</span><span class="p">,</span> <span class="mf">0.301</span><span class="p">,</span> <span class="mf">1.14</span><span class="p">,</span> <span class="mf">3.01</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">lambda_dict</span><span class="p">[</span><span class="n">nuc</span><span class="p">][</span><span class="n">e</span><span class="p">]</span>
 </div>
-<div class="viewcode-block" id="PrecursorData._get_Lambda"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.precursors.PrecursorData._get_Lambda">[docs]</a>    <span class="k">def</span> <span class="nf">_get_Lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<div class="viewcode-block" id="PrecursorData._get_Lambda"><a class="viewcode-back" href="../../../src/pyrk.data.precursors.html#pyrk.data.precursors.PrecursorData._get_Lambda">[docs]</a>    <span class="k">def</span> <span class="nf">_get_Lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        TODO: deifnition of Lambda</span>
+<span class="sd">        Mean generation time of the neutrons in this reactor type. [s]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">Lambda_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">Lambda_dict</span><span class="p">[</span><span class="s">&quot;u235&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">Lambda_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">Lambda_dict</span><span class="p">[</span><span class="s">&quot;sfr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">Lambda_dict</span><span class="p">[</span><span class="s">&quot;u235&quot;</span><span class="p">][</span><span class="s">&quot;thermal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.08e-5</span>
         <span class="n">Lambda_dict</span><span class="p">[</span><span class="s">&quot;u235&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">Lambda_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">][</span><span class="s">&quot;thermal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">Lambda_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">Lambda_dict</span><span class="p">[</span><span class="s">&quot;sfr&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0e-5</span>
         <span class="k">return</span> <span class="n">Lambda_dict</span><span class="p">[</span><span class="n">nuc</span><span class="p">][</span><span class="n">e</span><span class="p">]</span></div></div>
 </pre></div>
 
@@ -245,7 +248,7 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

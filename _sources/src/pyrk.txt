@@ -1,0 +1,34 @@
+pyrk package
+============
+
+Subpackages
+-----------
+
+.. toctree::
+
+    pyrk.data
+    pyrk.inp
+    pyrk.materials
+    pyrk.utilities
+
+Submodules
+----------
+
+.. toctree::
+
+   pyrk.density_model
+   pyrk.driver
+   pyrk.neutronics
+   pyrk.reactivity_insertion
+   pyrk.th_component
+   pyrk.th_system
+   pyrk.timer
+   pyrk.version
+
+Module contents
+---------------
+
+.. automodule:: pyrk
+    :members:
+    :undoc-members:
+    :show-inheritance:

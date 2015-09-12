@@ -1,0 +1,18 @@
+pyrk.inp.tests package
+======================
+
+Submodules
+----------
+
+.. toctree::
+
+   pyrk.inp.tests.test_sim_info
+   pyrk.inp.tests.test_validation
+
+Module contents
+---------------
+
+.. automodule:: pyrk.inp.tests
+    :members:
+    :undoc-members:
+    :show-inheritance:

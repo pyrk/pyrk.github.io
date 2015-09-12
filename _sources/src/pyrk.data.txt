@@ -1,0 +1,25 @@
+pyrk.data package
+=================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    pyrk.data.tests
+
+Submodules
+----------
+
+.. toctree::
+
+   pyrk.data.decay_heat
+   pyrk.data.precursors
+
+Module contents
+---------------
+
+.. automodule:: pyrk.data
+    :members:
+    :undoc-members:
+    :show-inheritance:

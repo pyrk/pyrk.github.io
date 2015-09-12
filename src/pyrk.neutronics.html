@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.neutronics module &mdash; pyrk  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/logo.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#the-future">The Future</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">PyRK API</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>pyrk.neutronics module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/src/pyrk.neutronics.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="pyrk-neutronics-module">
+<h1>pyrk.neutronics module<a class="headerlink" href="#pyrk-neutronics-module" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-pyrk.neutronics"></span><dl class="class">
+<dt id="pyrk.neutronics.Neutronics">
+<em class="property">class </em><code class="descclassname">pyrk.neutronics.</code><code class="descname">Neutronics</code><span class="sig-paren">(</span><em>iso='u235'</em>, <em>e='thermal'</em>, <em>n_precursors=6</em>, <em>n_decay=11</em>, <em>timer=&lt;pyrk.timer.Timer object&gt;</em>, <em>rho_ext=None</em>, <em>feedback=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/neutronics.html#Neutronics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.neutronics.Neutronics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>This class handles calculations and data related to the
+neutronics subblock</p>
+<dl class="method">
+<dt id="pyrk.neutronics.Neutronics.dpdt">
+<code class="descname">dpdt</code><span class="sig-paren">(</span><em>t_idx</em>, <em>components</em>, <em>power</em>, <em>zetas</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/neutronics.html#Neutronics.dpdt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.neutronics.Neutronics.dpdt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the power term. The first in the neutronics block.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>t</strong> (<em>float.</em>) &#8211; the time</li>
+<li><strong>dt</strong> (<em>float.</em>) &#8211; the timestep</li>
+<li><strong>components</strong> (<em>list of THComponent objects</em>) &#8211; the THComponents making up this reactor</li>
+<li><strong>power</strong> (<em>float.</em>) &#8211; the current reactor power in Watts (timestep t-1 ?)</li>
+<li><strong>zetas</strong> (<em>np.ndarray.</em>) &#8211; the current delayed neutron precursor populations, zeta_i</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.neutronics.Neutronics.dwdt">
+<code class="descname">dwdt</code><span class="sig-paren">(</span><em>power</em>, <em>omega</em>, <em>k</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/neutronics.html#Neutronics.dwdt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.neutronics.Neutronics.dwdt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the change in decay heat for $omega_k$ at a certain power</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>power</strong> (<em>float, in units of watts</em>) &#8211; the reactor power at this timestep</li>
+<li><strong>omega</strong> (<em>float, in units of watts #TODO check</em>) &#8211; $omega_k$ for fission product decay heat group k</li>
+<li><strong>k</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; the fission product decay heat group index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.neutronics.Neutronics.dzetadt">
+<code class="descname">dzetadt</code><span class="sig-paren">(</span><em>t</em>, <em>power</em>, <em>zeta</em>, <em>j</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/neutronics.html#Neutronics.dzetadt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.neutronics.Neutronics.dzetadt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the change in zeta over time at t for j</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>t</strong> (<em>float, units of seconds</em>) &#8211; time</li>
+<li><strong>power</strong> (<em>float, in units of watts</em>) &#8211; the reactor power at this timestep</li>
+<li><strong>zeta</strong> (<em>float #TODO units?</em>) &#8211; $zeta_j$, the concentration for precursor group j</li>
+<li><strong>j</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; the precursor group index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyrk.neutronics.Neutronics.feedback">
+<code class="descname">feedback</code><em class="property"> = None</em><a class="headerlink" href="#pyrk.neutronics.Neutronics.feedback" title="Permalink to this definition">¶</a></dt>
+<dd><p>feedback (bool): False if no reactivity feedbacks, true otherwise</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.neutronics.Neutronics.init_rho_ext">
+<code class="descname">init_rho_ext</code><span class="sig-paren">(</span><em>rho_ext</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/neutronics.html#Neutronics.init_rho_ext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.neutronics.Neutronics.init_rho_ext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyrk.neutronics.Neutronics.reactivity">
+<code class="descname">reactivity</code><span class="sig-paren">(</span><em>t_idx</em>, <em>components</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/neutronics.html#Neutronics.reactivity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.neutronics.Neutronics.reactivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the reactivity, in $Delta k$, at time t</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>t</strong> (<em>float, units of seconds</em>) &#8211; time</li>
+<li><strong>dt</strong> (<em>float, units of seconds</em>) &#8211; timestep size, units of seconds</li>
+<li><strong>components</strong> (<em>list of THComponent objects</em>) &#8211; thermal hydraulic component objects</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

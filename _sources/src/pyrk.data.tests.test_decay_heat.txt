@@ -1,0 +1,7 @@
+pyrk.data.tests.test_decay_heat module
+======================================
+
+.. automodule:: pyrk.data.tests.test_decay_heat
+    :members:
+    :undoc-members:
+    :show-inheritance:

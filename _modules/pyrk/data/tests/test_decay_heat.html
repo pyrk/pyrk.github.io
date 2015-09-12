@@ -12,6 +12,8 @@
 
   
   
+    <link rel="shortcut icon" href="../../../../_static/logo.ico"/>
+  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -63,23 +65,18 @@
           
           
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../pyrk.html">PyRK package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#input-subpackage">Input Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#data-subpackage">Data Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#utils-subpackage">Utils Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.driver">pyrk.driver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#pyrk-neutronics">pyrk.neutronics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.reactivity_insertion">pyrk.reactivity_insertion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.th_component">pyrk.th_component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.th_system">pyrk.th_system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.material">pyrk.material</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.graphite">pyrk.graphite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.flibe">pyrk.flibe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.kernel">pyrk.kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#the-future">The Future</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installing.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">PyRK Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../authors.html">PyRK License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../src/index.html">PyRK API</a></li>
 </ul>
 
           
@@ -122,7 +119,7 @@
 <span class="kn">from</span> <span class="nn">data</span> <span class="kn">import</span> <span class="n">decay_heat</span>
 
 
-<div class="viewcode-block" id="test_u235_thermal_constructor"><a class="viewcode-back" href="../../../../pyrk.data.tests.html#pyrk.data.tests.test_decay_heat.test_u235_thermal_constructor">[docs]</a><span class="k">def</span> <span class="nf">test_u235_thermal_constructor</span><span class="p">():</span>
+<div class="viewcode-block" id="test_u235_thermal_constructor"><a class="viewcode-back" href="../../../../src/pyrk.data.tests.test_decay_heat.html#pyrk.data.tests.test_decay_heat.test_u235_thermal_constructor">[docs]</a><span class="k">def</span> <span class="nf">test_u235_thermal_constructor</span><span class="p">():</span>
     <span class="n">n</span> <span class="o">=</span> <span class="mi">11</span>
     <span class="n">nuc</span> <span class="o">=</span> <span class="s">&quot;u235&quot;</span>
     <span class="n">e</span> <span class="o">=</span> <span class="s">&quot;thermal&quot;</span>
@@ -135,7 +132,7 @@
     <span class="n">assert_equal</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">_kappas</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">kappas</span><span class="p">())</span>
 
 </div>
-<div class="viewcode-block" id="test_u235_fast_constructor"><a class="viewcode-back" href="../../../../pyrk.data.tests.html#pyrk.data.tests.test_decay_heat.test_u235_fast_constructor">[docs]</a><span class="k">def</span> <span class="nf">test_u235_fast_constructor</span><span class="p">():</span>
+<div class="viewcode-block" id="test_u235_fast_constructor"><a class="viewcode-back" href="../../../../src/pyrk.data.tests.test_decay_heat.html#pyrk.data.tests.test_decay_heat.test_u235_fast_constructor">[docs]</a><span class="k">def</span> <span class="nf">test_u235_fast_constructor</span><span class="p">():</span>
     <span class="n">n</span> <span class="o">=</span> <span class="mi">11</span>
     <span class="n">nuc</span> <span class="o">=</span> <span class="s">&quot;u235&quot;</span>
     <span class="n">e</span> <span class="o">=</span> <span class="s">&quot;fast&quot;</span>
@@ -145,7 +142,7 @@
     <span class="n">assert_equal</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">_nuc</span><span class="p">,</span> <span class="n">nuc</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="test_pu239_thermal_constructor"><a class="viewcode-back" href="../../../../pyrk.data.tests.html#pyrk.data.tests.test_decay_heat.test_pu239_thermal_constructor">[docs]</a><span class="k">def</span> <span class="nf">test_pu239_thermal_constructor</span><span class="p">():</span>
+<div class="viewcode-block" id="test_pu239_thermal_constructor"><a class="viewcode-back" href="../../../../src/pyrk.data.tests.test_decay_heat.html#pyrk.data.tests.test_decay_heat.test_pu239_thermal_constructor">[docs]</a><span class="k">def</span> <span class="nf">test_pu239_thermal_constructor</span><span class="p">():</span>
     <span class="c"># TODO This should actually test for a warning to be issued</span>
     <span class="n">n</span> <span class="o">=</span> <span class="mi">11</span>
     <span class="n">nuc</span> <span class="o">=</span> <span class="s">&quot;pu239&quot;</span>
@@ -157,7 +154,7 @@
 
 
 </div>
-<div class="viewcode-block" id="test_pu239_fast_constructor"><a class="viewcode-back" href="../../../../pyrk.data.tests.html#pyrk.data.tests.test_decay_heat.test_pu239_fast_constructor">[docs]</a><span class="k">def</span> <span class="nf">test_pu239_fast_constructor</span><span class="p">():</span>
+<div class="viewcode-block" id="test_pu239_fast_constructor"><a class="viewcode-back" href="../../../../src/pyrk.data.tests.test_decay_heat.html#pyrk.data.tests.test_decay_heat.test_pu239_fast_constructor">[docs]</a><span class="k">def</span> <span class="nf">test_pu239_fast_constructor</span><span class="p">():</span>
     <span class="c"># TODO This should actually test for a warning to be issued</span>
     <span class="n">n</span> <span class="o">=</span> <span class="mi">11</span>
     <span class="n">nuc</span> <span class="o">=</span> <span class="s">&quot;pu239&quot;</span>
@@ -206,7 +203,7 @@
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

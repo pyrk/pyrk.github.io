@@ -1,0 +1,7 @@
+pyrk.materials.sodium module
+============================
+
+.. automodule:: pyrk.materials.sodium
+    :members:
+    :undoc-members:
+    :show-inheritance:

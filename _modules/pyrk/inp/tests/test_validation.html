@@ -12,6 +12,8 @@
 
   
   
+    <link rel="shortcut icon" href="../../../../_static/logo.ico"/>
+  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -63,23 +65,18 @@
           
           
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../pyrk.html">PyRK package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#input-subpackage">Input Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#data-subpackage">Data Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#utils-subpackage">Utils Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.driver">pyrk.driver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#pyrk-neutronics">pyrk.neutronics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.reactivity_insertion">pyrk.reactivity_insertion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.th_component">pyrk.th_component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.th_system">pyrk.th_system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.material">pyrk.material</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.graphite">pyrk.graphite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.flibe">pyrk.flibe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../pyrk.html#module-pyrk.kernel">pyrk.kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#the-future">The Future</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installing.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">PyRK Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../authors.html">PyRK License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../src/index.html">PyRK API</a></li>
 </ul>
 
           
@@ -120,73 +117,73 @@
     <span class="n">assert_false</span><span class="p">,</span> <span class="n">assert_raises</span><span class="p">,</span> <span class="n">assert_is_instance</span><span class="p">,</span> <span class="n">with_setup</span>
 
 <span class="kn">from</span> <span class="nn">pyrk.inp</span> <span class="kn">import</span> <span class="n">validation</span> <span class="k">as</span> <span class="n">v</span>
-<span class="kn">from</span> <span class="nn">pyrk.ur</span> <span class="kn">import</span> <span class="n">units</span>
+<span class="kn">from</span> <span class="nn">pyrk.utilities.ur</span> <span class="kn">import</span> <span class="n">units</span>
 
 
-<div class="viewcode-block" id="test_ge_wrong_type"><a class="viewcode-back" href="../../../../pyrk.inp.tests.html#pyrk.inp.tests.test_validation.test_ge_wrong_type">[docs]</a><span class="k">def</span> <span class="nf">test_ge_wrong_type</span><span class="p">():</span>
+<div class="viewcode-block" id="test_ge_wrong_type"><a class="viewcode-back" href="../../../../src/pyrk.inp.tests.test_validation.html#pyrk.inp.tests.test_validation.test_ge_wrong_type">[docs]</a><span class="k">def</span> <span class="nf">test_ge_wrong_type</span><span class="p">():</span>
     <span class="n">val</span> <span class="o">=</span> <span class="s">&quot;ten&quot;</span>
     <span class="n">valname</span> <span class="o">=</span> <span class="s">&quot;testval&quot;</span>
     <span class="n">llim</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">assert_raises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_ge</span><span class="p">,</span> <span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">llim</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="test_ge_Quantity_type"><a class="viewcode-back" href="../../../../pyrk.inp.tests.html#pyrk.inp.tests.test_validation.test_ge_Quantity_type">[docs]</a><span class="k">def</span> <span class="nf">test_ge_Quantity_type</span><span class="p">():</span>
+<div class="viewcode-block" id="test_ge_Quantity_type"><a class="viewcode-back" href="../../../../src/pyrk.inp.tests.test_validation.html#pyrk.inp.tests.test_validation.test_ge_Quantity_type">[docs]</a><span class="k">def</span> <span class="nf">test_ge_Quantity_type</span><span class="p">():</span>
     <span class="n">val</span> <span class="o">=</span> <span class="mi">10</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span>
     <span class="n">valname</span> <span class="o">=</span> <span class="s">&quot;testval&quot;</span>
     <span class="n">llim</span> <span class="o">=</span> <span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span>
     <span class="n">assert_equal</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">validate_ge</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">llim</span><span class="p">),</span> <span class="n">val</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="test_ge_right_type"><a class="viewcode-back" href="../../../../pyrk.inp.tests.html#pyrk.inp.tests.test_validation.test_ge_right_type">[docs]</a><span class="k">def</span> <span class="nf">test_ge_right_type</span><span class="p">():</span>
+<div class="viewcode-block" id="test_ge_right_type"><a class="viewcode-back" href="../../../../src/pyrk.inp.tests.test_validation.html#pyrk.inp.tests.test_validation.test_ge_right_type">[docs]</a><span class="k">def</span> <span class="nf">test_ge_right_type</span><span class="p">():</span>
     <span class="n">val</span> <span class="o">=</span> <span class="mi">10</span>
     <span class="n">valname</span> <span class="o">=</span> <span class="s">&quot;testval&quot;</span>
     <span class="n">llim</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">assert_equal</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">validate_ge</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">llim</span><span class="p">),</span> <span class="n">val</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="test_ge_too_small"><a class="viewcode-back" href="../../../../pyrk.inp.tests.html#pyrk.inp.tests.test_validation.test_ge_too_small">[docs]</a><span class="k">def</span> <span class="nf">test_ge_too_small</span><span class="p">():</span>
+<div class="viewcode-block" id="test_ge_too_small"><a class="viewcode-back" href="../../../../src/pyrk.inp.tests.test_validation.html#pyrk.inp.tests.test_validation.test_ge_too_small">[docs]</a><span class="k">def</span> <span class="nf">test_ge_too_small</span><span class="p">():</span>
     <span class="n">val</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
     <span class="n">valname</span> <span class="o">=</span> <span class="s">&quot;testval&quot;</span>
     <span class="n">llim</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">assert_raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_ge</span><span class="p">,</span> <span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">llim</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="test_ge_both_neg"><a class="viewcode-back" href="../../../../pyrk.inp.tests.html#pyrk.inp.tests.test_validation.test_ge_both_neg">[docs]</a><span class="k">def</span> <span class="nf">test_ge_both_neg</span><span class="p">():</span>
+<div class="viewcode-block" id="test_ge_both_neg"><a class="viewcode-back" href="../../../../src/pyrk.inp.tests.test_validation.html#pyrk.inp.tests.test_validation.test_ge_both_neg">[docs]</a><span class="k">def</span> <span class="nf">test_ge_both_neg</span><span class="p">():</span>
     <span class="n">val</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
     <span class="n">valname</span> <span class="o">=</span> <span class="s">&quot;testval&quot;</span>
     <span class="n">llim</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
     <span class="n">assert_equal</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">validate_ge</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">llim</span><span class="p">),</span> <span class="n">val</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="test_le_wrong_type"><a class="viewcode-back" href="../../../../pyrk.inp.tests.html#pyrk.inp.tests.test_validation.test_le_wrong_type">[docs]</a><span class="k">def</span> <span class="nf">test_le_wrong_type</span><span class="p">():</span>
+<div class="viewcode-block" id="test_le_wrong_type"><a class="viewcode-back" href="../../../../src/pyrk.inp.tests.test_validation.html#pyrk.inp.tests.test_validation.test_le_wrong_type">[docs]</a><span class="k">def</span> <span class="nf">test_le_wrong_type</span><span class="p">():</span>
     <span class="n">val</span> <span class="o">=</span> <span class="s">&quot;ten&quot;</span>
     <span class="n">valname</span> <span class="o">=</span> <span class="s">&quot;testval&quot;</span>
     <span class="n">ulim</span> <span class="o">=</span> <span class="mi">20</span>
     <span class="n">assert_raises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_le</span><span class="p">,</span> <span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">ulim</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="test_le_right_type"><a class="viewcode-back" href="../../../../pyrk.inp.tests.html#pyrk.inp.tests.test_validation.test_le_right_type">[docs]</a><span class="k">def</span> <span class="nf">test_le_right_type</span><span class="p">():</span>
+<div class="viewcode-block" id="test_le_right_type"><a class="viewcode-back" href="../../../../src/pyrk.inp.tests.test_validation.html#pyrk.inp.tests.test_validation.test_le_right_type">[docs]</a><span class="k">def</span> <span class="nf">test_le_right_type</span><span class="p">():</span>
     <span class="n">val</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">valname</span> <span class="o">=</span> <span class="s">&quot;testval&quot;</span>
     <span class="n">ulim</span> <span class="o">=</span> <span class="mi">10</span>
     <span class="n">assert_equal</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">validate_le</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">ulim</span><span class="p">),</span> <span class="n">val</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="test_le_too_big"><a class="viewcode-back" href="../../../../pyrk.inp.tests.html#pyrk.inp.tests.test_validation.test_le_too_big">[docs]</a><span class="k">def</span> <span class="nf">test_le_too_big</span><span class="p">():</span>
+<div class="viewcode-block" id="test_le_too_big"><a class="viewcode-back" href="../../../../src/pyrk.inp.tests.test_validation.html#pyrk.inp.tests.test_validation.test_le_too_big">[docs]</a><span class="k">def</span> <span class="nf">test_le_too_big</span><span class="p">():</span>
     <span class="n">val</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">valname</span> <span class="o">=</span> <span class="s">&quot;testval&quot;</span>
     <span class="n">ulim</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">assert_raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_le</span><span class="p">,</span> <span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">ulim</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="test_le_both_large"><a class="viewcode-back" href="../../../../pyrk.inp.tests.html#pyrk.inp.tests.test_validation.test_le_both_large">[docs]</a><span class="k">def</span> <span class="nf">test_le_both_large</span><span class="p">():</span>
+<div class="viewcode-block" id="test_le_both_large"><a class="viewcode-back" href="../../../../src/pyrk.inp.tests.test_validation.html#pyrk.inp.tests.test_validation.test_le_both_large">[docs]</a><span class="k">def</span> <span class="nf">test_le_both_large</span><span class="p">():</span>
     <span class="n">val</span> <span class="o">=</span> <span class="mi">1000000000000000</span>
     <span class="n">valname</span> <span class="o">=</span> <span class="s">&quot;testval&quot;</span>
     <span class="n">ulim</span> <span class="o">=</span> <span class="n">val</span>
     <span class="n">assert_equal</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">validate_le</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">ulim</span><span class="p">),</span> <span class="n">val</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="test_num_Quantity_type"><a class="viewcode-back" href="../../../../pyrk.inp.tests.html#pyrk.inp.tests.test_validation.test_num_Quantity_type">[docs]</a><span class="k">def</span> <span class="nf">test_num_Quantity_type</span><span class="p">():</span>
+<div class="viewcode-block" id="test_num_Quantity_type"><a class="viewcode-back" href="../../../../src/pyrk.inp.tests.test_validation.html#pyrk.inp.tests.test_validation.test_num_Quantity_type">[docs]</a><span class="k">def</span> <span class="nf">test_num_Quantity_type</span><span class="p">():</span>
     <span class="n">val</span> <span class="o">=</span> <span class="mi">10</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span>
     <span class="n">valname</span> <span class="o">=</span> <span class="s">&quot;testval&quot;</span>
     <span class="n">assert_equal</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">validate_num</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">),</span> <span class="n">val</span><span class="p">)</span></div>
@@ -230,7 +227,7 @@
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

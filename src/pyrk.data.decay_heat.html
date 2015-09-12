@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.data.decay_heat module &mdash; pyrk  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/logo.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#the-future">The Future</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">PyRK API</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>pyrk.data.decay_heat module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/src/pyrk.data.decay_heat.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="module-pyrk.data.decay_heat">
+<span id="pyrk-data-decay-heat-module"></span><h1>pyrk.data.decay_heat module<a class="headerlink" href="#module-pyrk.data.decay_heat" title="Permalink to this headline">¶</a></h1>
+<p>This subpackage contains ANS standard data for decay heat from fission product
+groups.</p>
+<dl class="class">
+<dt id="pyrk.data.decay_heat.DecayData">
+<em class="property">class </em><code class="descclassname">pyrk.data.decay_heat.</code><code class="descname">DecayData</code><span class="sig-paren">(</span><em>nuc</em>, <em>e</em>, <em>n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/data/decay_heat.html#DecayData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.data.decay_heat.DecayData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The DecayData class contains fission decay heat data.</p>
+<blockquote>
+<div><p>It is used to contain decay heat data retrieved from ANS/ANSI standards
+for decay heat from fission products.</p>
+<p>The traits are documented close to their definition by using a special
+comment <code class="docutils literal"><span class="pre">#:</span></code> prefix.</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<dl class="last docutils">
+<dt>The ANS/ANSI standards can be found at the ans store:</dt>
+<dd><a class="reference external" href="http://www.ans.org/store/i_240256">http://www.ans.org/store/i_240256</a></dd>
+</dl>
+</div>
+<dl class="method">
+<dt id="pyrk.data.decay_heat.DecayData._get_kappas">
+<code class="descname">_get_kappas</code><span class="sig-paren">(</span><em>nuc</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/data/decay_heat.html#DecayData._get_kappas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.data.decay_heat.DecayData._get_kappas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the decay heat value for fissioning nuclide nuc and spectrum e</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>e</strong> (<em>str.</em>) &#8211; The energy spectrum type. This should be &#8216;thermal&#8217; or &#8216;fast&#8217;             to indicate the energy spectrum.</li>
+<li><strong>nuc</strong> (<em>str.</em>) &#8211; The fissioning nuclide or custom reactor type. Currently             only u235, sfr, or pu239 are supported</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a list of floats</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a list of floats
+the kappas (decay heat values) for each decay heat group</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.data.decay_heat.DecayData._get_lambdas">
+<code class="descname">_get_lambdas</code><span class="sig-paren">(</span><em>nuc</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/data/decay_heat.html#DecayData._get_lambdas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.data.decay_heat.DecayData._get_lambdas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the heat decay constant for fissioning nuclide nuc, spectrum e</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>e</strong> (<em>str.</em>) &#8211; The energy spectrum type. This should be &#8216;thermal&#8217; or &#8216;fast&#8217;             to indicate the energy spectrum.</li>
+<li><strong>nuc</strong> (<em>str.</em>) &#8211; The fissioning nuclide or custom reactor type. Currently         only u235, sfr, or pu239 are supported</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a list of floats
+the lambdas (decay constants) for each decay heat group</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.data.decay_heat.DecayData.kappas">
+<code class="descname">kappas</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/data/decay_heat.html#DecayData.kappas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.data.decay_heat.DecayData.kappas" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a list of floats
+the kappas (decay heat values) for each decay heat group</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.data.decay_heat.DecayData.lambdas">
+<code class="descname">lambdas</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/data/decay_heat.html#DecayData.lambdas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.data.decay_heat.DecayData.lambdas" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a list of floats
+the lambdas (decay constants) for each decay heat group</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

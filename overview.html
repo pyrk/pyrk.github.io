@@ -1,0 +1,237 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Overview &mdash; pyrk  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/logo.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="index.html"/>
+        <link rel="next" title="Examples" href="examples.html"/>
+        <link rel="prev" title="PyRK" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-future">The Future</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/index.html">PyRK API</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Overview</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/overview.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>Time-dependent fluctuations in neutron population, fluid flow, and heat transfer are
+essential to understanding the performance and safety of a reactor. Such
+<em>transients</em> include normal reactor startup and shutdown as well as abnormal scenarios
+including Beyond Design Basis Events (BDBEs) such as Accident Transients
+Without Scram (ATWS). However, no open source tool currently exists for
+reactor transient analysis. To fill this gap, PyRK (Python for Reactor
+Kinetics) was created. PyRK is the first open source tool capable of:</p>
+<ul class="simple">
+<li>time-dependent,</li>
+<li>lumped parameter thermal-hydraulics,</li>
+<li>coupled with neutron kinetics,</li>
+<li>in 0-dimensions,</li>
+<li>for nuclear reactor analysis,</li>
+<li>of any reactor design,</li>
+<li>in an object-oriented context.</li>
+</ul>
+<div class="section" id="the-prke">
+<h2>The PRKE<a class="headerlink" href="#the-prke" title="Permalink to this headline">¶</a></h2>
+<p>The point reactor kinetics equations are implemented.</p>
+</div>
+<div class="section" id="lumped-parameter-th">
+<h2>Lumped Parameter TH<a class="headerlink" href="#lumped-parameter-th" title="Permalink to this headline">¶</a></h2>
+<p>TH is represented in 1-D</p>
+</div>
+<div class="section" id="material-library">
+<h2>Material Library<a class="headerlink" href="#material-library" title="Permalink to this headline">¶</a></h2>
+<p>A number of materials are represented. Additional materials are a key area
+where user/developer contributions are desired.</p>
+</div>
+<div class="section" id="data-library">
+<h2>Data Library<a class="headerlink" href="#data-library" title="Permalink to this headline">¶</a></h2>
+<p>Precursor and decay heat data from the ANS/ANSI standards and representative of
+reactor neutronics for canonical reactors has been provided.</p>
+</div>
+<div class="section" id="the-future">
+<h2>The Future<a class="headerlink" href="#the-future" title="Permalink to this headline">¶</a></h2>
+<p>Our target audience is anyone interested in conducting analyses of nuclear
+reactor safety. In the short term, we hope that users will add material
+classes, contribute data, find bugs, contribute fixes, and share their ideas
+for the future of PyRK.</p>
+<p>In the long term, it is very likely that PyRK will one day be absorbed into or
+will absorb the wonderful <cite>PyNE</cite> package.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">PyRK is a relatively new project and is still under heavy development.
+Although we will make a best effort to maintain compatibility with the
+current API, inevitably the API will change in future versions as PyRK
+matures.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="PyRK"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

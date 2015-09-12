@@ -1,0 +1,230 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.materials.sfrmetal &mdash; pyrk  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/logo.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-future">The Future</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/index.html">PyRK API</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyrk.materials.sfrmetal</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for pyrk.materials.sfrmetal</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">utilities.ur</span> <span class="kn">import</span> <span class="n">units</span>
+<span class="kn">from</span> <span class="nn">density_model</span> <span class="kn">import</span> <span class="n">DensityModel</span>
+<span class="kn">from</span> <span class="nn">material</span> <span class="kn">import</span> <span class="n">Material</span>
+
+
+<div class="viewcode-block" id="SFRMetal"><a class="viewcode-back" href="../../../src/pyrk.materials.sfrmetal.html#pyrk.materials.sfrmetal.SFRMetal">[docs]</a><span class="k">class</span> <span class="nc">SFRMetal</span><span class="p">(</span><span class="n">Material</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class represents SFR Metal fuel. It inherits from the material</span>
+<span class="sd">    class and possesses attributes intrinsic to SFR metal fuel, as reported in</span>
+<span class="sd">    T. Sofu, A review of inherent safety characteristics of metal alloy</span>
+<span class="sd">    sfrmetal-cooled fast reactor fuel against postulated accidents</span>
+
+<span class="sd">    http://www.sciencedirect.com/science/article/pii/S1738573315000753</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;sfrmetal&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initalizes a material</span>
+
+<span class="sd">        :param name: The name of the component (i.e., &quot;fuel&quot; or &quot;cool&quot;)</span>
+<span class="sd">        :type name: str.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Material</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                          <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                          <span class="n">k</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">thermal_conductivity</span><span class="p">(),</span>
+                          <span class="n">cp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_capacity</span><span class="p">(),</span>
+                          <span class="n">dm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">density</span><span class="p">())</span>
+
+<div class="viewcode-block" id="SFRMetal.thermal_conductivity"><a class="viewcode-back" href="../../../src/pyrk.materials.sfrmetal.html#pyrk.materials.sfrmetal.SFRMetal.thermal_conductivity">[docs]</a>    <span class="k">def</span> <span class="nf">thermal_conductivity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;SFRMetal thermal conductivity in [W/m-K]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">to_ret</span> <span class="o">=</span> <span class="mf">0.16</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="o">/</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">centimeter</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">to_ret</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;watt/meter/kelvin&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SFRMetal.specific_heat_capacity"><a class="viewcode-back" href="../../../src/pyrk.materials.sfrmetal.html#pyrk.materials.sfrmetal.SFRMetal.specific_heat_capacity">[docs]</a>    <span class="k">def</span> <span class="nf">specific_heat_capacity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Specific heat capacity of SFRMetal [J/kg/K]</span>
+<span class="sd">        actually depends on temperature pretty strongly.</span>
+
+<span class="sd">        TODO, Issue #4</span>
+<span class="sd">        The CODATA equation gives the relation:</span>
+
+<span class="sd">        .. math ::</span>
+
+<span class="sd">          c_p &amp;= 1.6582 - 8.4790\\times10^{-4}T\\\\</span>
+<span class="sd">              &amp;+ 4.4541\\times10^{-7}T^2 - 2992.6T^{-2}</span>
+
+<span class="sd">        Below is a constant estimate of sfrmetal cp at temperatures around 400C</span>
+<span class="sd">        based on table 1.1-5 in http://www.ne.anl.gov/eda/ANL-RE-95-2.pdf</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">to_ret</span> <span class="o">=</span> <span class="mf">0.17</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">joule</span><span class="o">/</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">g</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">to_ret</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;J/kg/kelvin&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SFRMetal.density"><a class="viewcode-back" href="../../../src/pyrk.materials.sfrmetal.html#pyrk.materials.sfrmetal.SFRMetal.density">[docs]</a>    <span class="k">def</span> <span class="nf">density</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        SFRMetal density as a funciton of T. [kg/m^3]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">DensityModel</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mf">14.1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">gram</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">cm</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s">&#39;constant&#39;</span><span class="p">)</span>
+</pre></div></div></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

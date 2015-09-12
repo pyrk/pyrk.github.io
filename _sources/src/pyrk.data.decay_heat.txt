@@ -1,0 +1,7 @@
+pyrk.data.decay_heat module
+===========================
+
+.. automodule:: pyrk.data.decay_heat
+    :members:
+    :undoc-members:
+    :show-inheritance:

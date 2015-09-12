@@ -1,0 +1,7 @@
+pyrk.timer module
+=================
+
+.. automodule:: pyrk.timer
+    :members:
+    :undoc-members:
+    :show-inheritance:

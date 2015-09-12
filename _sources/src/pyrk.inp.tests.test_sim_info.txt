@@ -1,0 +1,7 @@
+pyrk.inp.tests.test_sim_info module
+===================================
+
+.. automodule:: pyrk.inp.tests.test_sim_info
+    :members:
+    :undoc-members:
+    :show-inheritance:

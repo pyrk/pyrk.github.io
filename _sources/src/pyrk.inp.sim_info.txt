@@ -1,0 +1,7 @@
+pyrk.inp.sim_info module
+========================
+
+.. automodule:: pyrk.inp.sim_info
+    :members:
+    :undoc-members:
+    :show-inheritance:

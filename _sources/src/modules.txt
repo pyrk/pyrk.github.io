@@ -1,0 +1,7 @@
+pyrk
+====
+
+.. toctree::
+   :maxdepth: 4
+
+   pyrk

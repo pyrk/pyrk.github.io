@@ -1,0 +1,18 @@
+pyrk.data.tests package
+=======================
+
+Submodules
+----------
+
+.. toctree::
+
+   pyrk.data.tests.test_decay_heat
+   pyrk.data.tests.test_precursors
+
+Module contents
+---------------
+
+.. automodule:: pyrk.data.tests
+    :members:
+    :undoc-members:
+    :show-inheritance:

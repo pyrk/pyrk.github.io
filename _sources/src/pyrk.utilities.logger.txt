@@ -1,0 +1,7 @@
+pyrk.utilities.logger module
+============================
+
+.. automodule:: pyrk.utilities.logger
+    :members:
+    :undoc-members:
+    :show-inheritance:

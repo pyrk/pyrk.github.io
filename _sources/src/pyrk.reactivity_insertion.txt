@@ -1,0 +1,7 @@
+pyrk.reactivity_insertion module
+================================
+
+.. automodule:: pyrk.reactivity_insertion
+    :members:
+    :undoc-members:
+    :show-inheritance:

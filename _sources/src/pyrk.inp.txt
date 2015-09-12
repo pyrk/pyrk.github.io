@@ -1,0 +1,25 @@
+pyrk.inp package
+================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    pyrk.inp.tests
+
+Submodules
+----------
+
+.. toctree::
+
+   pyrk.inp.sim_info
+   pyrk.inp.validation
+
+Module contents
+---------------
+
+.. automodule:: pyrk.inp
+    :members:
+    :undoc-members:
+    :show-inheritance:

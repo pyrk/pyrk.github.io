@@ -1,0 +1,7 @@
+pyrk.materials.kernel module
+============================
+
+.. automodule:: pyrk.materials.kernel
+    :members:
+    :undoc-members:
+    :show-inheritance:

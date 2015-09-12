@@ -12,6 +12,8 @@
 
   
   
+    <link rel="shortcut icon" href="../../_static/logo.ico"/>
+  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -63,23 +65,18 @@
           
           
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../pyrk.html">PyRK package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#input-subpackage">Input Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#data-subpackage">Data Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#utils-subpackage">Utils Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.driver">pyrk.driver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#pyrk-neutronics">pyrk.neutronics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.reactivity_insertion">pyrk.reactivity_insertion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.th_component">pyrk.th_component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.th_system">pyrk.th_system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.material">pyrk.material</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.graphite">pyrk.graphite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.flibe">pyrk.flibe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../pyrk.html#module-pyrk.kernel">pyrk.kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#the-future">The Future</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">PyRK Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../authors.html">PyRK License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../src/index.html">PyRK API</a></li>
 </ul>
 
           
@@ -125,12 +122,13 @@
 <span class="kn">from</span> <span class="nn">reactivity_insertion</span> <span class="kn">import</span> <span class="n">ReactivityInsertion</span>
 <span class="kn">from</span> <span class="nn">timer</span> <span class="kn">import</span> <span class="n">Timer</span>
 
-<div class="viewcode-block" id="Neutronics"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics">[docs]</a><span class="k">class</span> <span class="nc">Neutronics</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Neutronics"><a class="viewcode-back" href="../../src/pyrk.neutronics.html#pyrk.neutronics.Neutronics">[docs]</a><span class="k">class</span> <span class="nc">Neutronics</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class handles calculations and data related to the</span>
 <span class="sd">    neutronics subblock</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Neutronics.__init__"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iso</span><span class="o">=</span><span class="s">&quot;u235&quot;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="s">&quot;thermal&quot;</span><span class="p">,</span> <span class="n">n_precursors</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_decay</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iso</span><span class="o">=</span><span class="s">&quot;u235&quot;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="s">&quot;thermal&quot;</span><span class="p">,</span> <span class="n">n_precursors</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_decay</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
                  <span class="n">timer</span><span class="o">=</span><span class="n">Timer</span><span class="p">(),</span> <span class="n">rho_ext</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">feedback</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a Neutronics object that holds the neutronics simulation</span>
@@ -149,8 +147,9 @@
 <span class="sd">        :returns: A Neutronics object that holds neutronics simulation info</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_iso</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;iso&quot;</span><span class="p">,</span> <span class="n">iso</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;u235&#39;</span><span class="p">,</span> <span class="s">&#39;pu239&#39;</span><span class="p">])</span>
-        <span class="sd">&quot;&quot;&quot;_iso (str): Fissioning isotope. &#39;u235&#39; or &#39;pu239&#39; are supported.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iso</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;iso&quot;</span><span class="p">,</span> <span class="n">iso</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;u235&#39;</span><span class="p">,</span> <span class="s">&#39;pu239&#39;</span><span class="p">,</span> <span class="s">&#39;sfr&#39;</span><span class="p">])</span>
+        <span class="sd">&quot;&quot;&quot;_iso (str): Fissioning isotope. &#39;u235&#39;, &#39;pu239&#39;, or &#39;sfr&#39; are</span>
+<span class="sd">        supported.&quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_e</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;e&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;thermal&#39;</span><span class="p">,</span> <span class="s">&#39;fast&#39;</span><span class="p">])</span>
         <span class="sd">&quot;&quot;&quot;_e (str): Energy spectrum &#39;thermal&#39; or &#39;fast&#39; are supported.&quot;&quot;&quot;</span>
@@ -177,16 +176,17 @@
         <span class="sd">&quot;&quot;&quot;_rho_ext (ReactivityInsertion): Reactivity function from the</span>
 <span class="sd">        reactivity insertion model&quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span> <span class="o">=</span>  <span class="n">feedback</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span> <span class="o">=</span> <span class="n">feedback</span>
         <span class="sd">&quot;&quot;&quot;feedback (bool): False if no reactivity feedbacks, true otherwise&quot;&quot;&quot;</span>
-</div>
-<div class="viewcode-block" id="Neutronics.init_rho_ext"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics.init_rho_ext">[docs]</a>    <span class="k">def</span> <span class="nf">init_rho_ext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho_ext</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Neutronics.init_rho_ext"><a class="viewcode-back" href="../../src/pyrk.neutronics.html#pyrk.neutronics.Neutronics.init_rho_ext">[docs]</a>    <span class="k">def</span> <span class="nf">init_rho_ext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho_ext</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">rho_ext</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">rho_ext</span> <span class="o">=</span> <span class="n">ReactivityInsertion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rho_ext</span>
 </div>
-<div class="viewcode-block" id="Neutronics.dpdt"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics.dpdt">[docs]</a>    <span class="k">def</span> <span class="nf">dpdt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">zetas</span><span class="p">):</span>
+<div class="viewcode-block" id="Neutronics.dpdt"><a class="viewcode-back" href="../../src/pyrk.neutronics.html#pyrk.neutronics.Neutronics.dpdt">[docs]</a>    <span class="k">def</span> <span class="nf">dpdt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">zetas</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the power term. The first in the neutronics block.</span>
+
 <span class="sd">        :param t: the time</span>
 <span class="sd">        :type t: float.</span>
 <span class="sd">        :param dt: the timestep</span>
@@ -208,8 +208,10 @@
         <span class="n">dp</span> <span class="o">=</span> <span class="n">power</span><span class="o">*</span><span class="p">(</span><span class="n">rho</span> <span class="o">-</span> <span class="n">beta</span><span class="p">)</span><span class="o">/</span><span class="n">Lambda</span> <span class="o">+</span> <span class="n">precursors</span>
         <span class="k">return</span> <span class="n">dp</span>
 </div>
-<div class="viewcode-block" id="Neutronics.dzetadt"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics.dzetadt">[docs]</a>    <span class="k">def</span> <span class="nf">dzetadt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+<div class="viewcode-block" id="Neutronics.dzetadt"><a class="viewcode-back" href="../../src/pyrk.neutronics.html#pyrk.neutronics.Neutronics.dzetadt">[docs]</a>    <span class="k">def</span> <span class="nf">dzetadt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">zeta</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the change in zeta over time at t for j</span>
+
 <span class="sd">        :param t: time</span>
 <span class="sd">        :type t: float, units of seconds</span>
 <span class="sd">        :param power: the reactor power at this timestep</span>
@@ -224,8 +226,9 @@
         <span class="n">beta_j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">betas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">beta_j</span><span class="o">*</span><span class="n">power</span><span class="o">/</span><span class="n">Lambda</span> <span class="o">-</span> <span class="n">lambda_j</span><span class="o">*</span><span class="n">zeta</span>
 </div>
-<div class="viewcode-block" id="Neutronics.dwdt"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics.dwdt">[docs]</a>    <span class="k">def</span> <span class="nf">dwdt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<div class="viewcode-block" id="Neutronics.dwdt"><a class="viewcode-back" href="../../src/pyrk.neutronics.html#pyrk.neutronics.Neutronics.dwdt">[docs]</a>    <span class="k">def</span> <span class="nf">dwdt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the change in decay heat for $\omega_k$ at a certain power</span>
+
 <span class="sd">        :param power: the reactor power at this timestep</span>
 <span class="sd">        :type power: float, in units of watts</span>
 <span class="sd">        :param omega: $\omega_k$ for fission product decay heat group k</span>
@@ -238,8 +241,9 @@
         <span class="n">lam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()[</span><span class="n">k</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">kappa</span><span class="o">*</span><span class="n">p</span><span class="o">-</span><span class="n">lam</span><span class="o">*</span><span class="n">omega</span>
 </div>
-<div class="viewcode-block" id="Neutronics.reactivity"><a class="viewcode-back" href="../../pyrk.html#pyrk.neutronics.Neutronics.reactivity">[docs]</a>    <span class="k">def</span> <span class="nf">reactivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">,</span> <span class="n">components</span><span class="p">):</span>
+<div class="viewcode-block" id="Neutronics.reactivity"><a class="viewcode-back" href="../../src/pyrk.neutronics.html#pyrk.neutronics.Neutronics.reactivity">[docs]</a>    <span class="k">def</span> <span class="nf">reactivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">,</span> <span class="n">components</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the reactivity, in $\Delta k$, at time t</span>
+
 <span class="sd">        :param t: time</span>
 <span class="sd">        :type t: float, units of seconds</span>
 <span class="sd">        :param dt: timestep size, units of seconds</span>
@@ -295,7 +299,7 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -1,0 +1,7 @@
+pyrk.th_component module
+========================
+
+.. automodule:: pyrk.th_component
+    :members:
+    :undoc-members:
+    :show-inheritance:

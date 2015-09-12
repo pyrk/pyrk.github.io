@@ -1,0 +1,7 @@
+pyrk.materials.sfrmetal module
+==============================
+
+.. automodule:: pyrk.materials.sfrmetal
+    :members:
+    :undoc-members:
+    :show-inheritance:

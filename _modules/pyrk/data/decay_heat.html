@@ -12,6 +12,8 @@
 
   
   
+    <link rel="shortcut icon" href="../../../_static/logo.ico"/>
+  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -63,23 +65,18 @@
           
           
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../pyrk.html">PyRK package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#input-subpackage">Input Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#data-subpackage">Data Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#utils-subpackage">Utils Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.driver">pyrk.driver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#pyrk-neutronics">pyrk.neutronics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.reactivity_insertion">pyrk.reactivity_insertion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.th_component">pyrk.th_component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.th_system">pyrk.th_system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.material">pyrk.material</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.graphite">pyrk.graphite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.flibe">pyrk.flibe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.kernel">pyrk.kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-future">The Future</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">PyRK Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">PyRK License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/index.html">PyRK API</a></li>
 </ul>
 
           
@@ -123,7 +120,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="DecayData"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.decay_heat.DecayData">[docs]</a><span class="k">class</span> <span class="nc">DecayData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="DecayData"><a class="viewcode-back" href="../../../src/pyrk.data.decay_heat.html#pyrk.data.decay_heat.DecayData">[docs]</a><span class="k">class</span> <span class="nc">DecayData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The DecayData class contains fission decay heat data.</span>
@@ -140,9 +137,9 @@
 <span class="sd">           http://www.ans.org/store/i_240256</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="DecayData.__init__"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.decay_heat.DecayData.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the decay group data for the fissioning nuclide (u235,</span>
-<span class="sd">        pu238, etc.... currently only u235 is supported).</span>
+<span class="sd">        pu238, etc.... currently only u235 and sfr are supported).</span>
 
 
 <span class="sd">        :param e: The energy spectrum type. This should be &#39;thermal&#39; or &#39;fast&#39;</span>
@@ -158,34 +155,37 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_nuc</span> <span class="o">=</span> <span class="n">nuc</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_e</span> <span class="o">=</span> <span class="n">e</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="n">n</span>
-</div>
-<div class="viewcode-block" id="DecayData.lambdas"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.decay_heat.DecayData.lambdas">[docs]</a>    <span class="k">def</span> <span class="nf">lambdas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DecayData.lambdas"><a class="viewcode-back" href="../../../src/pyrk.data.decay_heat.html#pyrk.data.decay_heat.DecayData.lambdas">[docs]</a>    <span class="k">def</span> <span class="nf">lambdas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns: a list of floats</span>
 <span class="sd">            the lambdas (decay constants) for each decay heat group</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lambdas</span>
 </div>
-<div class="viewcode-block" id="DecayData.kappas"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.decay_heat.DecayData.kappas">[docs]</a>    <span class="k">def</span> <span class="nf">kappas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DecayData.kappas"><a class="viewcode-back" href="../../../src/pyrk.data.decay_heat.html#pyrk.data.decay_heat.DecayData.kappas">[docs]</a>    <span class="k">def</span> <span class="nf">kappas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :returns: a list of floats</span>
 <span class="sd">            the kappas (decay heat values) for each decay heat group</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kappas</span>
 </div>
-<div class="viewcode-block" id="DecayData._get_lambdas"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.decay_heat.DecayData._get_lambdas">[docs]</a>    <span class="k">def</span> <span class="nf">_get_lambdas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<div class="viewcode-block" id="DecayData._get_lambdas"><a class="viewcode-back" href="../../../src/pyrk.data.decay_heat.html#pyrk.data.decay_heat.DecayData._get_lambdas">[docs]</a>    <span class="k">def</span> <span class="nf">_get_lambdas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param e: The energy spectrum type. This should be &#39;thermal&#39; or &#39;fast&#39;</span>
+<span class="sd">        Returns the heat decay constant for fissioning nuclide nuc, spectrum e</span>
+
+<span class="sd">        :param e: The energy spectrum type. This should be &#39;thermal&#39; or &#39;fast&#39; \</span>
 <span class="sd">            to indicate the energy spectrum.</span>
 <span class="sd">        :type e: str.</span>
-<span class="sd">        :param n: The number of decay heat groups. Currently, only 11 is</span>
-<span class="sd">            supported.</span>
-<span class="sd">        :type n: int.</span>
+<span class="sd">        :param nuc: The fissioning nuclide or custom reactor type. Currently \</span>
+<span class="sd">        only u235, sfr, or pu239 are supported</span>
+<span class="sd">        :type nuc: str.</span>
 <span class="sd">        :returns: a list of floats</span>
 <span class="sd">            the lambdas (decay constants) for each decay heat group</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">lambda_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;u235&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;sfr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="c"># ANS/ANSI 5.1-1971 for 235U thermal fission standard, 11 groups</span>
@@ -197,22 +197,27 @@
                                           <span class="mf">1.214</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">)]</span>
 
         <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;u235&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+        <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;sfr&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
         <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">][</span><span class="s">&quot;thermal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
         <span class="n">lambda_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">lambda_dict</span><span class="p">[</span><span class="n">nuc</span><span class="p">][</span><span class="n">e</span><span class="p">]</span>
 </div>
-<div class="viewcode-block" id="DecayData._get_kappas"><a class="viewcode-back" href="../../../pyrk.data.html#pyrk.data.decay_heat.DecayData._get_kappas">[docs]</a>    <span class="k">def</span> <span class="nf">_get_kappas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+<div class="viewcode-block" id="DecayData._get_kappas"><a class="viewcode-back" href="../../../src/pyrk.data.decay_heat.html#pyrk.data.decay_heat.DecayData._get_kappas">[docs]</a>    <span class="k">def</span> <span class="nf">_get_kappas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nuc</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param e: The energy spectrum type. This should be &#39;thermal&#39; or &#39;fast&#39;</span>
+<span class="sd">        Returns the decay heat value for fissioning nuclide nuc and spectrum e</span>
+
+<span class="sd">        :param e: The energy spectrum type. This should be &#39;thermal&#39; or &#39;fast&#39; \</span>
 <span class="sd">            to indicate the energy spectrum.</span>
 <span class="sd">        :type e: str.</span>
-<span class="sd">        :param n: The number of decay heat groups. Currently, only 11 is</span>
-<span class="sd">            supported.</span>
-<span class="sd">        :type n: int.</span>
+<span class="sd">        :param nuc: The fissioning nuclide or custom reactor type. Currently \</span>
+<span class="sd">            only u235, sfr, or pu239 are supported</span>
+<span class="sd">        :type nuc: str.</span>
+<span class="sd">        :returns: a list of floats</span>
 <span class="sd">        :returns: a list of floats</span>
 <span class="sd">            the kappas (decay heat values) for each decay heat group</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">kappa_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">kappa_dict</span><span class="p">[</span><span class="s">&quot;sfr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">kappa_dict</span><span class="p">[</span><span class="s">&quot;u235&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">kappa_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -229,6 +234,7 @@
                                          <span class="mf">1.893</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">),</span>
                                          <span class="mf">1.633</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">)]</span>
         <span class="n">kappa_dict</span><span class="p">[</span><span class="s">&quot;u235&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+        <span class="n">kappa_dict</span><span class="p">[</span><span class="s">&quot;sfr&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
         <span class="n">kappa_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">][</span><span class="s">&quot;thermal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
         <span class="n">kappa_dict</span><span class="p">[</span><span class="s">&quot;pu239&quot;</span><span class="p">][</span><span class="s">&quot;fast&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">kappa_dict</span><span class="p">[</span><span class="n">nuc</span><span class="p">][</span><span class="n">e</span><span class="p">]</span></div></div>
@@ -272,7 +278,7 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

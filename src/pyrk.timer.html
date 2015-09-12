@@ -1,0 +1,226 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.timer module &mdash; pyrk  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/logo.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#the-future">The Future</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">PyRK API</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>pyrk.timer module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/src/pyrk.timer.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="module-pyrk.timer">
+<span id="pyrk-timer-module"></span><h1>pyrk.timer module<a class="headerlink" href="#module-pyrk.timer" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyrk.timer.Timer">
+<em class="property">class </em><code class="descclassname">pyrk.timer.</code><code class="descname">Timer</code><span class="sig-paren">(</span><em>t0=&lt;Quantity(0.0</em>, <em>'second')&gt;</em>, <em>tf=&lt;Quantity(1.0</em>, <em>'second')&gt;</em>, <em>dt=&lt;Quantity(1.0</em>, <em>'second')&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>This class holds information about time</p>
+<dl class="method">
+<dt id="pyrk.timer.Timer.advance_one_timestep">
+<code class="descname">advance_one_timestep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.advance_one_timestep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.advance_one_timestep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyrk.timer.Timer.advance_time">
+<code class="descname">advance_time</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.advance_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.advance_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyrk.timer.Timer.current_time">
+<code class="descname">current_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.current_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.current_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyrk.timer.Timer.current_timestep">
+<code class="descname">current_timestep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.current_timestep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.current_timestep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyrk.timer.Timer.idx_from_t">
+<code class="descname">idx_from_t</code><span class="sig-paren">(</span><em>time</em>, <em>t0</em>, <em>dt</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.idx_from_t"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.idx_from_t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyrk.timer.Timer.t">
+<code class="descname">t</code><span class="sig-paren">(</span><em>t_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.t"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>given the index of t, a dimensionless int, this returns the time in
+seconds</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.timer.Timer.t_idx">
+<code class="descname">t_idx</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.t_idx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.t_idx" title="Permalink to this definition">¶</a></dt>
+<dd><p>given the actual time, in seconds, this returns the index of t.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.timer.Timer.timesteps">
+<code class="descname">timesteps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.timesteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.timesteps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

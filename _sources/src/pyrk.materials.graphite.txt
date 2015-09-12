@@ -1,0 +1,7 @@
+pyrk.materials.graphite module
+==============================
+
+.. automodule:: pyrk.materials.graphite
+    :members:
+    :undoc-members:
+    :show-inheritance:

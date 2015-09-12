@@ -1,0 +1,20 @@
+pyrk.utilities package
+======================
+
+Submodules
+----------
+
+.. toctree::
+
+   pyrk.utilities.exceptions
+   pyrk.utilities.logger
+   pyrk.utilities.plotter
+   pyrk.utilities.ur
+
+Module contents
+---------------
+
+.. automodule:: pyrk.utilities
+    :members:
+    :undoc-members:
+    :show-inheritance:

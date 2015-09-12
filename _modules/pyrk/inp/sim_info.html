@@ -12,6 +12,8 @@
 
   
   
+    <link rel="shortcut icon" href="../../../_static/logo.ico"/>
+  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -63,23 +65,18 @@
           
           
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../pyrk.html">PyRK package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#input-subpackage">Input Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#data-subpackage">Data Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#utils-subpackage">Utils Subpackage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.driver">pyrk.driver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#pyrk-neutronics">pyrk.neutronics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.reactivity_insertion">pyrk.reactivity_insertion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.th_component">pyrk.th_component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.th_system">pyrk.th_system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.material">pyrk.material</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.graphite">pyrk.graphite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.flibe">pyrk.flibe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../pyrk.html#module-pyrk.kernel">pyrk.kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-future">The Future</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">PyRK Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">PyRK License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/index.html">PyRK API</a></li>
 </ul>
 
           
@@ -117,20 +114,28 @@
             
   <h1>Source code for pyrk.inp.sim_info</h1><div class="highlight"><pre>
 <span class="c"># Licensed under a 3-clause BSD style license - see LICENSE</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">timer</span> <span class="kn">import</span> <span class="n">Timer</span>
 <span class="kn">import</span> <span class="nn">neutronics</span>
 <span class="kn">import</span> <span class="nn">reactivity_insertion</span> <span class="kn">as</span> <span class="nn">ri</span>
 <span class="kn">import</span> <span class="nn">th_system</span>
 
-<div class="viewcode-block" id="SimInfo"><a class="viewcode-back" href="../../../pyrk.inp.html#pyrk.inp.sim_info.SimInfo">[docs]</a><span class="k">class</span> <span class="nc">SimInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SimInfo"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo">[docs]</a><span class="k">class</span> <span class="nc">SimInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class holds information about a reactor kinetics simulation&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SimInfo.__init__"><a class="viewcode-back" href="../../../pyrk.inp.html#pyrk.inp.sim_info.SimInfo.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">timer</span><span class="o">=</span><span class="n">Timer</span><span class="p">(),</span>
                  <span class="n">components</span><span class="o">=</span><span class="p">{},</span>
-                 <span class="n">iso</span><span class="o">=</span><span class="s">&quot;u235&quot;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="s">&quot;thermal&quot;</span><span class="p">,</span> <span class="n">n_precursors</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_decay</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
-                 <span class="n">kappa</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">rho_ext</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">feedback</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+                 <span class="n">iso</span><span class="o">=</span><span class="s">&quot;u235&quot;</span><span class="p">,</span>
+                 <span class="n">e</span><span class="o">=</span><span class="s">&quot;thermal&quot;</span><span class="p">,</span>
+                 <span class="n">n_precursors</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                 <span class="n">n_decay</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
+                 <span class="n">kappa</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                 <span class="n">rho_ext</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">feedback</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                 <span class="n">plotdir</span><span class="o">=</span><span class="s">&#39;images&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This class holds information about a reactor kinetics simulation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">timer</span>
@@ -143,13 +148,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span> <span class="o">=</span> <span class="n">feedback</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ne</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_ne</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">th</span> <span class="o">=</span> <span class="n">th_system</span><span class="o">.</span><span class="n">THSystem</span><span class="p">(</span><span class="n">kappa</span><span class="o">=</span><span class="n">kappa</span><span class="p">,</span> <span class="n">components</span><span class="o">=</span><span class="n">components</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="SimInfo.init_rho_ext"><a class="viewcode-back" href="../../../pyrk.inp.html#pyrk.inp.sim_info.SimInfo.init_rho_ext">[docs]</a>    <span class="k">def</span> <span class="nf">init_rho_ext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho_ext</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">timer</span><span class="o">.</span><span class="n">timesteps</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_entries</span><span class="p">()),</span>
+                          <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotdir</span> <span class="o">=</span> <span class="n">plotdir</span>
+
+<div class="viewcode-block" id="SimInfo.init_rho_ext"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.init_rho_ext">[docs]</a>    <span class="k">def</span> <span class="nf">init_rho_ext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho_ext</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">rho_ext</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">rho_ext</span> <span class="o">=</span> <span class="n">ri</span><span class="o">.</span><span class="n">ReactivityInsertion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rho_ext</span>
 </div>
-<div class="viewcode-block" id="SimInfo.init_ne"><a class="viewcode-back" href="../../../pyrk.inp.html#pyrk.inp.sim_info.SimInfo.init_ne">[docs]</a>    <span class="k">def</span> <span class="nf">init_ne</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SimInfo.init_ne"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.init_ne">[docs]</a>    <span class="k">def</span> <span class="nf">init_ne</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">ne</span> <span class="o">=</span> <span class="n">neutronics</span><span class="o">.</span><span class="n">Neutronics</span><span class="p">(</span><span class="n">iso</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iso</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">e</span><span class="p">,</span>
                                    <span class="n">n_precursors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_pg</span><span class="p">,</span>
                                    <span class="n">n_decay</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_dg</span><span class="p">,</span>
@@ -158,11 +166,15 @@
                                    <span class="n">feedback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">feedback</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ne</span>
 </div>
-<div class="viewcode-block" id="SimInfo.n_entries"><a class="viewcode-back" href="../../../pyrk.inp.html#pyrk.inp.sim_info.SimInfo.n_entries">[docs]</a>    <span class="k">def</span> <span class="nf">n_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SimInfo.n_components"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.n_components">[docs]</a>    <span class="k">def</span> <span class="nf">n_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">to_ret</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">to_ret</span>
+</div>
+<div class="viewcode-block" id="SimInfo.n_entries"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.n_entries">[docs]</a>    <span class="k">def</span> <span class="nf">n_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">to_ret</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_pg</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_dg</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">to_ret</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="SimInfo.add_th_component"><a class="viewcode-back" href="../../../pyrk.inp.html#pyrk.inp.sim_info.SimInfo.add_th_component">[docs]</a>    <span class="k">def</span> <span class="nf">add_th_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">th_component</span><span class="p">):</span>
+<div class="viewcode-block" id="SimInfo.add_th_component"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.add_th_component">[docs]</a>    <span class="k">def</span> <span class="nf">add_th_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">th_component</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds a thermal-hydralic component to this simulation.</span>
 <span class="sd">        It should be fully initialized. A single simulation may have many</span>
 <span class="sd">        thermal-hydralic components. They are held in a dictionary.&quot;&quot;&quot;</span>
@@ -215,7 +227,7 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
