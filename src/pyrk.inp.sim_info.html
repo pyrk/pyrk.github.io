@@ -12,8 +12,6 @@
 
   
   
-    <link rel="shortcut icon" href="../_static/logo.ico"/>
-  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -124,27 +122,47 @@
 <dd><p>Adds a thermal-hydralic component to this simulation.
 It should be fully initialized. A single simulation may have many
 thermal-hydralic components. They are held in a dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>th_component</strong> (<a class="reference internal" href="pyrk.th_component.html#pyrk.th_component.THComponent" title="pyrk.th_component.THComponent"><em>THComponent</em></a>) &#8211; the th_component to add to the system</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyrk.inp.sim_info.SimInfo.init_ne">
 <code class="descname">init_ne</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.init_ne"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.init_ne" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Initializes the neutronics object owned by the siminfo object</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyrk.inp.sim_info.SimInfo.init_rho_ext">
 <code class="descname">init_rho_ext</code><span class="sig-paren">(</span><em>rho_ext</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.init_rho_ext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.init_rho_ext" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Initializes reactivity insertion object for the none case.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rho_ext</strong> (<em>a ReactivityInsertion object or None</em>) &#8211; external reactivity</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyrk.inp.sim_info.SimInfo.n_components">
 <code class="descname">n_components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.n_components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.n_components" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>The number of components in the simulation.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyrk.inp.sim_info.SimInfo.n_entries">
 <code class="descname">n_entries</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.n_entries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.n_entries" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>The number of entries in the pde to be solved</p>
+</dd></dl>
 
 </dd></dl>
 

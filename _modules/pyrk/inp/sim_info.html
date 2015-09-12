@@ -12,8 +12,6 @@
 
   
   
-    <link rel="shortcut icon" href="../../../_static/logo.ico"/>
-  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -137,6 +135,27 @@
                  <span class="n">feedback</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                  <span class="n">plotdir</span><span class="o">=</span><span class="s">&#39;images&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This class holds information about a reactor kinetics simulation</span>
+
+<span class="sd">        :param timer: the Timer object for the simulation</span>
+<span class="sd">        :type timer: Timer</span>
+<span class="sd">        :param components: the components making up the reactor</span>
+<span class="sd">        :type components: dictionary</span>
+<span class="sd">        :param iso: the main fissioning isotope, decides precursor data</span>
+<span class="sd">        :type iso: only a few values are supported. see PrecursorData class</span>
+<span class="sd">        :param e: spectrum (&quot;fast&quot;, &quot;thermal&quot;, etc.)</span>
+<span class="sd">        :type e: string</span>
+<span class="sd">        :param n_precursors: number of delayed precursor groups</span>
+<span class="sd">        :type n_precursors: int</span>
+<span class="sd">        :param n_decay: number of decay groups</span>
+<span class="sd">        :type n_decay: int</span>
+<span class="sd">        :param kappa: the value for kappa, a decay heat parameter</span>
+<span class="sd">        :type kappa: float</span>
+<span class="sd">        :param rho_ext: external reactivity</span>
+<span class="sd">        :type rho_ext: a ReactivityInsertion object or None</span>
+<span class="sd">        :param feedback: is reactivity feedback present in the simulation</span>
+<span class="sd">        :type feedback: bool</span>
+<span class="sd">        :param plotdir: the directory where the plots will be placed</span>
+<span class="sd">        :type plotdir: string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">timer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">components</span> <span class="o">=</span> <span class="n">components</span>
@@ -153,11 +172,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">plotdir</span> <span class="o">=</span> <span class="n">plotdir</span>
 
 <div class="viewcode-block" id="SimInfo.init_rho_ext"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.init_rho_ext">[docs]</a>    <span class="k">def</span> <span class="nf">init_rho_ext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho_ext</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes reactivity insertion object for the none case.</span>
+
+<span class="sd">        :param rho_ext: external reactivity</span>
+<span class="sd">        :type rho_ext: a ReactivityInsertion object or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">rho_ext</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">rho_ext</span> <span class="o">=</span> <span class="n">ri</span><span class="o">.</span><span class="n">ReactivityInsertion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">rho_ext</span>
 </div>
 <div class="viewcode-block" id="SimInfo.init_ne"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.init_ne">[docs]</a>    <span class="k">def</span> <span class="nf">init_ne</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes the neutronics object owned by the siminfo object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ne</span> <span class="o">=</span> <span class="n">neutronics</span><span class="o">.</span><span class="n">Neutronics</span><span class="p">(</span><span class="n">iso</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iso</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">e</span><span class="p">,</span>
                                    <span class="n">n_precursors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_pg</span><span class="p">,</span>
                                    <span class="n">n_decay</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_dg</span><span class="p">,</span>
@@ -167,17 +193,25 @@
         <span class="k">return</span> <span class="n">ne</span>
 </div>
 <div class="viewcode-block" id="SimInfo.n_components"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.n_components">[docs]</a>    <span class="k">def</span> <span class="nf">n_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The number of components in the simulation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">to_ret</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">to_ret</span>
 </div>
 <div class="viewcode-block" id="SimInfo.n_entries"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.n_entries">[docs]</a>    <span class="k">def</span> <span class="nf">n_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The number of entries in the pde to be solved</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">to_ret</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_pg</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_dg</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">to_ret</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="SimInfo.add_th_component"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.add_th_component">[docs]</a>    <span class="k">def</span> <span class="nf">add_th_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">th_component</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds a thermal-hydralic component to this simulation.</span>
 <span class="sd">        It should be fully initialized. A single simulation may have many</span>
-<span class="sd">        thermal-hydralic components. They are held in a dictionary.&quot;&quot;&quot;</span>
+<span class="sd">        thermal-hydralic components. They are held in a dictionary.</span>
+
+<span class="sd">        :param th_component: the th_component to add to the system</span>
+<span class="sd">        :type th_component: THComponent</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">th_component</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;A component named &quot;</span>

@@ -12,8 +12,6 @@
 
   
   
-    <link rel="shortcut icon" href="../../_static/logo.ico"/>
-  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -118,7 +116,7 @@
 
 <div class="viewcode-block" id="THSystem"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem">[docs]</a><span class="k">class</span> <span class="nc">THSystem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class handles calculations and data related to the</span>
-<span class="sd">    thermal hydraulics subblock</span>
+<span class="sd">    thermal hydraulics sub block</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">components</span><span class="p">):</span>
@@ -152,8 +150,8 @@
         <span class="k">for</span> <span class="n">interface</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">cust</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_from_name</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
             <span class="n">to_ret</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="p">(</span><span class="n">t_b</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
-                                      <span class="n">t_env</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
-                                      <span class="n">res</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;res&#39;</span><span class="p">])</span><span class="o">/</span><span class="n">cap</span>
+                                  <span class="n">t_env</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
+                                  <span class="n">res</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;res&#39;</span><span class="p">])</span><span class="o">/</span><span class="n">cap</span>
 
         <span class="k">return</span> <span class="n">to_ret</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;kelvin/second&#39;</span><span class="p">)</span>
 </div>

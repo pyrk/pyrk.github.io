@@ -12,8 +12,6 @@
 
   
   
-    <link rel="shortcut icon" href="_static/logo.ico"/>
-  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -133,11 +131,15 @@ Kinetics) was created. PyRK is the first open source tool capable of:</p>
 </ul>
 <div class="section" id="the-prke">
 <h2>The PRKE<a class="headerlink" href="#the-prke" title="Permalink to this headline">¶</a></h2>
-<p>The point reactor kinetics equations are implemented.</p>
+<p>The point reactor kinetics equations are implemented in this software as a
+suite of pdes. These are solved using the integration tools in the scipy
+package.</p>
 </div>
 <div class="section" id="lumped-parameter-th">
 <h2>Lumped Parameter TH<a class="headerlink" href="#lumped-parameter-th" title="Permalink to this headline">¶</a></h2>
-<p>TH is represented in 1-D</p>
+<p>TH is represented in 1-D, lumped paramter model, by default. That is,
+components that make up the reactor system are treated as material lumps and
+the system is treated as a thermal circuit.</p>
 </div>
 <div class="section" id="material-library">
 <h2>Material Library<a class="headerlink" href="#material-library" title="Permalink to this headline">¶</a></h2>
@@ -151,6 +153,8 @@ reactor neutronics for canonical reactors has been provided.</p>
 </div>
 <div class="section" id="the-future">
 <h2>The Future<a class="headerlink" href="#the-future" title="Permalink to this headline">¶</a></h2>
+<p>Soon, a finite volume model will be added to PyRK to represent components that
+are not well approximated by the lumped capacitance assumption.</p>
 <p>Our target audience is anyone interested in conducting analyses of nuclear
 reactor safety. In the short term, we hope that users will add material
 classes, contribute data, find bugs, contribute fixes, and share their ideas

@@ -12,8 +12,6 @@
 
   
   
-    <link rel="shortcut icon" href="../_static/logo.ico"/>
-  
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -121,12 +119,22 @@
 <dl class="method">
 <dt id="pyrk.timer.Timer.advance_one_timestep">
 <code class="descname">advance_one_timestep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.advance_one_timestep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.advance_one_timestep" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Advances the timer one timestep</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyrk.timer.Timer.advance_time">
 <code class="descname">advance_time</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.advance_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.advance_time" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Advances the timer to a specific time</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>time</strong> (<em>Quantity units seconds</em>) &#8211; the time to advance to</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyrk.timer.Timer.current_time">
@@ -141,25 +149,61 @@
 <dl class="method">
 <dt id="pyrk.timer.Timer.idx_from_t">
 <code class="descname">idx_from_t</code><span class="sig-paren">(</span><em>time</em>, <em>t0</em>, <em>dt</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.idx_from_t"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.idx_from_t" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>given the any time, in seconds, this returns the index of t.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>time</strong> (<em>float, units of seconds</em>) &#8211; any time to convert</li>
+<li><strong>time</strong> &#8211; start time for conversion calc</li>
+<li><strong>time</strong> &#8211; size of the timestep for the conversion calc</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">index</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyrk.timer.Timer.t">
 <code class="descname">t</code><span class="sig-paren">(</span><em>t_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.t"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.t" title="Permalink to this definition">¶</a></dt>
 <dd><p>given the index of t, a dimensionless int, this returns the time in
 seconds</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>t_idx</strong> &#8211; the index to convert to simulation time</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyrk.timer.Timer.t_idx">
 <code class="descname">t_idx</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.t_idx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.t_idx" title="Permalink to this definition">¶</a></dt>
 <dd><p>given the actual time, in seconds, this returns the index of t.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>time</strong> (<em>float, units of seconds</em>) &#8211; the actual time</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">index</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyrk.timer.Timer.timesteps">
 <code class="descname">timesteps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/timer.html#Timer.timesteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.timer.Timer.timesteps" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the number of timesteps in this simulation</p>
+</dd></dl>
 
 </dd></dl>
 
