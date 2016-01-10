@@ -1,0 +1,7 @@
+pyrk.db.sim_info_table module
+=============================
+
+.. automodule:: pyrk.db.sim_info_table
+    :members:
+    :undoc-members:
+    :show-inheritance:

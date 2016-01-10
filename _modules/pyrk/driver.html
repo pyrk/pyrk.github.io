@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>pyrk.driver &mdash; pyrk  documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,14 +46,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         
-
+          <a href="../../index.html" class="fa fa-home"> pyrk</a>
         
-          <a href="../../index.html" class="icon icon-home"> pyrk
-        
-
-        
-        </a>
-
         
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -62,8 +56,6 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
@@ -112,8 +104,6 @@
     <li>pyrk.driver</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-        
       </li>
   </ul>
   <hr/>
@@ -134,11 +124,11 @@
 <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">ode</span>
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">db</span> <span class="kn">import</span> <span class="n">database</span>
 <span class="kn">from</span> <span class="nn">utilities</span> <span class="kn">import</span> <span class="n">logger</span>
 <span class="kn">from</span> <span class="nn">utilities.logger</span> <span class="kn">import</span> <span class="n">pyrklog</span>
 <span class="kn">from</span> <span class="nn">inp</span> <span class="kn">import</span> <span class="n">sim_info</span>
 <span class="kn">from</span> <span class="nn">utilities.ur</span> <span class="kn">import</span> <span class="n">units</span>
-<span class="kn">from</span> <span class="nn">utilities</span> <span class="kn">import</span> <span class="n">plotter</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
 
@@ -183,7 +173,10 @@
     <span class="n">end_pg</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_n</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">dpdt</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">ts</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">components</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">end_pg</span><span class="p">])</span>
+    <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">dpdt</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">ts</span><span class="p">,</span>
+                      <span class="n">si</span><span class="o">.</span><span class="n">components</span><span class="p">,</span>
+                      <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                      <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">end_pg</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span><span class="p">):</span>
         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">dzetadt</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">j</span><span class="p">)</span>
@@ -230,7 +223,8 @@
     <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c"># power is normalized is 1</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span><span class="p">):</span>
         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">betas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">Lambda</span><span class="p">())</span>
+        <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> \
+            <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">betas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">Lambda</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">n_dg</span><span class="p">):</span>
         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -284,6 +278,7 @@
            <span class="ow">and</span> <span class="n">n</span><span class="o">.</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">tf</span><span class="o">.</span><span class="n">magnitude</span>
            <span class="ow">and</span> <span class="n">th</span><span class="o">.</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">tf</span><span class="o">.</span><span class="n">magnitude</span><span class="p">):</span>
         <span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">advance_one_timestep</span><span class="p">()</span>
+        <span class="n">si</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">record_all</span><span class="p">()</span>
         <span class="n">n</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">current_time</span><span class="p">()</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
         <span class="n">update_n</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">si</span><span class="p">)</span>
         <span class="n">th</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">current_time</span><span class="p">()</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
@@ -313,11 +308,26 @@
                          <span class="n">logo</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 
 </div>
+<div class="viewcode-block" id="load_infile"><a class="viewcode-back" href="../../src/pyrk.driver.html#pyrk.driver.load_infile">[docs]</a><span class="k">def</span> <span class="nf">load_infile</span><span class="p">(</span><span class="n">infile_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads the input file as a python package import based on the path</span>
+
+<span class="sd">    :param infile_path: path to the infile</span>
+<span class="sd">    :type infile_path: string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">os.path</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">file_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">infile_path</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_dir</span><span class="p">)</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">infile_path</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;.py&#39;</span><span class="p">)</span>
+    <span class="n">infile</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">infile</span>
+
+</div>
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../src/pyrk.driver.html#pyrk.driver.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">curr_dir</span><span class="p">):</span>
     <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">set_up_pyrklog</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">logfile</span><span class="p">)</span>
-    <span class="n">infile</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">infile</span><span class="p">)</span>
-
+    <span class="n">infile</span> <span class="o">=</span> <span class="n">load_infile</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">infile</span><span class="p">)</span>
+    <span class="n">out_db</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
     <span class="n">si</span> <span class="o">=</span> <span class="n">sim_info</span><span class="o">.</span><span class="n">SimInfo</span><span class="p">(</span><span class="n">timer</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">ti</span><span class="p">,</span>
                           <span class="n">components</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">components</span><span class="p">,</span>
                           <span class="n">iso</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">fission_iso</span><span class="p">,</span>
@@ -327,11 +337,13 @@
                           <span class="n">kappa</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">kappa</span><span class="p">,</span>
                           <span class="n">feedback</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">feedback</span><span class="p">,</span>
                           <span class="n">rho_ext</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">rho_ext</span><span class="p">,</span>
-                          <span class="n">plotdir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">plotdir</span><span class="p">)</span>
+                          <span class="n">plotdir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">plotdir</span><span class="p">,</span>
+                          <span class="n">infile</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">infile</span><span class="p">,</span>
+                          <span class="n">db</span><span class="o">=</span><span class="n">out_db</span><span class="p">)</span>
     <span class="n">print_logo</span><span class="p">(</span><span class="n">curr_dir</span><span class="p">)</span>
     <span class="n">sol</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">si</span><span class="o">=</span><span class="n">si</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">si</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">infile</span><span class="o">=</span><span class="n">infile</span><span class="p">)</span>
     <span class="n">log_results</span><span class="p">(</span><span class="n">si</span><span class="p">)</span>
-    <span class="n">plotter</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">si</span><span class="p">)</span>
+    <span class="n">out_db</span><span class="o">.</span><span class="n">close_db</span><span class="p">()</span>
     <span class="n">pyrklog</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Simulation succeeded.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
 
 </div>
@@ -343,9 +355,10 @@
                     <span class="n">default</span><span class="o">=</span><span class="s">&#39;input&#39;</span><span class="p">)</span>
     <span class="n">ap</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--logfile&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;the name of the log file&#39;</span><span class="p">,</span>
                     <span class="n">default</span><span class="o">=</span><span class="s">&#39;pyrk.log&#39;</span><span class="p">)</span>
-    <span class="n">ap</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--plotdir&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;the name of the directory of output </span><span class="se">\</span>
-<span class="s">                    plots&#39;</span><span class="p">,</span>
-                    <span class="n">default</span><span class="o">=</span><span class="s">&#39;images&#39;</span><span class="p">)</span>
+    <span class="n">ap</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s">&#39;--plotdir&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&#39;the name of the directory of output plots&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s">&#39;images&#39;</span><span class="p">)</span>
     <span class="n">ap</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--outfile&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;the name of the output database&#39;</span><span class="p">,</span>
                     <span class="n">default</span><span class="o">=</span><span class="s">&#39;pyrk.h5&#39;</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">ap</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
@@ -363,10 +376,10 @@
         &copy; Copyright 2015, Kathryn D. Huff.
     </p>
   </div>
+
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
+  
 </footer>
-
         </div>
       </div>
 

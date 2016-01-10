@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.db.database module &mdash; pyrk  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#the-future">The Future</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">PyRK API</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>pyrk.db.database module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/src/pyrk.db.database.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="module-pyrk.db.database">
+<span id="pyrk-db-database-module"></span><h1>pyrk.db.database module<a class="headerlink" href="#module-pyrk.db.database" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyrk.db.database.Database">
+<em class="property">class </em><code class="descclassname">pyrk.db.database.</code><code class="descname">Database</code><span class="sig-paren">(</span><em>filepath='pyrk.h5'</em>, <em>mode='w'</em>, <em>title='PyRKDatabase'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The Database class handles operations on the pyrk simulation backend and
+provides utilities for interacting with it.</p>
+<dl class="method">
+<dt id="pyrk.db.database.Database.add_group">
+<code class="descname">add_group</code><span class="sig-paren">(</span><em>groupname</em>, <em>grouptitle</em>, <em>path_to_group='/'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.add_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.add_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new group in the file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>groupname</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the group to add</li>
+<li><strong>grouptitle</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; metadata to store in plain english, a title</li>
+<li><strong>path_to_group</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; the database path, starts with &#8216;/&#8217;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.add_row">
+<code class="descname">add_row</code><span class="sig-paren">(</span><em>table</em>, <em>row_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.add_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.add_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a row to the table and flushes the table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>table</strong> &#8211; handle to the table where the row will reside</li>
+<li><strong>row_dict</strong> (<em>dictionary of row keys and values</em>) &#8211; metadata to store in plain english, a title</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.add_table">
+<code class="descname">add_table</code><span class="sig-paren">(</span><em>groupname</em>, <em>tablename</em>, <em>description</em>, <em>tabletitle</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.add_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.add_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new table
+All groupnames must be directly under root</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>groupname</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the group to add</li>
+<li><strong>tablename</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the table to add</li>
+<li><strong>description</strong> &#8211; metadata for the table</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>:type : str
+:param tabletitle: metadata to store in plain english, a title
+:type tabletitle: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.close_db">
+<code class="descname">close_db</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.close_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.close_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes all currently open handles to the database.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.delete_db">
+<code class="descname">delete_db</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.delete_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.delete_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the database exists, delete it</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.get_table">
+<code class="descname">get_table</code><span class="sig-paren">(</span><em>groupname</em>, <em>tablename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.get_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.get_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the table handle for a table within a group</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>groupname</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the group</li>
+<li><strong>tablename</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the table in the group</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the path to the table in the group</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)">str</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.get_tablepath">
+<code class="descname">get_tablepath</code><span class="sig-paren">(</span><em>groupname</em>, <em>tablename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.get_tablepath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.get_tablepath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compiles the string for a table within a group</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>groupname</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the group</li>
+<li><strong>tablename</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the table in the group</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the path to the table in the group</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)">str</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.group_exists">
+<code class="descname">group_exists</code><span class="sig-paren">(</span><em>path_to_group</em>, <em>groupname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.group_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.group_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the group exsts, with that name, at that path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>groupname</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the group to add</li>
+<li><strong>path_to_group</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; the database path, starts with &#8216;/&#8217;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">returns the group</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pytables Group object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.make_groups">
+<code class="descname">make_groups</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.make_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.make_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each group in groups, add group to the db.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.make_tables">
+<code class="descname">make_tables</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.make_tables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.make_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each table in tables, add table to the db.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.open_db">
+<code class="descname">open_db</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.open_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.open_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a handle to the open db</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.record_all">
+<code class="descname">record_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.record_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.record_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each row sent by current recorders, add the row.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.register_recorder">
+<code class="descname">register_recorder</code><span class="sig-paren">(</span><em>groupname</em>, <em>tablename</em>, <em>recorder</em>, <em>timeseries=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.register_recorder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.register_recorder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register an entity that wants to represent itself in the Database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>groupname</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the group to add</li>
+<li><strong>path_to_group</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; the database path, starts with &#8216;/&#8217;</li>
+<li><strong>recorder</strong> (<em>function object</em>) &#8211; a function pointer that returns a table row</li>
+<li><strong>timeseries</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; should this be recorded each timestep?</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.set_up_groups">
+<code class="descname">set_up_groups</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.set_up_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.set_up_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>We know what groups need to exist for a PyRK simulation. This is
+their info.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">groups that define the simulation in PyRK</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.db.database.Database.set_up_tables">
+<code class="descname">set_up_tables</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#Database.set_up_tables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.Database.set_up_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>We know what tables need to exist for a PyRK simulation. This is
+their info.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">tables that define the simulation in PyRK</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyrk.db.database.nostderr">
+<code class="descclassname">pyrk.db.database.</code><code class="descname">nostderr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/db/database.html#nostderr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.db.database.nostderr" title="Permalink to this definition">¶</a></dt>
+<dd><p>This context manager catches standard error output.
+It is used mostly to catch the unnecessary fileclosed warnings from
+pytables.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

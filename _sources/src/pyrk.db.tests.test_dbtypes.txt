@@ -1,0 +1,7 @@
+pyrk.db.tests.test_dbtypes module
+=================================
+
+.. automodule:: pyrk.db.tests.test_dbtypes
+    :members:
+    :undoc-members:
+    :show-inheritance:

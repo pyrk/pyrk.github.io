@@ -6,6 +6,7 @@ Submodules
 
 .. toctree::
 
+   pyrk.materials.fhrfuel
    pyrk.materials.flibe
    pyrk.materials.graphite
    pyrk.materials.kernel

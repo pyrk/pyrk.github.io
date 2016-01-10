@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>pyrk.neutronics &mdash; pyrk  documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,14 +46,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         
-
+          <a href="../../index.html" class="fa fa-home"> pyrk</a>
         
-          <a href="../../index.html" class="icon icon-home"> pyrk
-        
-
-        
-        </a>
-
         
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -62,8 +56,6 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
@@ -112,8 +104,6 @@
     <li>pyrk.neutronics</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-        
       </li>
   </ul>
   <hr/>
@@ -132,6 +122,7 @@
 
 
 <div class="viewcode-block" id="Neutronics"><a class="viewcode-back" href="../../src/pyrk.neutronics.html#pyrk.neutronics.Neutronics">[docs]</a><span class="k">class</span> <span class="nc">Neutronics</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
     <span class="sd">&quot;&quot;&quot;This class handles calculations and data related to the</span>
 <span class="sd">    neutronics subblock</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -146,7 +137,7 @@
 <span class="sd">        :type iso: str.</span>
 <span class="sd">        :param e: The energy spectrum &#39;thermal&#39; or &#39;fast&#39; are supported.</span>
 <span class="sd">        :type e: str.</span>
-<span class="sd">        :param n_precursors: Number of neutron precursor groups. 6 is supported.</span>
+<span class="sd">        :param n_precursors: Number of neutron precursor groups. 6 is supported</span>
 <span class="sd">        :type n_precursors: int.</span>
 <span class="sd">        :param n_decay: The number of decay heat groups. 11 is supported.</span>
 <span class="sd">        :type n_decay: int.</span>
@@ -155,9 +146,10 @@
 <span class="sd">        :returns: A Neutronics object that holds neutronics simulation info</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_iso</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;iso&quot;</span><span class="p">,</span> <span class="n">iso</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;u235&#39;</span><span class="p">,</span> <span class="s">&#39;pu239&#39;</span><span class="p">,</span> <span class="s">&#39;sfr&#39;</span><span class="p">])</span>
-        <span class="sd">&quot;&quot;&quot;_iso (str): Fissioning isotope. &#39;u235&#39;, &#39;pu239&#39;, or &#39;sfr&#39; are</span>
-<span class="sd">        supported.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iso</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;iso&quot;</span><span class="p">,</span> <span class="n">iso</span><span class="p">,</span>
+                                         <span class="p">[</span><span class="s">&#39;u235&#39;</span><span class="p">,</span> <span class="s">&#39;pu239&#39;</span><span class="p">,</span> <span class="s">&#39;sfr&#39;</span><span class="p">,</span> <span class="s">&#39;fhr&#39;</span><span class="p">])</span>
+        <span class="sd">&quot;&quot;&quot;_iso (str): Fissioning isotope. &#39;u235&#39;, &#39;pu239&#39;, or &#39;sfr&#39;, &quot;fhr&quot;</span>
+<span class="sd">        are supported.&quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_e</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;e&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;thermal&#39;</span><span class="p">,</span> <span class="s">&#39;fast&#39;</span><span class="p">])</span>
         <span class="sd">&quot;&quot;&quot;_e (str): Energy spectrum &#39;thermal&#39; or &#39;fast&#39; are supported.&quot;&quot;&quot;</span>
@@ -251,22 +243,41 @@
 </div>
 <div class="viewcode-block" id="Neutronics.reactivity"><a class="viewcode-back" href="../../src/pyrk.neutronics.html#pyrk.neutronics.Neutronics.reactivity">[docs]</a>    <span class="k">def</span> <span class="nf">reactivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">,</span> <span class="n">components</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the reactivity, in $\Delta k$, at time t</span>
-
-<span class="sd">        :param t: time</span>
-<span class="sd">        :type t: float, units of seconds</span>
-<span class="sd">        :param dt: timestep size, units of seconds</span>
-<span class="sd">        :type dt: float, units of seconds</span>
+<span class="sd">        :param t_idx: time step that reactivity is calculated</span>
+<span class="sd">        :type t_idx: int, index</span>
+<span class="sd">        :param t_idx_feedback: time step that temperature feedback starts</span>
+<span class="sd">        :type t_idx_feedback: int, index</span>
 <span class="sd">        :param components: thermal hydraulic component objects</span>
-<span class="sd">        :type components: list of THComponent objects</span>
+<span class="sd">        :type components: list of THComponent and/or THSuperComponent objects</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">rho</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span> <span class="ow">and</span> <span class="n">t_idx</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">t_idx_feedback</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
-                <span class="n">rho</span><span class="p">[</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">temp_reactivity</span><span class="p">()</span>
+                <span class="n">rho</span><span class="p">[</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">temp_reactivity</span><span class="p">(</span><span class="n">t_idx</span><span class="p">)</span>
         <span class="n">rho</span><span class="p">[</span><span class="s">&quot;external&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rho_ext</span><span class="p">(</span><span class="n">t_idx</span><span class="o">=</span><span class="n">t_idx</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;delta_k&#39;</span><span class="p">)</span>
         <span class="n">to_ret</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rho</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">magnitude</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rho</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">to_ret</span>
-        <span class="k">return</span> <span class="n">to_ret</span></div></div>
+        <span class="k">return</span> <span class="n">to_ret</span>
+</div>
+<div class="viewcode-block" id="Neutronics.record"><a class="viewcode-back" href="../../src/pyrk.neutronics.html#pyrk.neutronics.Neutronics.record">[docs]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A recorder function to hold total and external reactivity</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">current_timestep</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">rec</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;t_idx&#39;</span><span class="p">:</span> <span class="n">t</span><span class="p">,</span>
+               <span class="s">&#39;rho_tot&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rho</span><span class="p">[</span><span class="n">t</span><span class="p">],</span>
+               <span class="s">&#39;rho_ext&#39;</span><span class="p">:</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">_rho_ext</span><span class="p">(</span><span class="n">t_idx</span><span class="o">=</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;delta_k&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+               <span class="p">}</span>
+        <span class="k">return</span> <span class="n">rec</span>
+</div>
+<div class="viewcode-block" id="Neutronics.metadata"><a class="viewcode-back" href="../../src/pyrk.neutronics.html#pyrk.neutronics.Neutronics.metadata">[docs]</a>    <span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A recorder function to hold reactivity in each component</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timestep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timer</span><span class="o">.</span><span class="n">current_timestep</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">rec</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;t_idx&#39;</span><span class="p">:</span> <span class="n">timestep</span><span class="p">,</span>
+               <span class="s">&#39;component&#39;</span><span class="p">:</span> <span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+               <span class="s">&#39;rho&#39;</span><span class="p">:</span> <span class="n">component</span><span class="o">.</span><span class="n">temp_reactivity</span><span class="p">(</span><span class="n">timestep</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="n">rec</span></div></div>
 </pre></div>
 
           </div>
@@ -280,10 +291,10 @@
         &copy; Copyright 2015, Kathryn D. Huff.
     </p>
   </div>
+
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
+  
 </footer>
-
         </div>
       </div>
 

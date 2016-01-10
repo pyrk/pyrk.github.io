@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>pyrk.version &mdash; pyrk  documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,14 +46,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         
-
+          <a href="../../index.html" class="fa fa-home"> pyrk</a>
         
-          <a href="../../index.html" class="icon icon-home"> pyrk
-        
-
-        
-        </a>
-
         
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -62,8 +56,6 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
@@ -112,8 +104,6 @@
     <li>pyrk.version</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-        
       </li>
   </ul>
   <hr/>
@@ -154,6 +144,7 @@
 <span class="c">#</span>
 <span class="c">#   include RELEASE-VERSION</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;get_git_version&quot;</span><span class="p">]</span>
 
 <span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
@@ -173,11 +164,11 @@
 
 <span class="k">def</span> <span class="nf">read_release_version</span><span class="p">():</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;RELEASE-VERSION&quot;</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;RELEASE-VERSION&quot;</span><span class="p">,</span> <span class="s">&quot;rt&quot;</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">version</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">return</span> <span class="n">version</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -186,9 +177,9 @@
         <span class="k">return</span> <span class="bp">None</span>
 
 
-<span class="k">def</span> <span class="nf">write_release_version</span><span class="p">(</span><span class="n">version</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">write_release_version</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
     <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;RELEASE-VERSION&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">version</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">v</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
@@ -197,41 +188,42 @@
     <span class="n">release_version</span> <span class="o">=</span> <span class="n">read_release_version</span><span class="p">()</span>
 
     <span class="c"># First try to get the current version using “git describe”.</span>
-    <span class="n">version</span> <span class="o">=</span> <span class="n">call_git_describe</span><span class="p">()</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">call_git_describe</span><span class="p">()</span>
 
     <span class="c"># adapt to PEP 440 compatible versioning scheme</span>
-    <span class="n">version</span> <span class="o">=</span> <span class="n">pep440adapt</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">pep440adapt</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 
     <span class="c"># If that doesn&#39;t work, fall back on the value that&#39;s in</span>
     <span class="c"># RELEASE-VERSION.</span>
-    <span class="k">if</span> <span class="n">version</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">version</span> <span class="o">=</span> <span class="n">release_version</span>
+    <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">release_version</span>
 
     <span class="c"># If we still don&#39;t have anything, that&#39;s an error.</span>
-    <span class="k">if</span> <span class="n">version</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Cannot find the version number!&quot;</span><span class="p">)</span>
 
     <span class="c"># If the current version is different from what&#39;s in the</span>
     <span class="c"># RELEASE-VERSION file, update the file to be current.</span>
-    <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="n">release_version</span><span class="p">:</span>
-        <span class="n">write_release_version</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">v</span> <span class="o">!=</span> <span class="n">release_version</span><span class="p">:</span>
+        <span class="n">write_release_version</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 
     <span class="c"># Finally, return the current version.</span>
-    <span class="k">return</span> <span class="n">version</span>
+    <span class="k">return</span> <span class="n">v</span>
 
 </div>
-<span class="k">def</span> <span class="nf">pep440adapt</span><span class="p">(</span><span class="n">version</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="s">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">version</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">pep440adapt</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+    <span class="n">dash</span> <span class="o">=</span> <span class="n">b</span><span class="s">&#39;-&#39;</span>
+    <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">dash</span> <span class="ow">in</span> <span class="n">v</span><span class="p">:</span>
         <span class="c"># adapt git-describe version to be in line with PEP 440</span>
         <span class="c"># by setting a dev release identifier</span>
-        <span class="n">parts</span> <span class="o">=</span> <span class="n">version</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)</span>
-        <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;dev&#39;</span> <span class="o">+</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s">&#39;g&#39;</span><span class="p">)</span>
-        <span class="n">version</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">version</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">dash</span><span class="p">)</span>
+        <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="s">&#39;dev&#39;</span> <span class="o">+</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">b</span><span class="s">&#39;g&#39;</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">b</span><span class="s">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">v</span>
 
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">get_git_version</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">get_git_version</span><span class="p">())</span>
 </pre></div>
 
           </div>
@@ -245,10 +237,10 @@
         &copy; Copyright 2015, Kathryn D. Huff.
     </p>
   </div>
+
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
+  
 </footer>
-
         </div>
       </div>
 

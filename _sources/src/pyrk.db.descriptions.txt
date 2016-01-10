@@ -1,0 +1,7 @@
+pyrk.db.descriptions module
+===========================
+
+.. automodule:: pyrk.db.descriptions
+    :members:
+    :undoc-members:
+    :show-inheritance:

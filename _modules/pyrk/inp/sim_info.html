@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>pyrk.inp.sim_info &mdash; pyrk  documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,14 +46,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         
-
+          <a href="../../../index.html" class="fa fa-home"> pyrk</a>
         
-          <a href="../../../index.html" class="icon icon-home"> pyrk
-        
-
-        
-        </a>
-
         
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -62,8 +56,6 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
@@ -112,8 +104,6 @@
     <li>pyrk.inp.sim_info</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-        
       </li>
   </ul>
   <hr/>
@@ -128,6 +118,7 @@
 <span class="kn">import</span> <span class="nn">neutronics</span>
 <span class="kn">import</span> <span class="nn">reactivity_insertion</span> <span class="kn">as</span> <span class="nn">ri</span>
 <span class="kn">import</span> <span class="nn">th_system</span>
+<span class="kn">from</span> <span class="nn">db</span> <span class="kn">import</span> <span class="n">database</span>
 
 
 <div class="viewcode-block" id="SimInfo"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo">[docs]</a><span class="k">class</span> <span class="nc">SimInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -143,7 +134,10 @@
                  <span class="n">kappa</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
                  <span class="n">rho_ext</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="n">feedback</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                 <span class="n">plotdir</span><span class="o">=</span><span class="s">&#39;images&#39;</span><span class="p">):</span>
+                 <span class="n">plotdir</span><span class="o">=</span><span class="s">&#39;images&#39;</span><span class="p">,</span>
+                 <span class="n">infile</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">sim_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">db</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This class holds information about a reactor kinetics simulation</span>
 
 <span class="sd">        :param timer: the Timer object for the simulation</span>
@@ -176,11 +170,43 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rho_ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_rho_ext</span><span class="p">(</span><span class="n">rho_ext</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">feedback</span> <span class="o">=</span> <span class="n">feedback</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ne</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_ne</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">=</span> <span class="n">kappa</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">th</span> <span class="o">=</span> <span class="n">th_system</span><span class="o">.</span><span class="n">THSystem</span><span class="p">(</span><span class="n">kappa</span><span class="o">=</span><span class="n">kappa</span><span class="p">,</span> <span class="n">components</span><span class="o">=</span><span class="n">components</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">timer</span><span class="o">.</span><span class="n">timesteps</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_entries</span><span class="p">()),</span>
                           <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plotdir</span> <span class="o">=</span> <span class="n">plotdir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">infile</span> <span class="o">=</span> <span class="n">infile</span>
+        <span class="k">if</span> <span class="n">sim_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sim_id</span> <span class="o">=</span> <span class="n">sim_id</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sim_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_sim_id</span><span class="p">()</span>
 
+        <span class="k">if</span> <span class="n">db</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">Database</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_recorders</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SimInfo.register_recorders"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.register_recorders">[docs]</a>    <span class="k">def</span> <span class="nf">register_recorders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Registers the function pointers that return database rows</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">register_recorder</span><span class="p">(</span><span class="s">&#39;metadata&#39;</span><span class="p">,</span> <span class="s">&#39;sim_info&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                                  <span class="n">timeseries</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">register_recorder</span><span class="p">(</span><span class="s">&#39;metadata&#39;</span><span class="p">,</span> <span class="s">&#39;sim_timeseries&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">record</span><span class="p">,</span>
+                                <span class="n">timeseries</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">register_recorder</span><span class="p">(</span><span class="s">&#39;neutronics&#39;</span><span class="p">,</span> <span class="s">&#39;neutronics_params&#39;</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">record</span><span class="p">,</span>
+                                  <span class="n">timeseries</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">register_recorder</span><span class="p">(</span><span class="s">&#39;th&#39;</span><span class="p">,</span> <span class="s">&#39;th_timeseries&#39;</span><span class="p">,</span>
+                                      <span class="n">c</span><span class="o">.</span><span class="n">record</span><span class="p">,</span>
+                                      <span class="n">timeseries</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">register_recorder</span><span class="p">(</span><span class="s">&#39;th&#39;</span><span class="p">,</span> <span class="s">&#39;th_params&#39;</span><span class="p">,</span>
+                                      <span class="n">c</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+                                      <span class="n">timeseries</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="c"># TODO: for all n_pg and n_dg, report zetas and omegas</span>
+</div>
 <div class="viewcode-block" id="SimInfo.init_rho_ext"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.init_rho_ext">[docs]</a>    <span class="k">def</span> <span class="nf">init_rho_ext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho_ext</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes reactivity insertion object for the none case.</span>
 
@@ -230,7 +256,71 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">[</span><span class="n">th_component</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">th_component</span>
-            <span class="k">return</span> <span class="n">th_component</span></div></div>
+            <span class="k">return</span> <span class="n">th_component</span>
+</div>
+<div class="viewcode-block" id="SimInfo.get_git_revision_hash"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.get_git_revision_hash">[docs]</a>    <span class="k">def</span> <span class="nf">get_git_revision_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">subprocess</span>
+        <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s">&#39;git&#39;</span><span class="p">,</span> <span class="s">&#39;rev-parse&#39;</span><span class="p">,</span> <span class="s">&#39;HEAD&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="SimInfo.get_git_revision_short_hash"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.get_git_revision_short_hash">[docs]</a>    <span class="k">def</span> <span class="nf">get_git_revision_short_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">subprocess</span>
+        <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s">&#39;git&#39;</span><span class="p">,</span> <span class="s">&#39;rev-parse&#39;</span><span class="p">,</span> <span class="s">&#39;--short&#39;</span><span class="p">,</span> <span class="s">&#39;HEAD&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="SimInfo.get_timestamp"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.get_timestamp">[docs]</a>    <span class="k">def</span> <span class="nf">get_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># time since epoch, a float</span>
+        <span class="kn">import</span> <span class="nn">time</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="c"># human readable time, a string</span>
+        <span class="kn">import</span> <span class="nn">datetime</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M:%S&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ts</span><span class="p">,</span> <span class="n">st</span>
+</div>
+<div class="viewcode-block" id="SimInfo.get_input_blob"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.get_input_blob">[docs]</a>    <span class="k">def</span> <span class="nf">get_input_blob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="n">instring</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">instring</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">instring</span>
+</div>
+<div class="viewcode-block" id="SimInfo.generate_sim_id"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.generate_sim_id">[docs]</a>    <span class="k">def</span> <span class="nf">generate_sim_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;generates sim id, unique to this simulation.</span>
+
+<span class="sd">        :rtype: str&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">uuid</span>
+        <span class="n">sim_id</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span>
+        <span class="k">return</span> <span class="n">sim_id</span>
+</div>
+<div class="viewcode-block" id="SimInfo.metadata"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.metadata">[docs]</a>    <span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A recorder function for the metadata/sim_info table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ts</span><span class="p">,</span> <span class="n">st</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_timestamp</span><span class="p">()</span>
+        <span class="n">rec</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;simhash&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_sim_id</span><span class="p">(),</span>
+               <span class="s">&#39;timestamp&#39;</span><span class="p">:</span> <span class="n">ts</span><span class="p">,</span>
+               <span class="s">&#39;humantime&#39;</span><span class="p">:</span> <span class="n">st</span><span class="p">,</span>
+               <span class="s">&#39;revision&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_git_revision_short_hash</span><span class="p">(),</span>
+               <span class="s">&#39;inputblob&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_input_blob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">infile</span><span class="p">),</span>
+               <span class="s">&#39;t0&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t0</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;tf&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">tf</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;dt&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;t_feedback&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_feedback</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;iso&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">iso</span><span class="p">,</span>
+               <span class="s">&#39;e&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span><span class="p">,</span>
+               <span class="s">&#39;n_pg&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_pg</span><span class="p">,</span>
+               <span class="s">&#39;n_dg&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_dg</span><span class="p">,</span>
+               <span class="s">&#39;kappa&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span><span class="p">,</span>
+               <span class="s">&#39;plotdir&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotdir</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">rec</span>
+</div>
+<div class="viewcode-block" id="SimInfo.record"><a class="viewcode-back" href="../../../src/pyrk.inp.sim_info.html#pyrk.inp.sim_info.SimInfo.record">[docs]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A recorder function for the metadata/sim_timeseries table</span>
+
+<span class="sd">        TODO: reconsider the database structure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">t_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">current_timestep</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">power</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">t_idx</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">rec</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;t_idx&#39;</span><span class="p">:</span> <span class="n">t_idx</span><span class="p">,</span>
+               <span class="s">&#39;power&#39;</span><span class="p">:</span> <span class="n">power</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">rec</span></div></div>
 </pre></div>
 
           </div>
@@ -244,10 +334,10 @@
         &copy; Copyright 2015, Kathryn D. Huff.
     </p>
   </div>
+
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
+  
 </footer>
-
         </div>
       </div>
 

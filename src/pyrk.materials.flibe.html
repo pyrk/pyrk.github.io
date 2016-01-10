@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>pyrk.materials.flibe module &mdash; pyrk  documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -33,7 +33,7 @@
     <link rel="top" title="pyrk  documentation" href="../index.html"/> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -45,14 +45,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         
-
+          <a href="../index.html" class="fa fa-home"> pyrk</a>
         
-          <a href="../index.html" class="icon icon-home"> pyrk
-        
-
-        
-        </a>
-
         
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -61,8 +55,6 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
@@ -109,9 +101,7 @@
     <li>pyrk.materials.flibe module</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../_sources/src/pyrk.materials.flibe.txt" rel="nofollow"> View page source</a>
-          
+          <a href="../_sources/src/pyrk.materials.flibe.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
@@ -124,43 +114,39 @@
 <dl class="class">
 <dt id="pyrk.materials.flibe.Flibe">
 <em class="property">class </em><code class="descclassname">pyrk.materials.flibe.</code><code class="descname">Flibe</code><span class="sig-paren">(</span><em>name='flibe'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/flibe.html#Flibe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.flibe.Flibe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pyrk.materials.material.html#pyrk.materials.material.Material" title="pyrk.materials.material.Material"><code class="xref py py-class docutils literal"><span class="pre">pyrk.materials.material.Material</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">materials.material.Material</span></code></p>
 <p>This class represents FLiBe. It inherits from the material
 class and possesses attributes intrinsic to flibe.</p>
+<p>Reference:
+Williams, D. F., Toth, D. M. and Clarno, K. T. Assessment of Candidate
+Molten Salt Coolants for the Advanced High-Temperature Reactor (AHTR).s.l.
+Oakridge National Laboratory Technical Report, March 2006. ORNL/TM-2006/12.
+Sohal MS, Ebner MA, Sabharwall P, Shape P (INL).
+Engineering Database of Liquid Salt Thermophysical and Thermochemical
+Properties. INL/EXT-10 18297. March 2010.
+Allen, T. Molten Salt Database,
+<a class="reference external" href="http://allen.neep.wisc.edu/shell/index.php/salts">http://allen.neep.wisc.edu/shell/index.php/salts</a>,
+Nuclear Engineering and Engineering Physics Department,
+University of Wisconsin. 2010
+P. Bardet et al. Dynamics of liquid-protected fusion chambers.
+Fusion science and technology, vol 47, 2005.</p>
 <dl class="method">
 <dt id="pyrk.materials.flibe.Flibe.density">
 <code class="descname">density</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/flibe.html#Flibe.density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.flibe.Flibe.density" title="Permalink to this definition">¶</a></dt>
 <dd><p>FLiBe density as a funciton of T. [kg/m^3]</p>
-<p>The relation is</p>
-<div class="math">
-</div>
-<p>2415 + 0.49072T</p>
-<p>This is based on
-<a class="reference external" href="http://aries.ucsd.edu/raffray/publications/FST/TOFE_15_Zaghloul.pdf">http://aries.ucsd.edu/raffray/publications/FST/TOFE_15_Zaghloul.pdf</a>
-it is valid between the melting point and the critical point</p>
-<div class="math">
-</div>
-<p>t_m = 732.2</p>
-<div class="math">
-</div>
-<p>t_c = 4498.8</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyrk.materials.flibe.Flibe.specific_heat_capacity">
 <code class="descname">specific_heat_capacity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/flibe.html#Flibe.specific_heat_capacity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.flibe.Flibe.specific_heat_capacity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specific heat capacity of flibe [J/kg/K]</p>
-<p>from www-ferp.ucsd.edu/LIB/PROPS/HTS.shtml</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyrk.materials.flibe.Flibe.thermal_conductivity">
 <code class="descname">thermal_conductivity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/flibe.html#Flibe.thermal_conductivity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.flibe.Flibe.thermal_conductivity" title="Permalink to this definition">¶</a></dt>
-<dd><p>FLiBe thermal conductivity in [W/m-K]</p>
-<p>(based on <a class="reference external" href="http://www.psfc.mit.edu/library1/catalog/reports/">http://www.psfc.mit.edu/library1/catalog/reports/</a>
-1980/80rr/80rr012/80rr012_full.pdf)
-and found in the Andreades et. al Technical Description (pbfhr design
-report)</p>
+<dd><p>FLiBe thermal conductivity in [W/m-K]
+TODO:k= 0.7662+0.0005T (T in celsius)</p>
 </dd></dl>
 
 </dd></dl>
@@ -179,10 +165,10 @@ report)</p>
         &copy; Copyright 2015, Kathryn D. Huff.
     </p>
   </div>
+
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
+  
 </footer>
-
         </div>
       </div>
 

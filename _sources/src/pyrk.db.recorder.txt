@@ -1,0 +1,7 @@
+pyrk.db.recorder module
+=======================
+
+.. automodule:: pyrk.db.recorder
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>pyrk.th_system &mdash; pyrk  documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,14 +46,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         
-
+          <a href="../../index.html" class="fa fa-home"> pyrk</a>
         
-          <a href="../../index.html" class="icon icon-home"> pyrk
-        
-
-        
-        </a>
-
         
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -62,8 +56,6 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
@@ -112,8 +104,6 @@
     <li>pyrk.th_system</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-        
       </li>
   </ul>
   <hr/>
@@ -121,50 +111,25 @@
           <div role="main" class="document">
             
   <h1>Source code for pyrk.th_system</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">six</span>
+<span class="kn">from</span> <span class="nn">th_component</span> <span class="kn">import</span> <span class="n">THSuperComponent</span>
 <span class="kn">from</span> <span class="nn">utilities.ur</span> <span class="kn">import</span> <span class="n">units</span>
 
 
 <div class="viewcode-block" id="THSystem"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem">[docs]</a><span class="k">class</span> <span class="nc">THSystem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This class handles calculations and data related to the</span>
-<span class="sd">    thermal hydraulics sub block</span>
+
+    <span class="sd">&quot;&quot;&quot;This class models:</span>
+<span class="sd">    - lumped capacitance model for slab geometry</span>
+<span class="sd">    - 1-D heat diffusion in spherical geometry, for heat</span>
+<span class="sd">    generation at any radius in the sphere,</span>
+<span class="sd">    - advective heat transfer by fluid</span>
+<span class="sd">    - convective heat transfer at the solid surface to fluid.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">components</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">=</span> <span class="n">kappa</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">components</span> <span class="o">=</span> <span class="n">components</span>
 
-<div class="viewcode-block" id="THSystem.dtempdt"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.dtempdt">[docs]</a>    <span class="k">def</span> <span class="nf">dtempdt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omegas</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">):</span>
-        <span class="n">to_ret</span> <span class="o">=</span> <span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">second</span>
-        <span class="n">cap</span> <span class="o">=</span> <span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span><span class="n">t_idx</span><span class="p">)</span><span class="o">*</span><span class="n">component</span><span class="o">.</span><span class="n">cp</span><span class="o">*</span><span class="n">component</span><span class="o">.</span><span class="n">vol</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">component</span><span class="o">.</span><span class="n">heatgen</span><span class="p">:</span>
-            <span class="n">to_ret</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heatgen</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omegas</span><span class="p">)</span><span class="o">/</span><span class="n">cap</span>
-        <span class="k">for</span> <span class="n">interface</span><span class="p">,</span> <span class="n">area</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">cond</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-            <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_from_name</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
-            <span class="n">to_ret</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conduction</span><span class="p">(</span><span class="n">t_b</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
-                                      <span class="n">t_env</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
-                                      <span class="n">k</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">k</span><span class="p">,</span>
-                                      <span class="n">L</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">vol</span><span class="o">/</span><span class="n">area</span><span class="p">,</span>
-                                      <span class="n">A</span><span class="o">=</span><span class="n">area</span><span class="p">)</span><span class="o">/</span><span class="n">cap</span>
-        <span class="k">for</span> <span class="n">interface</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">conv</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-            <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_from_name</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
-            <span class="n">to_ret</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convection</span><span class="p">(</span><span class="n">t_b</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
-                                      <span class="n">t_env</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
-                                      <span class="n">h</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;h&#39;</span><span class="p">],</span>
-                                      <span class="n">A</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;area&#39;</span><span class="p">])</span><span class="o">/</span><span class="n">cap</span>
-        <span class="k">for</span> <span class="n">interface</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">mass</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-            <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_from_name</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
-            <span class="n">to_ret</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mass_trans</span><span class="p">(</span><span class="n">t_b</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
-                                      <span class="n">t_inlet</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
-                                      <span class="n">H</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;H&#39;</span><span class="p">],</span>
-                                      <span class="n">u</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;u&#39;</span><span class="p">])</span>
-        <span class="k">for</span> <span class="n">interface</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">cust</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-            <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_from_name</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
-            <span class="n">to_ret</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="p">(</span><span class="n">t_b</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
-                                  <span class="n">t_env</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">],</span>
-                                  <span class="n">res</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;res&#39;</span><span class="p">])</span><span class="o">/</span><span class="n">cap</span>
-
-        <span class="k">return</span> <span class="n">to_ret</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;kelvin/second&#39;</span><span class="p">)</span>
-</div>
 <div class="viewcode-block" id="THSystem.comp_from_name"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.comp_from_name">[docs]</a>    <span class="k">def</span> <span class="nf">comp_from_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the component with the matching name</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -176,10 +141,210 @@
         <span class="n">msg</span> <span class="o">+=</span> <span class="n">name</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="THSystem.heatgen"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.heatgen">[docs]</a>    <span class="k">def</span> <span class="nf">heatgen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omegas</span><span class="p">):</span>
-        <span class="n">to_ret</span> <span class="o">=</span> <span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">power_tot</span><span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">kappa</span><span class="p">)</span><span class="o">*</span><span class="n">power</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">omegas</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">to_ret</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="p">)</span>
+<div class="viewcode-block" id="THSystem.dtempdt"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.dtempdt">[docs]</a>    <span class="k">def</span> <span class="nf">dtempdt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omegas</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;compute the derivative dtemperature/dt</span>
+
+<span class="sd">        :param component: name of the component that dtemp/dt is calculated</span>
+<span class="sd">        :type component: str</span>
+<span class="sd">        :param power: nuclear power density</span>
+<span class="sd">        :type power: float</span>
+<span class="sd">        :param omegas: decay heat nuclear data</span>
+<span class="sd">        :type omegas: list</span>
+<span class="sd">        :param t_idx: the timestep that dtempdt is calculated for</span>
+<span class="sd">        :type t_idx: int</span>
+<span class="sd">        :return: value of dtemp/dt</span>
+<span class="sd">        :rtype: float, kelvin/s</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">to_ret</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">THSuperComponent</span><span class="p">):</span>
+            <span class="c">#  return 0 for superComponent, doesn&#39;t calculate the temperature</span>
+            <span class="c">#  variation of superComponent</span>
+            <span class="k">return</span> <span class="n">to_ret</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">second</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cap</span> <span class="o">=</span> <span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span><span class="n">t_idx</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="o">*</span><span class="n">component</span><span class="o">.</span><span class="n">cp</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">component</span><span class="o">.</span><span class="n">sph</span> <span class="ow">and</span> <span class="n">component</span><span class="o">.</span><span class="n">ri</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+                <span class="n">Qcent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BC_center</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">)</span>
+                <span class="n">to_ret</span> <span class="o">-=</span> <span class="n">Qcent</span><span class="o">/</span><span class="n">cap</span>
+            <span class="k">for</span> <span class="n">interface</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">convBC</span><span class="p">):</span>
+                <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_from_name</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+                <span class="n">QconvBC</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convBoundary</span><span class="p">(</span><span class="n">component</span><span class="p">,</span>
+                                            <span class="n">t_b</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+                                            <span class="n">t_env</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+                                            <span class="n">h</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&quot;h&quot;</span><span class="p">],</span>
+                                            <span class="n">R</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&quot;R&quot;</span><span class="p">])</span>
+                <span class="n">to_ret</span> <span class="o">-=</span> <span class="n">QconvBC</span><span class="o">/</span><span class="n">cap</span>
+            <span class="k">if</span> <span class="n">component</span><span class="o">.</span><span class="n">heatgen</span><span class="p">:</span>
+                <span class="n">to_ret</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heatgen</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omegas</span><span class="p">)</span><span class="o">/</span><span class="n">cap</span>
+            <span class="k">for</span> <span class="n">interface</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">cond</span><span class="p">):</span>
+                <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_from_name</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">component</span><span class="o">.</span><span class="n">sph</span><span class="p">:</span>
+                    <span class="n">Qcond</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conductionFVM</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">Qcond</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conduction_slab</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">,</span>
+                                                 <span class="n">L</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&quot;L&quot;</span><span class="p">],</span>
+                                                 <span class="n">A</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&quot;area&quot;</span><span class="p">])</span>
+                <span class="n">to_ret</span> <span class="o">-=</span> <span class="n">Qcond</span><span class="o">/</span><span class="n">cap</span>
+            <span class="k">for</span> <span class="n">interface</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">conv</span><span class="p">):</span>
+                <span class="n">env</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_from_name</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">THSuperComponent</span><span class="p">):</span>
+                    <span class="n">Tr</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">compute_tr</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+                                        <span class="n">env</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+                    <span class="n">Qconv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convection</span><span class="p">(</span><span class="n">t_b</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+                                            <span class="n">t_env</span><span class="o">=</span><span class="n">Tr</span><span class="p">,</span>
+                                            <span class="n">h</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;h&#39;</span><span class="p">],</span>
+                                            <span class="n">A</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;area&#39;</span><span class="p">])</span>
+                    <span class="k">assert</span> <span class="p">(</span><span class="n">Qconv</span><span class="o">*</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="o">-</span><span class="n">Tr</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">                    convection from </span><span class="si">%s</span><span class="s"> to </span><span class="si">%s</span><span class="s">, from low temperature </span><span class="si">%f</span><span class="s"> to</span>
+<span class="s">                    high temperature </span><span class="si">%f</span><span class="s"> is not physical: </span><span class="si">%f</span><span class="s">&#39;&#39;&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+                        <span class="n">Tr</span><span class="p">,</span> <span class="n">Qconv</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">Qconv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convection</span><span class="p">(</span><span class="n">t_b</span><span class="o">=</span><span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+                                            <span class="n">t_env</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+                                            <span class="n">h</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;h&#39;</span><span class="p">],</span>
+                                            <span class="n">A</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;area&#39;</span><span class="p">])</span>
+                    <span class="k">assert</span> <span class="p">(</span><span class="n">Qconv</span><span class="o">*</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">-</span><span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]))</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> \
+                        <span class="sd">&#39;&#39;&#39;convection from %s to %s, from low temperature %f to</span>
+<span class="sd">                    high temperature %f is not physical: %f&#39;&#39;&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+                        <span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">Qconv</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+                <span class="n">to_ret</span> <span class="o">-=</span> <span class="n">Qconv</span><span class="o">/</span><span class="n">cap</span><span class="o">/</span><span class="n">component</span><span class="o">.</span><span class="n">vol</span><span class="o">.</span><span class="n">magnitude</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">adv</span><span class="p">):</span>
+                <span class="n">Qadv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">advection</span><span class="p">(</span><span class="n">component</span><span class="p">,</span>
+                                      <span class="n">t_idx</span><span class="p">,</span>
+                                      <span class="n">t_in</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;t_in&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+                                      <span class="n">m_flow</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;m_flow&#39;</span><span class="p">],</span>
+                                      <span class="n">cp</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s">&#39;cp&#39;</span><span class="p">])</span>
+                <span class="n">to_ret</span> <span class="o">-=</span> <span class="n">Qadv</span><span class="o">/</span><span class="n">cap</span><span class="o">/</span><span class="n">component</span><span class="o">.</span><span class="n">vol</span><span class="o">.</span><span class="n">magnitude</span>
+            <span class="k">return</span> <span class="n">to_ret</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span>
 </div>
+<div class="viewcode-block" id="THSystem.BC_center"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.BC_center">[docs]</a>    <span class="k">def</span> <span class="nf">BC_center</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Volumetric conductive heat flux Qconduction from the center of a</span>
+<span class="sd">        sphere to the first boundary</span>
+<span class="sd">        (conduction without interface) in watts/meter**3</span>
+
+<span class="sd">        :param component: name of the inner most component(mesh element)</span>
+<span class="sd">        :type component: str</span>
+<span class="sd">        :param t_idx: timestep at which Qconduction is calculated</span>
+<span class="sd">        :type t_idx: int</span>
+<span class="sd">        :return : Qcondction</span>
+<span class="sd">        :rtype:float, dimensionless</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">conductivity</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">k</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">T_b</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">dr</span> <span class="o">=</span> <span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">ro</span> <span class="o">-</span> <span class="n">component</span><span class="o">.</span><span class="n">ri</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">conductivity</span><span class="o">*</span><span class="n">T_b</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">dr</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="THSystem.convBoundary"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.convBoundary">[docs]</a>    <span class="k">def</span> <span class="nf">convBoundary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">t_b</span><span class="p">,</span> <span class="n">t_env</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">R</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;calculate heat transfer through convective boundray condition</span>
+<span class="sd">        for the mesh element at the surface of the spherical Supercomponent</span>
+<span class="sd">        (watts)</span>
+
+<span class="sd">        :param component: name of the outer most solid component</span>
+<span class="sd">        :type component: str</span>
+<span class="sd">        :param t_b: temperature of the body</span>
+<span class="sd">        :type t_b: float</span>
+<span class="sd">        :param t_env: temperature of the environment(fluid)</span>
+<span class="sd">        :type t_env: float</span>
+<span class="sd">        :param h: convective heat transfer coefficient</span>
+<span class="sd">        :type h: float</span>
+<span class="sd">        :param R: outer radius of the component</span>
+<span class="sd">        :type R: float</span>
+<span class="sd">        :return: dimensionless quantity of Qconv</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">r_b</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">ro</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">k</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">dr</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">ri</span><span class="o">.</span><span class="n">magnitude</span><span class="o">-</span><span class="n">component</span><span class="o">.</span><span class="n">ro</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">T_R</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">h</span><span class="o">.</span><span class="n">magnitude</span><span class="o">/</span><span class="n">k</span><span class="o">*</span><span class="n">t_env</span> <span class="o">+</span> <span class="n">t_b</span><span class="o">/</span><span class="n">dr</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">dr</span><span class="o">-</span><span class="n">h</span><span class="o">.</span><span class="n">magnitude</span><span class="o">/</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">to_ret</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">r_b</span><span class="o">*</span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">r_b</span><span class="o">*</span><span class="n">t_b</span><span class="o">-</span><span class="n">R</span><span class="o">.</span><span class="n">magnitude</span><span class="o">*</span><span class="n">T_R</span><span class="p">)</span><span class="o">/</span><span class="n">dr</span><span class="o">**</span><span class="mi">2</span>
+        <span class="k">return</span> <span class="n">to_ret</span>
+</div>
+<div class="viewcode-block" id="THSystem.heatgen"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.heatgen">[docs]</a>    <span class="k">def</span> <span class="nf">heatgen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">omegas</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculate heat transfer by conduction(watts/m3)</span>
+
+<span class="sd">        :param component: name of the component</span>
+<span class="sd">        :type component: str</span>
+<span class="sd">        :param power: normalized nuclear power generated in the component</span>
+<span class="sd">        i.e.: power*power_tot = power (in watts)</span>
+<span class="sd">        :type power: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">power</span><span class="o">*</span><span class="n">component</span><span class="o">.</span><span class="n">power_tot</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">*</span>
+                <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">kappa</span><span class="p">)</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">omegas</span><span class="p">))</span><span class="o">/</span><span class="n">component</span><span class="o">.</span><span class="n">vol</span><span class="o">.</span><span class="n">magnitude</span>
+</div>
+<div class="viewcode-block" id="THSystem.conductionFVM"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.conductionFVM">[docs]</a>    <span class="k">def</span> <span class="nf">conductionFVM</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>
+                      <span class="n">k</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">**</span><span class="mi">2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        compute volumetric conductive heat transfer by conduction(watts/m3)</span>
+
+<span class="sd">        :param component: name of the component</span>
+<span class="sd">        :type component: str</span>
+<span class="sd">        :param env: name of the environment</span>
+<span class="sd">        :type env: str</span>
+<span class="sd">        :param t_idx: time step that conduction heat is computed</span>
+<span class="sd">        :type t_idx: int</span>
+<span class="sd">        :param L: conduction distance</span>
+<span class="sd">        :type L: float, units meter</span>
+<span class="sd">        :pram k: conductivity</span>
+<span class="sd">        :type k: float, units w/mk</span>
+<span class="sd">        :return: Qond, dimemsionless quantity</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">T_b</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">T_env</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">r_b</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">ro</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">r_env</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">ro</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">dr</span> <span class="o">=</span> <span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">ro</span><span class="o">-</span><span class="n">component</span><span class="o">.</span><span class="n">ri</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">k</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="k">return</span> <span class="n">k</span><span class="o">/</span><span class="n">r_b</span> <span class="o">*</span> <span class="p">(</span><span class="n">r_b</span> <span class="o">*</span> <span class="n">T_b</span> <span class="o">-</span> <span class="n">r_env</span> <span class="o">*</span> <span class="n">T_env</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">dr</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="THSystem.conduction_slab"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.conduction_slab">[docs]</a>    <span class="k">def</span> <span class="nf">conduction_slab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span>
+                        <span class="n">A</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">**</span><span class="mi">2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        compute volumetric heat transfer by conduction(watts/m3)</span>
+
+<span class="sd">        :param component: name of the component</span>
+<span class="sd">        :type component: str</span>
+<span class="sd">        :param env: name of the environment</span>
+<span class="sd">        :type env: str</span>
+<span class="sd">        :param t_idx: time step that conduction heat is computed</span>
+<span class="sd">        :type t_idx: int</span>
+<span class="sd">        :return: Qond, dimemsionless quantity</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">T_b</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">T_env</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">T_b</span><span class="o">-</span><span class="n">T_env</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">k</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">A</span><span class="p">))</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="k">return</span> <span class="n">num</span><span class="o">/</span><span class="n">denom</span>
+</div>
+<div class="viewcode-block" id="THSystem.advection"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.advection">[docs]</a>    <span class="k">def</span> <span class="nf">advection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">,</span> <span class="n">t_in</span><span class="p">,</span> <span class="n">m_flow</span><span class="p">,</span> <span class="n">cp</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; calculate heat transfer by advection in watts</span>
+
+<span class="sd">        :param component: name of the component</span>
+<span class="sd">        :type component: str</span>
+<span class="sd">        :param t_idx: time step that conduction heat is computed</span>
+<span class="sd">        :type t_idx: int</span>
+<span class="sd">        :param t_in: inlet temperature</span>
+<span class="sd">        :type t_in: float</span>
+<span class="sd">        :param m_flow: mass flow rate though the control volume</span>
+<span class="sd">        :type m_flow: float</span>
+<span class="sd">        :param cp: specific heat capacity of the fluid</span>
+<span class="sd">        :type cp: float</span>
+<span class="sd">        :return: dimemsionless quantity of Qadvective</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="c">#check if the temperature is the initial temperature 0degC</span>
+        <span class="c">#set Qadv=0 in this case for computation stability</span>
+        <span class="k">if</span> <span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;kelvin&#39;</span><span class="p">):</span>
+                        <span class="n">Qadv</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">t_out</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span><span class="o">*</span><span class="mf">2.0</span> <span class="o">-</span> <span class="n">t_in</span>
+            <span class="n">Qadv</span> <span class="o">=</span> <span class="n">m_flow</span><span class="o">.</span><span class="n">magnitude</span><span class="o">*</span><span class="n">cp</span><span class="o">.</span><span class="n">magnitude</span><span class="o">*</span><span class="p">(</span><span class="n">t_out</span><span class="o">-</span><span class="n">t_in</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Qadv</span></div>
 <div class="viewcode-block" id="THSystem.mass_trans"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.mass_trans">[docs]</a>    <span class="k">def</span> <span class="nf">mass_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_b</span><span class="p">,</span> <span class="n">t_inlet</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param t_b: The temperature of the body</span>
@@ -193,6 +358,8 @@
 </div>
 <div class="viewcode-block" id="THSystem.convection"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.convection">[docs]</a>    <span class="k">def</span> <span class="nf">convection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_b</span><span class="p">,</span> <span class="n">t_env</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        heat transfer by convection(watts)</span>
+
 <span class="sd">        :param t_b: The temperature of the body</span>
 <span class="sd">        :type t_b: float.</span>
 <span class="sd">        :param t_env: The temperature of the environment</span>
@@ -203,30 +370,25 @@
 <span class="sd">        :type A: float.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_b</span><span class="o">-</span><span class="n">t_env</span><span class="p">)</span>
-        <span class="n">denom</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">A</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">num</span><span class="o">/</span><span class="n">denom</span>
-</div>
-<div class="viewcode-block" id="THSystem.conduction"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.conduction">[docs]</a>    <span class="k">def</span> <span class="nf">conduction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_b</span><span class="p">,</span> <span class="n">t_env</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param t_b: The temperature of the body</span>
-<span class="sd">        :type t_b: float.</span>
-<span class="sd">        :param t_env: The temperature of the environment</span>
-<span class="sd">        :type t_env: float.</span>
-<span class="sd">        :param L: the length scale of the body</span>
-<span class="sd">        :type L: float.</span>
-<span class="sd">        :param k: the thermal conductivity</span>
-<span class="sd">        :type k: float.</span>
-<span class="sd">        :param A: the surface area of heat transfer</span>
-<span class="sd">        :type A: float.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_b</span><span class="o">-</span><span class="n">t_env</span><span class="p">)</span>
-        <span class="n">denom</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">A</span><span class="p">)</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">magnitude</span><span class="o">*</span><span class="n">A</span><span class="o">.</span><span class="n">magnitude</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">num</span><span class="o">/</span><span class="n">denom</span>
 </div>
 <div class="viewcode-block" id="THSystem.custom"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.custom">[docs]</a>    <span class="k">def</span> <span class="nf">custom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_b</span><span class="p">,</span> <span class="n">t_env</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
         <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">t_b</span><span class="o">-</span><span class="n">t_env</span><span class="p">)</span>
         <span class="n">denom</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">num</span><span class="o">/</span><span class="n">denom</span></div></div>
+        <span class="k">return</span> <span class="n">num</span><span class="o">/</span><span class="n">denom</span>
+</div>
+<div class="viewcode-block" id="THSystem.record"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.record">[docs]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;a recorder function that calls down to each component.</span>
+<span class="sd">        used for the th/th_timeseries table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_from_name</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">record</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="THSystem.metadata"><a class="viewcode-back" href="../../src/pyrk.th_system.html#pyrk.th_system.THSystem.metadata">[docs]</a>    <span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;a recorder function that calls down to each component.</span>
+<span class="sd">        used for the th/th_params table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">comp_from_name</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">metadata</span><span class="p">()</span></div></div>
 </pre></div>
 
           </div>
@@ -240,10 +402,10 @@
         &copy; Copyright 2015, Kathryn D. Huff.
     </p>
   </div>
+
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
+  
 </footer>
-
         </div>
       </div>
 

@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>pyrk.th_system module &mdash; pyrk  documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -33,7 +33,7 @@
     <link rel="top" title="pyrk  documentation" href="../index.html"/> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -45,14 +45,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         
-
+          <a href="../index.html" class="fa fa-home"> pyrk</a>
         
-          <a href="../index.html" class="icon icon-home"> pyrk
-        
-
-        
-        </a>
-
         
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -61,8 +55,6 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
@@ -109,9 +101,7 @@
     <li>pyrk.th_system module</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../_sources/src/pyrk.th_system.txt" rel="nofollow"> View page source</a>
-          
+          <a href="../_sources/src/pyrk.th_system.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
@@ -125,8 +115,61 @@
 <dt id="pyrk.th_system.THSystem">
 <em class="property">class </em><code class="descclassname">pyrk.th_system.</code><code class="descname">THSystem</code><span class="sig-paren">(</span><em>kappa</em>, <em>components</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
-<p>This class handles calculations and data related to the
-thermal hydraulics sub block</p>
+<p>This class models:
+- lumped capacitance model for slab geometry
+- 1-D heat diffusion in spherical geometry, for heat
+generation at any radius in the sphere,
+- advective heat transfer by fluid
+- convective heat transfer at the solid surface to fluid.</p>
+<dl class="method">
+<dt id="pyrk.th_system.THSystem.BC_center">
+<code class="descname">BC_center</code><span class="sig-paren">(</span><em>component</em>, <em>t_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.BC_center"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.BC_center" title="Permalink to this definition">¶</a></dt>
+<dd><p>Volumetric conductive heat flux Qconduction from the center of a
+sphere to the first boundary
+(conduction without interface) in watts/meter**3</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>component</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the inner most component(mesh element)</li>
+<li><strong>t_idx</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; timestep at which Qconduction is calculated</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>:return : Qcondction
+:rtype:float, dimensionless</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.th_system.THSystem.advection">
+<code class="descname">advection</code><span class="sig-paren">(</span><em>component</em>, <em>t_idx</em>, <em>t_in</em>, <em>m_flow</em>, <em>cp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.advection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.advection" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate heat transfer by advection in watts</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>component</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the component</li>
+<li><strong>t_idx</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; time step that conduction heat is computed</li>
+<li><strong>t_in</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; inlet temperature</li>
+<li><strong>m_flow</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; mass flow rate though the control volume</li>
+<li><strong>cp</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; specific heat capacity of the fluid</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dimemsionless quantity of Qadvective</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyrk.th_system.THSystem.comp_from_name">
 <code class="descname">comp_from_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.comp_from_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.comp_from_name" title="Permalink to this definition">¶</a></dt>
@@ -134,19 +177,82 @@ thermal hydraulics sub block</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyrk.th_system.THSystem.conduction">
-<code class="descname">conduction</code><span class="sig-paren">(</span><em>t_b</em>, <em>t_env</em>, <em>L</em>, <em>k</em>, <em>A</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.conduction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.conduction" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dt id="pyrk.th_system.THSystem.conductionFVM">
+<code class="descname">conductionFVM</code><span class="sig-paren">(</span><em>component</em>, <em>env</em>, <em>t_idx</em>, <em>L=&lt;Quantity(0.0</em>, <em>'meter')&gt;</em>, <em>k=&lt;Quantity(0.0</em>, <em>'meter')&gt;</em>, <em>A=&lt;Quantity(0.0</em>, <em>'meter ** 2')&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.conductionFVM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.conductionFVM" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute volumetric conductive heat transfer by conduction(watts/m3)</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>t_b</strong> (<em>float.</em>) &#8211; The temperature of the body</li>
-<li><strong>t_env</strong> (<em>float.</em>) &#8211; The temperature of the environment</li>
-<li><strong>L</strong> (<em>float.</em>) &#8211; the length scale of the body</li>
-<li><strong>k</strong> (<em>float.</em>) &#8211; the thermal conductivity</li>
-<li><strong>A</strong> (<em>float.</em>) &#8211; the surface area of heat transfer</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>component</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the component</li>
+<li><strong>env</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the environment</li>
+<li><strong>t_idx</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; time step that conduction heat is computed</li>
+<li><strong>L</strong> (<em>float, units meter</em>) &#8211; conduction distance</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Pram k:</th><td class="field-body"><p class="first">conductivity</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Qond, dimemsionless quantity</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.th_system.THSystem.conduction_slab">
+<code class="descname">conduction_slab</code><span class="sig-paren">(</span><em>component</em>, <em>env</em>, <em>t_idx</em>, <em>L</em>, <em>A=&lt;Quantity(0.0</em>, <em>'meter ** 2')&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.conduction_slab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.conduction_slab" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute volumetric heat transfer by conduction(watts/m3)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>component</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the component</li>
+<li><strong>env</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the environment</li>
+<li><strong>t_idx</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; time step that conduction heat is computed</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Qond, dimemsionless quantity</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.th_system.THSystem.convBoundary">
+<code class="descname">convBoundary</code><span class="sig-paren">(</span><em>component</em>, <em>t_b</em>, <em>t_env</em>, <em>h</em>, <em>R</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.convBoundary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.convBoundary" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate heat transfer through convective boundray condition
+for the mesh element at the surface of the spherical Supercomponent
+(watts)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>component</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the outer most solid component</li>
+<li><strong>t_b</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; temperature of the body</li>
+<li><strong>t_env</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; temperature of the environment(fluid)</li>
+<li><strong>h</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; convective heat transfer coefficient</li>
+<li><strong>R</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; outer radius of the component</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dimensionless quantity of Qconv</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)">float</a></p>
 </td>
 </tr>
 </tbody>
@@ -156,7 +262,8 @@ thermal hydraulics sub block</p>
 <dl class="method">
 <dt id="pyrk.th_system.THSystem.convection">
 <code class="descname">convection</code><span class="sig-paren">(</span><em>t_b</em>, <em>t_env</em>, <em>h</em>, <em>A</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.convection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.convection" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>heat transfer by convection(watts)</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -180,12 +287,48 @@ thermal hydraulics sub block</p>
 <dl class="method">
 <dt id="pyrk.th_system.THSystem.dtempdt">
 <code class="descname">dtempdt</code><span class="sig-paren">(</span><em>component</em>, <em>power</em>, <em>omegas</em>, <em>t_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.dtempdt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.dtempdt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>compute the derivative dtemperature/dt</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>component</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the component that dtemp/dt is calculated</li>
+<li><strong>power</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; nuclear power density</li>
+<li><strong>omegas</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; decay heat nuclear data</li>
+<li><strong>t_idx</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; the timestep that dtempdt is calculated for</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">value of dtemp/dt</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float, kelvin/s</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyrk.th_system.THSystem.heatgen">
 <code class="descname">heatgen</code><span class="sig-paren">(</span><em>component</em>, <em>power</em>, <em>omegas</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.heatgen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.heatgen" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>calculate heat transfer by conduction(watts/m3)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>component</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the component</li>
+<li><strong>power</strong> &#8211; normalized nuclear power generated in the component</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>i.e.: power*power_tot = power (in watts)
+:type power: float</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyrk.th_system.THSystem.mass_trans">
@@ -204,6 +347,20 @@ thermal hydraulics sub block</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="pyrk.th_system.THSystem.metadata">
+<code class="descname">metadata</code><span class="sig-paren">(</span><em>component</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>a recorder function that calls down to each component.
+used for the th/th_params table</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.th_system.THSystem.record">
+<code class="descname">record</code><span class="sig-paren">(</span><em>component</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.record" title="Permalink to this definition">¶</a></dt>
+<dd><p>a recorder function that calls down to each component.
+used for the th/th_timeseries table</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -220,10 +377,10 @@ thermal hydraulics sub block</p>
         &copy; Copyright 2015, Kathryn D. Huff.
     </p>
   </div>
+
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
+  
 </footer>
-
         </div>
       </div>
 

@@ -1,0 +1,7 @@
+pyrk.materials.fhrfuel module
+=============================
+
+.. automodule:: pyrk.materials.fhrfuel
+    :members:
+    :undoc-members:
+    :show-inheritance:

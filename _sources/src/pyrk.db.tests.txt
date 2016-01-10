@@ -1,0 +1,18 @@
+pyrk.db.tests package
+=====================
+
+Submodules
+----------
+
+.. toctree::
+
+   pyrk.db.tests.test_database
+   pyrk.db.tests.test_dbtypes
+
+Module contents
+---------------
+
+.. automodule:: pyrk.db.tests
+    :members:
+    :undoc-members:
+    :show-inheritance:

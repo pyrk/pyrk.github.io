@@ -1,0 +1,456 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.db.database &mdash; pyrk  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#the-future">The Future</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../src/index.html">PyRK API</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyrk.db.database</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for pyrk.db.database</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE</span>
+<span class="kn">import</span> <span class="nn">tables</span> <span class="kn">as</span> <span class="nn">tb</span>
+<span class="kn">from</span> <span class="nn">db</span> <span class="kn">import</span> <span class="n">descriptions</span> <span class="k">as</span> <span class="n">desc</span>
+
+<span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+
+<span class="nd">@contextlib.contextmanager</span>
+<div class="viewcode-block" id="nostderr"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.nostderr">[docs]</a><span class="k">def</span> <span class="nf">nostderr</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This context manager catches standard error output.</span>
+<span class="sd">    It is used mostly to catch the unnecessary fileclosed warnings from</span>
+<span class="sd">    pytables.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">savestderr</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span>
+
+    <span class="k">class</span> <span class="nc">Devnull</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span> <span class="k">pass</span>
+
+        <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">Devnull</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">savestderr</span>
+
+</div>
+<div class="viewcode-block" id="Database"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database">[docs]</a><span class="k">class</span> <span class="nc">Database</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The Database class handles operations on the pyrk simulation backend and</span>
+<span class="sd">    provides utilities for interacting with it.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s">&#39;pyrk.h5&#39;</span><span class="p">,</span>
+                 <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">,</span>
+                 <span class="n">title</span><span class="o">=</span><span class="s">&#39;PyRKDatabase&#39;</span>
+                 <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates an hdf5 database for simulation information</span>
+
+<span class="sd">        :param filepath: the location of the h5 file. e.g. &#39;pyrk.h5&#39;</span>
+<span class="sd">        :type filepath: str</span>
+<span class="sd">        :param mode: mode for file opening</span>
+<span class="sd">        :type mode: str (a, w, and r are supported)</span>
+<span class="sd">        :param title: The title of the database</span>
+<span class="sd">        :type title: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tablehandles</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h5file</span> <span class="o">=</span> <span class="n">tb</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">,</span>
+                              <span class="n">title</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+                              <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_up_groups</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_up_tables</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_groups</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_tables</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Database.add_group"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.add_group">[docs]</a>    <span class="k">def</span> <span class="nf">add_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">grouptitle</span><span class="p">,</span> <span class="n">path_to_group</span><span class="o">=</span><span class="s">&#39;/&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a new group in the file</span>
+
+<span class="sd">        :param groupname: name of the group to add</span>
+<span class="sd">        :type groupname: str</span>
+<span class="sd">        :param grouptitle: metadata to store in plain english, a title</span>
+<span class="sd">        :type grouptitle: str</span>
+<span class="sd">        :param path_to_group: the database path, starts with &#39;/&#39;</span>
+<span class="sd">        :type path_to_group: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">open_db</span><span class="p">()</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_exists</span><span class="p">(</span><span class="n">path_to_group</span><span class="p">,</span> <span class="n">groupname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">path_to_group</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span>
+                                             <span class="n">grouptitle</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">group</span>
+</div>
+<div class="viewcode-block" id="Database.add_table"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.add_table">[docs]</a>    <span class="k">def</span> <span class="nf">add_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">tablename</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">tabletitle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a new table</span>
+<span class="sd">        All groupnames must be directly under root</span>
+
+<span class="sd">        :param groupname: name of the group to add</span>
+<span class="sd">        :type groupname: str</span>
+<span class="sd">        :param tablename: name of the table to add</span>
+<span class="sd">        :type tablename: str</span>
+<span class="sd">        :param description: metadata for the table</span>
+<span class="sd">        :type : str</span>
+<span class="sd">        :param tabletitle: metadata to store in plain english, a title</span>
+<span class="sd">        :type tabletitle: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">open_db</span><span class="p">()</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tablepath</span><span class="p">(</span><span class="n">groupname</span><span class="p">,</span> <span class="n">tablename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tablehandles</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="n">groupname</span><span class="p">,</span>
+                                                        <span class="n">tablename</span><span class="p">,</span>
+                                                        <span class="n">description</span><span class="p">,</span>
+                                                        <span class="n">tabletitle</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tablehandles</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="Database.add_row"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.add_row">[docs]</a>    <span class="k">def</span> <span class="nf">add_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">row_dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a row to the table and flushes the table</span>
+
+<span class="sd">        :param table: handle to the table where the row will reside</span>
+<span class="sd">        :type tablename: pytables Table object</span>
+<span class="sd">        :param row_dict: metadata to store in plain english, a title</span>
+<span class="sd">        :type row_dict: dictionary of row keys and values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">open_db</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">row_dict</span><span class="p">):</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">()</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Database.group_exists"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.group_exists">[docs]</a>    <span class="k">def</span> <span class="nf">group_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_to_group</span><span class="p">,</span> <span class="n">groupname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks whether the group exsts, with that name, at that path</span>
+
+<span class="sd">        :param groupname: name of the group to add</span>
+<span class="sd">        :type groupname: str</span>
+<span class="sd">        :param path_to_group: the database path, starts with &#39;/&#39;</span>
+<span class="sd">        :type path_to_group: str</span>
+<span class="sd">        :returns: returns the group</span>
+<span class="sd">        :rtype: pytables Group object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">open_db</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="n">path_to_group</span><span class="p">,</span>
+                                         <span class="n">name</span><span class="o">=</span><span class="n">groupname</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">tb</span><span class="o">.</span><span class="n">NoSuchNodeError</span><span class="p">:</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="n">group</span>
+</div>
+<div class="viewcode-block" id="Database.open_db"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.open_db">[docs]</a>    <span class="k">def</span> <span class="nf">open_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a handle to the open db&quot;&quot;&quot;</span>
+        <span class="c"># if it is not open, open it.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">isopen</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">h5file</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">h5file</span> <span class="o">=</span> <span class="n">tb</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+            <span class="k">assert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">isopen</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">h5file</span>
+</div>
+<div class="viewcode-block" id="Database.close_db"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.close_db">[docs]</a>    <span class="k">def</span> <span class="nf">close_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Closes all currently open handles to the database.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">nostderr</span><span class="p">():</span>
+            <span class="n">tb</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">_open_files</span><span class="o">.</span><span class="n">close_all</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Database.record_all"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.record_all">[docs]</a>    <span class="k">def</span> <span class="nf">record_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;For each row sent by current recorders, add the row.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">())</span>
+</div>
+<div class="viewcode-block" id="Database.delete_db"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.delete_db">[docs]</a>    <span class="k">def</span> <span class="nf">delete_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If the database exists, delete it&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">os.path</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Database.make_groups"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.make_groups">[docs]</a>    <span class="k">def</span> <span class="nf">make_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;For each group in groups, add group to the db.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_group</span><span class="p">(</span><span class="n">groupname</span><span class="o">=</span><span class="n">g</span><span class="p">[</span><span class="s">&#39;groupname&#39;</span><span class="p">],</span>
+                           <span class="n">grouptitle</span><span class="o">=</span><span class="n">g</span><span class="p">[</span><span class="s">&#39;grouptitle&#39;</span><span class="p">],</span>
+                           <span class="n">path_to_group</span><span class="o">=</span><span class="n">g</span><span class="p">[</span><span class="s">&#39;path&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="Database.make_tables"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.make_tables">[docs]</a>    <span class="k">def</span> <span class="nf">make_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;For each table in tables, add table to the db.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tables</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_table</span><span class="p">(</span><span class="n">groupname</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="s">&#39;groupname&#39;</span><span class="p">],</span>
+                           <span class="n">tablename</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="s">&#39;tablename&#39;</span><span class="p">],</span>
+                           <span class="n">description</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="s">&#39;description&#39;</span><span class="p">],</span>
+                           <span class="n">tabletitle</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="s">&#39;tabletitle&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="Database.set_up_groups"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.set_up_groups">[docs]</a>    <span class="k">def</span> <span class="nf">set_up_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;We know what groups need to exist for a PyRK simulation. This is</span>
+<span class="sd">        their info.</span>
+
+<span class="sd">        :returns: groups that define the simulation in PyRK</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">groups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;groupname&#39;</span><span class="p">:</span> <span class="s">&#39;th&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;grouptitle&#39;</span><span class="p">:</span> <span class="s">&#39;TH&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/&#39;</span><span class="p">})</span>
+        <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;groupname&#39;</span><span class="p">:</span> <span class="s">&#39;neutronics&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;grouptitle&#39;</span><span class="p">:</span> <span class="s">&#39;Neutronics&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/&#39;</span><span class="p">})</span>
+        <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;groupname&#39;</span><span class="p">:</span> <span class="s">&#39;metadata&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;grouptitle&#39;</span><span class="p">:</span> <span class="s">&#39;Simulation Metadata&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;/&#39;</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">groups</span>
+</div>
+<div class="viewcode-block" id="Database.set_up_tables"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.set_up_tables">[docs]</a>    <span class="k">def</span> <span class="nf">set_up_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;We know what tables need to exist for a PyRK simulation. This is</span>
+<span class="sd">        their info.</span>
+
+<span class="sd">        :returns: tables that define the simulation in PyRK</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tables</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">tables</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;groupname&#39;</span><span class="p">:</span> <span class="s">&#39;metadata&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;tablename&#39;</span><span class="p">:</span> <span class="s">&#39;sim_info&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;description&#39;</span><span class="p">:</span> <span class="n">desc</span><span class="o">.</span><span class="n">SimInfoRow</span><span class="p">,</span>
+                       <span class="s">&#39;tabletitle&#39;</span><span class="p">:</span> <span class="s">&#39;Simulation Information&#39;</span><span class="p">})</span>
+        <span class="n">tables</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;groupname&#39;</span><span class="p">:</span> <span class="s">&#39;metadata&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;tablename&#39;</span><span class="p">:</span> <span class="s">&#39;sim_timeseries&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;description&#39;</span><span class="p">:</span> <span class="n">desc</span><span class="o">.</span><span class="n">SimTimeseriesRow</span><span class="p">,</span>
+                       <span class="s">&#39;tabletitle&#39;</span><span class="p">:</span> <span class="s">&#39;Simulation Power Data&#39;</span><span class="p">})</span>
+        <span class="n">tables</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;groupname&#39;</span><span class="p">:</span> <span class="s">&#39;th&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;tablename&#39;</span><span class="p">:</span> <span class="s">&#39;th_params&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;description&#39;</span><span class="p">:</span> <span class="n">desc</span><span class="o">.</span><span class="n">ThMetadataRow</span><span class="p">,</span>
+                       <span class="s">&#39;tabletitle&#39;</span><span class="p">:</span> <span class="s">&#39;TH Component Parameters&#39;</span><span class="p">})</span>
+        <span class="n">tables</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;groupname&#39;</span><span class="p">:</span> <span class="s">&#39;th&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;tablename&#39;</span><span class="p">:</span> <span class="s">&#39;th_timeseries&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;description&#39;</span><span class="p">:</span> <span class="n">desc</span><span class="o">.</span><span class="n">ThTimeseriesRow</span><span class="p">,</span>
+                       <span class="s">&#39;tabletitle&#39;</span><span class="p">:</span> <span class="s">&#39;TH Timeseries&#39;</span><span class="p">})</span>
+        <span class="n">tables</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;groupname&#39;</span><span class="p">:</span> <span class="s">&#39;neutronics&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;tablename&#39;</span><span class="p">:</span> <span class="s">&#39;neutronics_timeseries&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;description&#39;</span><span class="p">:</span> <span class="n">desc</span><span class="o">.</span><span class="n">NeutronicsTimeseriesRow</span><span class="p">,</span>
+                       <span class="s">&#39;tabletitle&#39;</span><span class="p">:</span> <span class="s">&#39;Neutronics Timeseries&#39;</span><span class="p">})</span>
+        <span class="n">tables</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;groupname&#39;</span><span class="p">:</span> <span class="s">&#39;neutronics&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;tablename&#39;</span><span class="p">:</span> <span class="s">&#39;neutronics_params&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;description&#39;</span><span class="p">:</span> <span class="n">desc</span><span class="o">.</span><span class="n">NeutronicsParamsRow</span><span class="p">,</span>
+                       <span class="s">&#39;tabletitle&#39;</span><span class="p">:</span> <span class="s">&#39;Neutronics Metadata&#39;</span><span class="p">})</span>
+        <span class="n">tables</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;groupname&#39;</span><span class="p">:</span> <span class="s">&#39;neutronics&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;tablename&#39;</span><span class="p">:</span> <span class="s">&#39;zetas&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;description&#39;</span><span class="p">:</span> <span class="n">desc</span><span class="o">.</span><span class="n">ZetasTimestepRow</span><span class="p">,</span>
+                       <span class="s">&#39;tabletitle&#39;</span><span class="p">:</span> <span class="s">&#39;Neutron Precursor Concentrations&#39;</span><span class="p">})</span>
+        <span class="n">tables</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;groupname&#39;</span><span class="p">:</span> <span class="s">&#39;neutronics&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;tablename&#39;</span><span class="p">:</span> <span class="s">&#39;omegas&#39;</span><span class="p">,</span>
+                       <span class="s">&#39;description&#39;</span><span class="p">:</span> <span class="n">desc</span><span class="o">.</span><span class="n">OmegasTimestepRow</span><span class="p">,</span>
+                       <span class="s">&#39;tabletitle&#39;</span><span class="p">:</span> <span class="s">&#39;Decay Heat Fractions&#39;</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">tables</span>
+</div>
+<div class="viewcode-block" id="Database.register_recorder"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.register_recorder">[docs]</a>    <span class="k">def</span> <span class="nf">register_recorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">tablename</span><span class="p">,</span> <span class="n">recorder</span><span class="p">,</span>
+                          <span class="n">timeseries</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Register an entity that wants to represent itself in the Database</span>
+
+<span class="sd">        :param groupname: name of the group to add</span>
+<span class="sd">        :type groupname: str</span>
+<span class="sd">        :param path_to_group: the database path, starts with &#39;/&#39;</span>
+<span class="sd">        :type path_to_group: str</span>
+<span class="sd">        :param recorder: a function pointer that returns a table row</span>
+<span class="sd">        :type recorder: function object</span>
+<span class="sd">        :param timeseries: should this be recorded each timestep?</span>
+<span class="sd">        :type timeseries: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">open_db</span><span class="p">()</span>
+        <span class="n">tab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="n">groupname</span><span class="p">,</span> <span class="n">tablename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">timeseries</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">recorder</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tab</span><span class="p">,</span> <span class="n">recorder</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="Database.get_tablepath"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.get_tablepath">[docs]</a>    <span class="k">def</span> <span class="nf">get_tablepath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">tablename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compiles the string for a table within a group</span>
+
+<span class="sd">        :param groupname: name of the group</span>
+<span class="sd">        :type groupname: str</span>
+<span class="sd">        :param tablename: name of the table in the group</span>
+<span class="sd">        :type tablename: str</span>
+<span class="sd">        :returns: the path to the table in the group</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&#39;/&#39;</span><span class="o">+</span><span class="n">groupname</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="n">tablename</span>
+</div>
+<div class="viewcode-block" id="Database.get_table"><a class="viewcode-back" href="../../../src/pyrk.db.database.html#pyrk.db.database.Database.get_table">[docs]</a>    <span class="k">def</span> <span class="nf">get_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">tablename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the table handle for a table within a group</span>
+
+<span class="sd">        :param groupname: name of the group</span>
+<span class="sd">        :type groupname: str</span>
+<span class="sd">        :param tablename: name of the table in the group</span>
+<span class="sd">        :type tablename: str</span>
+<span class="sd">        :returns: the path to the table in the group</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">open_db</span><span class="p">()</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tablepath</span><span class="p">(</span><span class="n">groupname</span><span class="p">,</span> <span class="n">tablename</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tablehandles</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;table path &quot;</span> <span class="o">+</span> <span class="n">p</span> <span class="o">+</span> <span class="s">&quot; not found among table handles.&quot;</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

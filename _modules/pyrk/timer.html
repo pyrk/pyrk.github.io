@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>pyrk.timer &mdash; pyrk  documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,14 +46,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         
-
+          <a href="../../index.html" class="fa fa-home"> pyrk</a>
         
-          <a href="../../index.html" class="icon icon-home"> pyrk
-        
-
-        
-        </a>
-
         
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -62,8 +56,6 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
@@ -112,8 +104,6 @@
     <li>pyrk.timer</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-        
       </li>
   </ul>
   <hr/>
@@ -134,7 +124,8 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">t0</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">,</span>
                  <span class="n">tf</span><span class="o">=</span><span class="mf">1.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">,</span>
-                 <span class="n">dt</span><span class="o">=</span><span class="mf">1.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">):</span>
+                 <span class="n">dt</span><span class="o">=</span><span class="mf">1.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">,</span>
+                 <span class="n">t_feedback</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize the timer object. There should be only one.</span>
 
 <span class="sd">        :param t0: first times in the simulation</span>
@@ -145,13 +136,15 @@
 <span class="sd">        :type dt: float, units of seconds</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">t0</span> <span class="o">=</span> <span class="n">validation</span><span class="o">.</span><span class="n">validate_ge</span><span class="p">(</span><span class="s">&quot;t0&quot;</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tf</span> <span class="o">=</span> <span class="n">validation</span><span class="o">.</span><span class="n">validate_ge</span><span class="p">(</span><span class="s">&quot;tf&quot;</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="n">t0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t_feedback</span> <span class="o">=</span> <span class="n">validation</span><span class="o">.</span><span class="n">validate_ge</span><span class="p">(</span><span class="s">&quot;t_feedback&quot;</span><span class="p">,</span> <span class="n">t_feedback</span><span class="p">,</span> <span class="n">t0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tf</span> <span class="o">=</span> <span class="n">validation</span><span class="o">.</span><span class="n">validate_ge</span><span class="p">(</span><span class="s">&quot;tf&quot;</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="n">t_feedback</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">=</span> <span class="n">validation</span><span class="o">.</span><span class="n">validate_ge</span><span class="p">(</span><span class="s">&quot;dt&quot;</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">series</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">t0</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
                                                  <span class="n">stop</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
                                                  <span class="n">num</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timesteps</span><span class="p">()),</span>
                                      <span class="s">&#39;seconds&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ts</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t_idx_feedback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_idx</span><span class="p">(</span><span class="n">t_feedback</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Timer.t_idx"><a class="viewcode-back" href="../../src/pyrk.timer.html#pyrk.timer.Timer.t_idx">[docs]</a>    <span class="k">def</span> <span class="nf">t_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;given the actual time, in seconds, this returns the index of t.</span>
@@ -233,10 +226,10 @@
         &copy; Copyright 2015, Kathryn D. Huff.
     </p>
   </div>
+
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
+  
 </footer>
-
         </div>
       </div>
 

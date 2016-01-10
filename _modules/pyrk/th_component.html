@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>pyrk.th_component &mdash; pyrk  documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,14 +46,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         
-
+          <a href="../../index.html" class="fa fa-home"> pyrk</a>
         
-          <a href="../../index.html" class="icon icon-home"> pyrk
-        
-
-        
-        </a>
-
         
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -62,8 +56,6 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
@@ -112,8 +104,6 @@
     <li>pyrk.th_component</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-        
       </li>
   </ul>
   <hr/>
@@ -121,14 +111,17 @@
           <div role="main" class="document">
             
   <h1>Source code for pyrk.th_component</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">six</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">inp</span> <span class="kn">import</span> <span class="n">validation</span>
 <span class="kn">from</span> <span class="nn">utilities.ur</span> <span class="kn">import</span> <span class="n">units</span>
-<span class="kn">from</span> <span class="nn">density_model</span> <span class="kn">import</span> <span class="n">DensityModel</span>
 <span class="kn">from</span> <span class="nn">timer</span> <span class="kn">import</span> <span class="n">Timer</span>
+<span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">from</span> <span class="nn">materials.material</span> <span class="kn">import</span> <span class="n">Material</span>
 
+
 <div class="viewcode-block" id="THComponent"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent">[docs]</a><span class="k">class</span> <span class="nc">THComponent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
     <span class="sd">&quot;&quot;&quot;This class represents a component of the system it has material and</span>
 <span class="sd">    geometric properties essential to thermal modeling and heat transfer in</span>
 <span class="sd">    support of calculations related to the thermal hydraulics sub block</span>
@@ -136,18 +129,23 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="n">mat</span><span class="o">=</span><span class="n">Material</span><span class="p">(),</span>
-                 <span class="n">vol</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span>
-                 <span class="n">T0</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">,</span>
+                 <span class="n">vol</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span>
+                 <span class="n">T0</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">,</span>
                  <span class="n">alpha_temp</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">delta_k</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">,</span>
                  <span class="n">timer</span><span class="o">=</span><span class="n">Timer</span><span class="p">(),</span>
                  <span class="n">heatgen</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                 <span class="n">power_tot</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="p">):</span>
+                 <span class="n">power_tot</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="p">,</span>
+                 <span class="n">sph</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                 <span class="n">ri</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>
+                 <span class="n">ro</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initalizes a thermal hydraulic component.</span>
 <span class="sd">        A thermal-hydraulic component will be treated as one &quot;lump&quot; in the</span>
 <span class="sd">        lumped capacitance model.</span>
 
 <span class="sd">        :param name: The name of the component (i.e., &quot;fuel&quot; or &quot;cool&quot;)</span>
 <span class="sd">        :type name: str.</span>
+<span class="sd">        :param mat: The material of this component</span>
+<span class="sd">        :type mat: Material object</span>
 <span class="sd">        :param vol: The volume of the component</span>
 <span class="sd">        :type vol: float meter**3</span>
 <span class="sd">        :param T0: The initial temperature of the component</span>
@@ -158,30 +156,80 @@
 <span class="sd">        :type timer: Timer object</span>
 <span class="sd">        :param heatgen: is this component a heat generator (fuel)</span>
 <span class="sd">        :type heatgen: bool</span>
+<span class="sd">        :param power_tot: power generated in this component</span>
+<span class="sd">        :type power_tot: float</span>
+<span class="sd">        :param sph: is this component a spherical component, spherical</span>
+<span class="sd">        equations for heatgen, conduction are different,</span>
+<span class="sd">        post-processing is different too</span>
+<span class="sd">        :type sph: bool</span>
+<span class="sd">        :param ri: inner radius of the sph/annular component, ri=0 for sphere</span>
+<span class="sd">        :type ri: float</span>
+<span class="sd">        :param ro: outer radius of the sph/annular component,</span>
+<span class="sd">        ro=radius for sphere</span>
+<span class="sd">        :type ro: float</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vol</span> <span class="o">=</span> <span class="n">vol</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;meter**3&#39;</span><span class="p">)</span>
-        <span class="n">validation</span><span class="o">.</span><span class="n">validate_ge</span><span class="p">(</span><span class="s">&quot;vol&quot;</span><span class="p">,</span> <span class="n">vol</span><span class="p">,</span> <span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mat</span> <span class="o">=</span> <span class="n">mat</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">mat</span><span class="o">.</span><span class="n">k</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cp</span> <span class="o">=</span> <span class="n">mat</span><span class="o">.</span><span class="n">cp</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dm</span> <span class="o">=</span> <span class="n">mat</span><span class="o">.</span><span class="n">dm</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">T0</span> <span class="o">=</span> <span class="n">T0</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;kelvin&#39;</span><span class="p">)</span>
-        <span class="n">validation</span><span class="o">.</span><span class="n">validate_num</span><span class="p">(</span><span class="s">&quot;T&quot;</span><span class="p">,</span> <span class="n">T0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">timer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">timer</span><span class="o">.</span><span class="n">timesteps</span><span class="p">(),),</span>
                                          <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="s">&#39;kelvin&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">T0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T0</span> <span class="o">=</span> <span class="n">T0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alpha_temp</span> <span class="o">=</span> <span class="n">alpha_temp</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;delta_k/kelvin&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">timer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">heatgen</span> <span class="o">=</span> <span class="n">heatgen</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">power_tot</span> <span class="o">=</span> <span class="n">power_tot</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cond</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">conv</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adv</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cust</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prev_t_idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">convBC</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sph</span> <span class="o">=</span> <span class="n">sph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ri</span> <span class="o">=</span> <span class="n">ri</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;meter&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ro</span> <span class="o">=</span> <span class="n">ro</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;meter&#39;</span><span class="p">)</span>
 
+<div class="viewcode-block" id="THComponent.mesh"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.mesh">[docs]</a>    <span class="k">def</span> <span class="nf">mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;cut a THComponent into a list of smaller components</span>
+<span class="sd">        uniform meshing method, only implemented for spherical components</span>
+
+<span class="sd">        :param size: size of uniform mesh element</span>
+<span class="sd">        :type size: float with length unit</span>
+<span class="sd">        :return: list of smaller components</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sph</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s">&#39;mesh function only implemented for spherical component&#39;</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">ri</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s">&#39;mesh size can not be larger than the thickness of the shell&#39;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">ro</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">ri</span><span class="p">)</span><span class="o">/</span><span class="n">size</span><span class="p">))</span>
+        <span class="n">to_ret</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+            <span class="n">ri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ri</span><span class="o">+</span><span class="n">i</span><span class="o">*</span><span class="n">size</span>
+            <span class="n">ro</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ri</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">size</span>
+            <span class="n">vol</span> <span class="o">=</span> <span class="mf">4.0</span><span class="o">/</span><span class="mf">3.0</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">ro</span><span class="o">**</span><span class="mi">3</span><span class="o">-</span><span class="n">ri</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+            <span class="n">power_tot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">power_tot</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">vol</span><span class="o">*</span><span class="n">vol</span>
+            <span class="n">alpha_temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha_temp</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">vol</span><span class="o">*</span><span class="n">vol</span>
+            <span class="n">to_ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">THComponent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s">&#39;</span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span>
+                                      <span class="n">mat</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mat</span><span class="p">,</span>
+                                      <span class="n">vol</span><span class="o">=</span><span class="n">vol</span><span class="p">,</span>
+                                      <span class="n">T0</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">T0</span><span class="p">,</span>
+                                      <span class="n">alpha_temp</span><span class="o">=</span><span class="n">alpha_temp</span><span class="p">,</span>
+                                      <span class="n">timer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="p">,</span>
+                                      <span class="n">heatgen</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">heatgen</span><span class="p">,</span>
+                                      <span class="n">power_tot</span><span class="o">=</span><span class="n">power_tot</span><span class="p">,</span>
+                                      <span class="n">sph</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sph</span><span class="p">,</span>
+                                      <span class="n">ri</span><span class="o">=</span><span class="n">ri</span><span class="p">,</span> <span class="n">ro</span><span class="o">=</span><span class="n">ro</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">to_ret</span>
+</div>
 <div class="viewcode-block" id="THComponent.temp"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.temp">[docs]</a>    <span class="k">def</span> <span class="nf">temp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestep</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The temperature of this component at the chosen timestep</span>
+
 <span class="sd">        :param timestep: the timestep at which to query the temperature</span>
 <span class="sd">        :type timestep: int</span>
 <span class="sd">        :return: the temperature of the component at the chosen timestep</span>
@@ -193,6 +241,7 @@
 </div>
 <div class="viewcode-block" id="THComponent.rho"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.rho">[docs]</a>    <span class="k">def</span> <span class="nf">rho</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestep</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;The density of this component&#39;s materials</span>
+
 <span class="sd">        :param timestep: the timestep at which to query the temperature</span>
 <span class="sd">        :type timestep: int</span>
 <span class="sd">        :return: the density of this component</span>
@@ -203,6 +252,7 @@
 </div>
 <div class="viewcode-block" id="THComponent.update_temp"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.update_temp">[docs]</a>    <span class="k">def</span> <span class="nf">update_temp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Updates the temperature</span>
+
 <span class="sd">        :param timestep: the timestep at which to query the temperature</span>
 <span class="sd">        :type timestep: int</span>
 <span class="sd">        :param temp: the new temperature</span>
@@ -212,30 +262,236 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">prev_t_idx</span> <span class="o">=</span> <span class="n">timestep</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">timestep</span><span class="p">]</span>
 </div>
-<div class="viewcode-block" id="THComponent.dtemp"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.dtemp">[docs]</a>    <span class="k">def</span> <span class="nf">dtemp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_t_idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">prev_t_idx</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">prev_t_idx</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<div class="viewcode-block" id="THComponent.dtemp"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.dtemp">[docs]</a>    <span class="k">def</span> <span class="nf">dtemp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestep</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;calculate temperature difference between the given timestep and the</span>
+<span class="sd">        timestep where feedback is turned on</span>
+
+<span class="sd">        :param timestep: the timestep at which to query the tempareture</span>
+<span class="sd">        :type timestep: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">T0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_idx_feedback</span><span class="p">]</span>
+        <span class="c"># timestep -1 because timestep hasn&#39;t been updated yet, is 0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">timestep</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">T0</span>
 </div>
-<div class="viewcode-block" id="THComponent.temp_reactivity"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.temp_reactivity">[docs]</a>    <span class="k">def</span> <span class="nf">temp_reactivity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha_temp</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dtemp</span><span class="p">()</span>
+<div class="viewcode-block" id="THComponent.temp_reactivity"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.temp_reactivity">[docs]</a>    <span class="k">def</span> <span class="nf">temp_reactivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestep</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;calculate reactivity of a component from temperature feedback</span>
+
+<span class="sd">        :param timestep: the timestep at which to calculate reactivity feedback</span>
+<span class="sd">        :type timestep: int</span>
+<span class="sd">        :param T0_timestep: the timestep at which the temperature is used as</span>
+<span class="sd">        reference temperature</span>
+<span class="sd">        :type T0_timestep: int</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">assert</span> <span class="n">timestep</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_idx_feedback</span><span class="p">,</span> <span class="s">&quot;timestep that feedback</span><span class="se">\</span>
+<span class="s">            starts </span><span class="si">%f</span><span class="s"> should be prior to the timestep </span><span class="si">%f</span><span class="s"> for temp feedback</span><span class="se">\</span>
+<span class="s">            calculation&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_idx_feedback</span><span class="p">,</span> <span class="n">timestep</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha_temp</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dtemp</span><span class="p">(</span><span class="n">timestep</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="THComponent.add_convection"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.add_convection">[docs]</a>    <span class="k">def</span> <span class="nf">add_convection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">area</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;add convection in the self.conv dictionary</span>
+
+<span class="sd">        :param env: name of the component that heat is transfered to/from</span>
+<span class="sd">        :type env: str</span>
+<span class="sd">        :param h: heat transfer coefficient</span>
+<span class="sd">        :type h: float</span>
+<span class="sd">        :param area: heat transfer area</span>
+<span class="sd">        :type area: float</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">[</span><span class="n">env</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s">&quot;h&quot;</span><span class="p">:</span> <span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;joule/second/kelvin/meter**2&#39;</span><span class="p">),</span>
-            <span class="s">&quot;area&quot;</span><span class="p">:</span> <span class="n">area</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;meter**2&#39;</span><span class="p">)</span>
+            <span class="s">&quot;area&quot;</span><span class="p">:</span> <span class="n">area</span>
         <span class="p">}</span>
-</div>
-<div class="viewcode-block" id="THComponent.add_conduction"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.add_conduction">[docs]</a>    <span class="k">def</span> <span class="nf">add_conduction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">area</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cond</span><span class="p">[</span><span class="n">env</span><span class="p">]</span> <span class="o">=</span> <span class="n">area</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;meter**2&#39;</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="THComponent.add_mass_trans"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.add_mass_trans">[docs]</a>    <span class="k">def</span> <span class="nf">add_mass_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mass</span><span class="p">[</span><span class="n">env</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;H&quot;</span><span class="p">:</span> <span class="n">H</span><span class="p">,</span>
                           <span class="s">&quot;u&quot;</span><span class="p">:</span> <span class="n">u</span><span class="p">}</span>
 </div>
 <div class="viewcode-block" id="THComponent.add_custom"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.add_custom">[docs]</a>    <span class="k">def</span> <span class="nf">add_custom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cust</span><span class="p">[</span><span class="n">env</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;res&quot;</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="p">)}</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cust</span><span class="p">[</span><span class="n">env</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;res&quot;</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="p">)}</span>
+</div>
+<div class="viewcode-block" id="THComponent.addConvBC"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.addConvBC">[docs]</a>    <span class="k">def</span> <span class="nf">addConvBC</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">prev_comp</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">R</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;add convective boundary condition</span>
+
+<span class="sd">        :param env: name of the environment for convective heat transfer</span>
+<span class="sd">        (the fluid)</span>
+<span class="sd">        :type env: str</span>
+<span class="sd">        :param prev_comp: name of the component that is immediately inside the</span>
+<span class="sd">        boundary component</span>
+<span class="sd">        :type prev_comp: str</span>
+<span class="sd">        :param h: convective heat transfer coefficient</span>
+<span class="sd">        :type h: float</span>
+<span class="sd">        :param R: radius of the sphere</span>
+<span class="sd">        :type R: float</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">convBC</span><span class="p">[</span><span class="n">env</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;h&quot;</span><span class="p">:</span> <span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;joule/second/kelvin/meter**2&#39;</span><span class="p">),</span>
+            <span class="s">&quot;prev_comp&quot;</span><span class="p">:</span> <span class="n">prev_comp</span><span class="p">,</span>
+            <span class="s">&quot;R&quot;</span><span class="p">:</span> <span class="n">R</span>
+        <span class="p">}</span>
+</div>
+<div class="viewcode-block" id="THComponent.add_conduction"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.add_conduction">[docs]</a>    <span class="k">def</span> <span class="nf">add_conduction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>
+                       <span class="n">r_b</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span> <span class="n">r_env</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Add parameters for conduction heat transfer calculation</span>
+<span class="sd">        area and L are used for slab geometry</span>
+<span class="sd">        r_b and r_env are used for spherical heat diffusion</span>
+
+<span class="sd">        :param env: name of the component that this component conduct heat to</span>
+<span class="sd">        :type env: str</span>
+<span class="sd">        :param area: conduction surface for the slab</span>
+<span class="sd">        :type area: float</span>
+<span class="sd">        :param L: thickness of the slab</span>
+<span class="sd">        :type L: float</span>
+<span class="sd">        :param r_b: outer radius of the component</span>
+<span class="sd">        :type r_b: float</span>
+<span class="sd">        :param r_env: outer radius of the environment</span>
+<span class="sd">        :type r_env: float</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cond</span><span class="p">[</span><span class="n">env</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;area&quot;</span><span class="p">:</span> <span class="n">area</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;meter**2&#39;</span><span class="p">),</span>
+            <span class="s">&quot;L&quot;</span><span class="p">:</span> <span class="n">L</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;meter&#39;</span><span class="p">),</span>
+            <span class="s">&quot;r_b&quot;</span><span class="p">:</span> <span class="n">r_b</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;meter&#39;</span><span class="p">),</span>
+            <span class="s">&quot;r_env&quot;</span><span class="p">:</span> <span class="n">r_env</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;meter&#39;</span><span class="p">)</span>
+        <span class="p">}</span>
+</div>
+<div class="viewcode-block" id="THComponent.add_advection"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.add_advection">[docs]</a>    <span class="k">def</span> <span class="nf">add_advection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">m_flow</span><span class="p">,</span> <span class="n">t_in</span><span class="p">,</span> <span class="n">cp</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Add advection dictionary to the fluid component(coolant) that has</span>
+<span class="sd">        advective heat tranfer</span>
+
+<span class="sd">        :param m_flow: mass flow rate</span>
+<span class="sd">        :type m_flow: float</span>
+<span class="sd">        :param t_in: temperature at the inlet of the control volume</span>
+<span class="sd">        :type t_in: float</span>
+<span class="sd">        :param cp: specific heat capacity</span>
+<span class="sd">        :type cp: float</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adv</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;m_flow&quot;</span><span class="p">:</span> <span class="n">m_flow</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;kg/second&#39;</span><span class="p">),</span>
+            <span class="s">&quot;t_in&quot;</span><span class="p">:</span> <span class="n">t_in</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;kelvin&#39;</span><span class="p">),</span>
+            <span class="s">&quot;cp&quot;</span><span class="p">:</span> <span class="n">cp</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;joule/kg/kelvin&#39;</span><span class="p">)</span>
+        <span class="p">}</span>
+</div>
+<div class="viewcode-block" id="THComponent.metadata"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.metadata">[docs]</a>    <span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A recorder function to fill the th/th_params table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rec</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;component&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+               <span class="s">&#39;vol&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;matname&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mat</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+               <span class="s">&#39;k&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;cp&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;T0&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">T0</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;alpha_temp&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha_temp</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;heatgen&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">heatgen</span><span class="p">,</span>
+               <span class="s">&#39;power_tot&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">power_tot</span><span class="o">.</span><span class="n">magnitude</span>
+               <span class="p">}</span>
+        <span class="k">return</span> <span class="n">rec</span>
+</div>
+<div class="viewcode-block" id="THComponent.record"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.record">[docs]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A recorder function to fill the th/th_timeseries table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timestep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_t_idx</span>
+        <span class="n">rec</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;t_idx&#39;</span><span class="p">:</span> <span class="n">timestep</span><span class="p">,</span>
+               <span class="s">&#39;component&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+               <span class="s">&#39;temp&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp</span><span class="p">(</span><span class="n">timestep</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;density&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">(</span><span class="n">timestep</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;k&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;cp&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cp</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;alpha_temp&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha_temp</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span>
+               <span class="s">&#39;heatgen&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">heatgen</span><span class="p">,</span>
+               <span class="s">&#39;power_tot&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">power_tot</span><span class="o">.</span><span class="n">magnitude</span>
+               <span class="p">}</span>
+        <span class="k">return</span> <span class="n">rec</span>
+
+</div></div>
+<div class="viewcode-block" id="THSuperComponent"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THSuperComponent">[docs]</a><span class="k">class</span> <span class="nc">THSuperComponent</span><span class="p">(</span><span class="n">THComponent</span><span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39;A &#39;component&#39; containing a list of component</span>
+<span class="sd">    Creating a superComponent would automatically define conduction between the</span>
+<span class="sd">    mesh elements&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">T0</span><span class="p">,</span> <span class="n">sub_comp</span><span class="o">=</span><span class="p">[],</span> <span class="n">timer</span><span class="o">=</span><span class="n">Timer</span><span class="p">()):</span>
+        <span class="sd">&quot;&quot;&quot;Initalizes a thermal hydraulic super component.</span>
+
+<span class="sd">        :param name: The name of the supercomponent (i.e., &quot;fuel&quot; or &quot;cool&quot;)</span>
+<span class="sd">        :type name: str.</span>
+<span class="sd">        :param T0: The initial temperature of the supercomponent</span>
+<span class="sd">        :type T0: float.</span>
+<span class="sd">        :param sub_comp: List of components that makes up the supercomponent.</span>
+<span class="sd">        The sub_components should be in order from the center to the outside</span>
+<span class="sd">        :type sub_comp: list of THComponent</span>
+<span class="sd">        :param timer: The timer instance for the sim</span>
+<span class="sd">        :type timer: Timer object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">THComponent</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                             <span class="n">mat</span><span class="o">=</span><span class="n">Material</span><span class="p">(),</span>
+                             <span class="n">vol</span><span class="o">=</span><span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span>
+                             <span class="n">T0</span><span class="o">=</span><span class="n">T0</span><span class="p">,</span>
+                             <span class="n">alpha_temp</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">delta_k</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">,</span>
+                             <span class="n">timer</span><span class="o">=</span><span class="n">timer</span><span class="p">,</span>
+                             <span class="n">heatgen</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                             <span class="n">power_tot</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="p">,</span>
+                             <span class="n">sph</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                             <span class="n">ri</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>
+                             <span class="n">ro</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span> <span class="o">=</span> <span class="n">sub_comp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">timer</span><span class="o">.</span><span class="n">timesteps</span><span class="p">(),),</span>
+                                         <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="s">&#39;kelvin&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">T0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_conduction_in_mesh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha_temp</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">delta_k</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span>
+
+<div class="viewcode-block" id="THSuperComponent.compute_tr"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THSuperComponent.compute_tr">[docs]</a>    <span class="k">def</span> <span class="nf">compute_tr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_env</span><span class="p">,</span> <span class="n">t_innercomp</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;compute temperature at r=R for the sphere from the temperature at r=R-dr</span>
+<span class="sd">        and the temperature of the env/fluid/coolant</span>
+
+<span class="sd">        :param t_env: temperature of the component(env) that self tranfers</span>
+<span class="sd">        heat with</span>
+<span class="sd">        :type t_env: float</span>
+<span class="sd">        :param t_innercomp: temperature of the component that is inside self</span>
+<span class="sd">        :type t_innercomp: float</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">envname</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">):</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">[</span><span class="n">envname</span><span class="p">][</span><span class="s">&quot;h&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">[</span><span class="n">envname</span><span class="p">][</span><span class="s">&quot;k&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span>
+            <span class="n">dr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">[</span><span class="n">envname</span><span class="p">][</span><span class="s">&quot;dr&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">h</span><span class="o">/</span><span class="n">k</span><span class="o">*</span><span class="n">t_env</span><span class="o">+</span><span class="n">t_innercomp</span><span class="o">/</span><span class="n">dr</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">dr</span><span class="o">-</span><span class="n">h</span><span class="o">/</span><span class="n">k</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="THSuperComponent.add_component"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THSuperComponent.add_component">[docs]</a>    <span class="k">def</span> <span class="nf">add_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_component</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_component</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="THSuperComponent.add_conv_bc"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THSuperComponent.add_conv_bc">[docs]</a>    <span class="k">def</span> <span class="nf">add_conv_bc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envname</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;add convective boundary condition to the supercomponent</span>
+
+<span class="sd">        :param envname: the name of the component that self tranfer heat with</span>
+<span class="sd">        :type envname: str</span>
+<span class="sd">        :param h: convective heat transfer coefficient</span>
+<span class="sd">        :type h: float</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">addConvBC</span><span class="p">(</span><span class="n">envname</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                    <span class="n">h</span><span class="p">,</span>
+                                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ro</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">[</span><span class="n">envname</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;h&#39;</span><span class="p">:</span> <span class="n">h</span><span class="p">,</span>
+                              <span class="s">&#39;k&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">k</span><span class="p">,</span>
+                              <span class="s">&#39;dr&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ro</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ri</span>
+                              <span class="p">}</span>
+</div>
+<div class="viewcode-block" id="THSuperComponent.add_conduction_in_mesh"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THSuperComponent.add_conduction_in_mesh">[docs]</a>    <span class="k">def</span> <span class="nf">add_conduction_in_mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;add conduction between the mesh elements</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">)</span>
+        <span class="c"># element i=0:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">add_conduction</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="c"># element i=1:elementNb-3</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="mi">2</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">add_conduction</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">add_conduction</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="c"># element i=elementNb-2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">add_conduction</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sub_comp</span><span class="p">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>
@@ -249,10 +505,10 @@
         &copy; Copyright 2015, Kathryn D. Huff.
     </p>
   </div>
+
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
+  
 </footer>
-
         </div>
       </div>
 

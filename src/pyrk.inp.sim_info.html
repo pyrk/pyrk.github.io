@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>pyrk.inp.sim_info module &mdash; pyrk  documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -33,7 +33,7 @@
     <link rel="top" title="pyrk  documentation" href="../index.html"/> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -45,14 +45,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         
-
+          <a href="../index.html" class="fa fa-home"> pyrk</a>
         
-          <a href="../index.html" class="icon icon-home"> pyrk
-        
-
-        
-        </a>
-
         
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -61,8 +55,6 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
@@ -109,9 +101,7 @@
     <li>pyrk.inp.sim_info module</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="../_sources/src/pyrk.inp.sim_info.txt" rel="nofollow"> View page source</a>
-          
+          <a href="../_sources/src/pyrk.inp.sim_info.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
@@ -123,7 +113,7 @@
 <span id="pyrk-inp-sim-info-module"></span><h1>pyrk.inp.sim_info module<a class="headerlink" href="#module-pyrk.inp.sim_info" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyrk.inp.sim_info.SimInfo">
-<em class="property">class </em><code class="descclassname">pyrk.inp.sim_info.</code><code class="descname">SimInfo</code><span class="sig-paren">(</span><em>timer=&lt;timer.Timer object&gt;</em>, <em>components={}</em>, <em>iso='u235'</em>, <em>e='thermal'</em>, <em>n_precursors=6</em>, <em>n_decay=11</em>, <em>kappa=0.0</em>, <em>rho_ext=None</em>, <em>feedback=False</em>, <em>plotdir='images'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyrk.inp.sim_info.</code><code class="descname">SimInfo</code><span class="sig-paren">(</span><em>timer=&lt;timer.Timer object&gt;</em>, <em>components={}</em>, <em>iso='u235'</em>, <em>e='thermal'</em>, <em>n_precursors=6</em>, <em>n_decay=11</em>, <em>kappa=0.0</em>, <em>rho_ext=None</em>, <em>feedback=False</em>, <em>plotdir='images'</em>, <em>infile=None</em>, <em>sim_id=None</em>, <em>db=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <p>This class holds information about a reactor kinetics simulation</p>
 <dl class="method">
@@ -141,6 +131,40 @@ thermal-hydralic components. They are held in a dictionary.</p>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="method">
+<dt id="pyrk.inp.sim_info.SimInfo.generate_sim_id">
+<code class="descname">generate_sim_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.generate_sim_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.generate_sim_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates sim id, unique to this simulation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.inp.sim_info.SimInfo.get_git_revision_hash">
+<code class="descname">get_git_revision_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.get_git_revision_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.get_git_revision_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyrk.inp.sim_info.SimInfo.get_git_revision_short_hash">
+<code class="descname">get_git_revision_short_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.get_git_revision_short_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.get_git_revision_short_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyrk.inp.sim_info.SimInfo.get_input_blob">
+<code class="descname">get_input_blob</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.get_input_blob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.get_input_blob" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyrk.inp.sim_info.SimInfo.get_timestamp">
+<code class="descname">get_timestamp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.get_timestamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.get_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="pyrk.inp.sim_info.SimInfo.init_ne">
@@ -163,6 +187,12 @@ thermal-hydralic components. They are held in a dictionary.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyrk.inp.sim_info.SimInfo.metadata">
+<code class="descname">metadata</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>A recorder function for the metadata/sim_info table</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyrk.inp.sim_info.SimInfo.n_components">
 <code class="descname">n_components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.n_components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.n_components" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of components in the simulation.</p>
@@ -172,6 +202,19 @@ thermal-hydralic components. They are held in a dictionary.</p>
 <dt id="pyrk.inp.sim_info.SimInfo.n_entries">
 <code class="descname">n_entries</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.n_entries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.n_entries" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of entries in the pde to be solved</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.inp.sim_info.SimInfo.record">
+<code class="descname">record</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.record" title="Permalink to this definition">¶</a></dt>
+<dd><p>A recorder function for the metadata/sim_timeseries table</p>
+<p>TODO: reconsider the database structure.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyrk.inp.sim_info.SimInfo.register_recorders">
+<code class="descname">register_recorders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/sim_info.html#SimInfo.register_recorders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.sim_info.SimInfo.register_recorders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers the function pointers that return database rows</p>
 </dd></dl>
 
 </dd></dl>
@@ -190,10 +233,10 @@ thermal-hydralic components. They are held in a dictionary.</p>
         &copy; Copyright 2015, Kathryn D. Huff.
     </p>
   </div>
+
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
+  
 </footer>
-
         </div>
       </div>
 

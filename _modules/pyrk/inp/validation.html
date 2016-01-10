@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>pyrk.inp.validation &mdash; pyrk  documentation</title>
@@ -15,6 +14,7 @@
   
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -34,7 +34,7 @@
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
@@ -46,14 +46,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         
-
+          <a href="../../../index.html" class="fa fa-home"> pyrk</a>
         
-          <a href="../../../index.html" class="icon icon-home"> pyrk
-        
-
-        
-        </a>
-
         
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -62,8 +56,6 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
@@ -112,8 +104,6 @@
     <li>pyrk.inp.validation</li>
       <li class="wy-breadcrumbs-aside">
         
-          
-        
       </li>
   </ul>
   <hr/>
@@ -122,7 +112,9 @@
             
   <h1>Source code for pyrk.inp.validation</h1><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">utilities.ur</span> <span class="kn">import</span> <span class="n">units</span>
-
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,):</span>
+    <span class="nb">long</span> <span class="o">=</span> <span class="nb">int</span>
 
 <div class="viewcode-block" id="validate_ge"><a class="viewcode-back" href="../../../src/pyrk.inp.validation.html#pyrk.inp.validation.validate_ge">[docs]</a><span class="k">def</span> <span class="nf">validate_ge</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">llim</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Raises errors if the value is less than the lower limit (llim) or if it</span>
@@ -235,10 +227,10 @@
         &copy; Copyright 2015, Kathryn D. Huff.
     </p>
   </div>
+
   Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
+  
 </footer>
-
         </div>
       </div>
 

@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyrk.db.tests.test_database &mdash; pyrk  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyrk  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../../../index.html" class="fa fa-home"> pyrk</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#the-prke">The PRKE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#material-library">Material Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#data-library">Data Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../overview.html#the-future">The Future</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">PyRK Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../src/index.html">PyRK API</a></li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyrk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyrk.db.tests.test_database</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <h1>Source code for pyrk.db.tests.test_database</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">nose.tools</span> <span class="kn">import</span> <span class="n">assert_equal</span><span class="p">,</span> <span class="n">assert_almost_equal</span><span class="p">,</span> <span class="n">assert_true</span><span class="p">,</span> \
+    <span class="n">assert_false</span><span class="p">,</span> <span class="n">assert_raises</span><span class="p">,</span> <span class="n">assert_is_instance</span><span class="p">,</span> <span class="n">with_setup</span>
+
+<span class="kn">from</span> <span class="nn">db</span> <span class="kn">import</span> <span class="n">database</span> <span class="k">as</span> <span class="n">d</span>
+
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<div class="viewcode-block" id="dictfunc"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.dictfunc">[docs]</a><span class="k">def</span> <span class="nf">dictfunc</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;t0&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
+</div>
+<div class="viewcode-block" id="DatabaseTest"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest">[docs]</a><span class="k">class</span> <span class="nc">DatabaseTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="DatabaseTest.setUp"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">&quot;set up test fixtures&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="s">&#39;testfile.h5&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DatabaseTest.tearDown"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">&quot;tear down test fixtures&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">close_db</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">delete_db</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">close_db</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">delete_db</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="DatabaseTest.test_default_constructor"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.test_default_constructor">[docs]</a>    <span class="k">def</span> <span class="nf">test_default_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">assert_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">assert_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="s">&#39;PyRKDatabase&#39;</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">os.path</span>
+        <span class="n">assert_true</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">filepath</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="DatabaseTest.test_add_group"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.test_add_group">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">add_group</span><span class="p">(</span><span class="n">groupname</span><span class="o">=</span><span class="s">&quot;test_group&quot;</span><span class="p">,</span>
+                         <span class="n">grouptitle</span><span class="o">=</span><span class="s">&quot;Test Group&quot;</span><span class="p">,</span>
+                         <span class="n">path_to_group</span><span class="o">=</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+        <span class="n">assert_true</span><span class="p">(</span><span class="s">&#39;Test Group&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">test_group</span><span class="o">.</span><span class="n">__str__</span><span class="p">())</span>
+</div>
+<div class="viewcode-block" id="DatabaseTest.test_group_exists"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.test_group_exists">[docs]</a>    <span class="k">def</span> <span class="nf">test_group_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">assert_true</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">group_exists</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;metadata&#39;</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="DatabaseTest.test_open_and_close_db"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.test_open_and_close_db">[docs]</a>    <span class="k">def</span> <span class="nf">test_open_and_close_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">open_db</span><span class="p">()</span>
+        <span class="n">assert_true</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">isopen</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">close_db</span><span class="p">()</span>
+        <span class="n">assert_false</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">isopen</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">open_db</span><span class="p">()</span>
+        <span class="n">assert_true</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">isopen</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DatabaseTest.test_open_and_close_custom_db"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.test_open_and_close_custom_db">[docs]</a>    <span class="k">def</span> <span class="nf">test_open_and_close_custom_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">assert_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">filepath</span><span class="p">,</span> <span class="s">&#39;testfile.h5&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">open_db</span><span class="p">()</span>
+        <span class="n">assert_true</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">isopen</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">close_db</span><span class="p">()</span>
+        <span class="n">assert_false</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">isopen</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">open_db</span><span class="p">()</span>
+        <span class="n">assert_true</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">isopen</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DatabaseTest.test_register_recorder"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.test_register_recorder">[docs]</a>    <span class="k">def</span> <span class="nf">test_register_recorder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">register_recorder</span><span class="p">(</span><span class="s">&#39;metadata&#39;</span><span class="p">,</span> <span class="s">&#39;sim_info&#39;</span><span class="p">,</span> <span class="n">dictfunc</span><span class="p">,</span>
+                                 <span class="n">timeseries</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">assert_true</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">dictfunc</span> <span class="ow">in</span> <span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">recorders</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="DatabaseTest.test_custom_constructor"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.test_custom_constructor">[docs]</a>    <span class="k">def</span> <span class="nf">test_custom_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">assert_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="o">.</span><span class="n">filepath</span><span class="p">,</span> <span class="s">&#39;testfile.h5&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DatabaseTest.test_sim_info_group"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.test_sim_info_group">[docs]</a>    <span class="k">def</span> <span class="nf">test_sim_info_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">grp_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">__str__</span><span class="p">()</span>
+        <span class="n">assert_true</span><span class="p">(</span><span class="s">&#39;Simulation Metadata&#39;</span> <span class="ow">in</span> <span class="n">grp_str</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DatabaseTest.test_add_entry"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.test_add_entry">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rec</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;t0&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+               <span class="s">&#39;tf&#39;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+               <span class="s">&#39;dt&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+               <span class="s">&#39;t_feedback&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+               <span class="s">&#39;iso&#39;</span><span class="p">:</span> <span class="s">&#39;u235&#39;</span><span class="p">,</span>
+               <span class="s">&#39;e&#39;</span><span class="p">:</span> <span class="s">&#39;thermal&#39;</span><span class="p">,</span>
+               <span class="s">&#39;n_pg&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+               <span class="s">&#39;n_dg&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+               <span class="s">&#39;kappa&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+               <span class="s">&#39;plotdir&#39;</span><span class="p">:</span> <span class="s">&#39;images&#39;</span><span class="p">}</span>
+        <span class="n">tab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s">&#39;metadata&#39;</span><span class="p">,</span> <span class="s">&#39;sim_info&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">rec</span><span class="p">)</span>
+        <span class="n">t0_obs</span> <span class="o">=</span> <span class="n">tab</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s">&#39;t0&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">t0_exp</span> <span class="o">=</span> <span class="n">rec</span><span class="p">[</span><span class="s">&#39;t0&#39;</span><span class="p">]</span>
+        <span class="n">assert_equal</span><span class="p">(</span><span class="n">t0_obs</span><span class="p">,</span> <span class="n">t0_exp</span><span class="p">)</span>
+        <span class="n">tf_obs</span> <span class="o">=</span> <span class="n">tab</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s">&#39;tf&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">tf_exp</span> <span class="o">=</span> <span class="n">rec</span><span class="p">[</span><span class="s">&#39;tf&#39;</span><span class="p">]</span>
+        <span class="n">assert_equal</span><span class="p">(</span><span class="n">tf_obs</span><span class="p">,</span> <span class="n">tf_exp</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DatabaseTest.test_get_table"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.test_get_table">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">open_db</span><span class="p">()</span>
+        <span class="n">exp_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">h5file</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">sim_info</span><span class="o">.</span><span class="n">coldescrs</span>
+        <span class="n">obs_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s">&#39;metadata&#39;</span><span class="p">,</span> <span class="s">&#39;sim_info&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">coldescrs</span>
+        <span class="n">assert_equal</span><span class="p">(</span><span class="n">exp_cols</span><span class="p">,</span> <span class="n">obs_cols</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DatabaseTest.test_set_up_tables"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.test_set_up_tables">[docs]</a>    <span class="k">def</span> <span class="nf">test_set_up_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">set_up_tables</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tables</span><span class="p">:</span>
+            <span class="n">assert_true</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s">&#39;groupname&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;th&#39;</span><span class="p">,</span>
+                                           <span class="s">&#39;metadata&#39;</span><span class="p">,</span>
+                                           <span class="s">&#39;neutronics&#39;</span><span class="p">])</span>
+            <span class="n">assert_true</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s">&#39;tablename&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;th_params&#39;</span><span class="p">,</span> <span class="s">&#39;th_timeseries&#39;</span><span class="p">,</span>
+                                           <span class="s">&#39;sim_info&#39;</span><span class="p">,</span>
+                                           <span class="s">&#39;sim_timeseries&#39;</span><span class="p">,</span>
+                                           <span class="s">&#39;neutronics_timeseries&#39;</span><span class="p">,</span>
+                                           <span class="s">&#39;neutronics_params&#39;</span><span class="p">,</span>
+                                           <span class="s">&#39;zetas&#39;</span><span class="p">,</span>
+                                           <span class="s">&#39;omegas&#39;</span>
+                                           <span class="p">])</span>
+</div>
+<div class="viewcode-block" id="DatabaseTest.test_set_up_groups"><a class="viewcode-back" href="../../../../src/pyrk.db.tests.test_database.html#pyrk.db.tests.test_database.DatabaseTest.test_set_up_groups">[docs]</a>    <span class="k">def</span> <span class="nf">test_set_up_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">set_up_groups</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+            <span class="n">assert_true</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="s">&#39;groupname&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;th&#39;</span><span class="p">,</span>
+                                           <span class="s">&#39;metadata&#39;</span><span class="p">,</span>
+                                           <span class="s">&#39;neutronics&#39;</span><span class="p">])</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Kathryn D. Huff.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
