@@ -30,7 +30,10 @@
   
 
   
-    <link rel="top" title="pyrk  documentation" href="../index.html"/> 
+    <link rel="top" title="pyrk  documentation" href="../index.html"/>
+        <link rel="up" title="pyrk.db package" href="pyrk.db.html"/>
+        <link rel="next" title="pyrk.db.descriptions module" href="pyrk.db.descriptions.html"/>
+        <link rel="prev" title="pyrk.db package" href="pyrk.db.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -61,7 +64,7 @@
         
           
           
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../overview.html#the-prke">The PRKE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
@@ -74,6 +77,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">PyRK Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="index.html">PyRK API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pyrk</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pyrk.html">pyrk package</a></li>
+</ul>
+</li>
 </ul>
 
           
@@ -97,6 +104,12 @@
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="modules.html">pyrk</a> &raquo;</li>
+      
+          <li><a href="pyrk.html">pyrk package</a> &raquo;</li>
+      
+          <li><a href="pyrk.db.html">pyrk.db package</a> &raquo;</li>
       
     <li>pyrk.db.database module</li>
       <li class="wy-breadcrumbs-aside">
@@ -166,15 +179,13 @@ All groupnames must be directly under root</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>groupname</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the group to add</li>
 <li><strong>tablename</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the table to add</li>
-<li><strong>description</strong> &#8211; metadata for the table</li>
+<li><strong>description</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; metadata for the table</li>
+<li><strong>tabletitle</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; metadata to store in plain english, a title</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>:type : str
-:param tabletitle: metadata to store in plain english, a title
-:type tabletitle: str</p>
 </dd></dl>
 
 <dl class="method">
@@ -350,6 +361,15 @@ pytables.</p>
 
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pyrk.db.descriptions.html" class="btn btn-neutral float-right" title="pyrk.db.descriptions module">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pyrk.db.html" class="btn btn-neutral" title="pyrk.db package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

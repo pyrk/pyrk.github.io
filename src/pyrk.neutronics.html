@@ -113,7 +113,7 @@
 <h1>pyrk.neutronics module<a class="headerlink" href="#pyrk-neutronics-module" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-pyrk.neutronics"></span><dl class="class">
 <dt id="pyrk.neutronics.Neutronics">
-<em class="property">class </em><code class="descclassname">pyrk.neutronics.</code><code class="descname">Neutronics</code><span class="sig-paren">(</span><em>iso='u235'</em>, <em>e='thermal'</em>, <em>n_precursors=6</em>, <em>n_decay=11</em>, <em>timer=&lt;timer.Timer object&gt;</em>, <em>rho_ext=None</em>, <em>feedback=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/neutronics.html#Neutronics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.neutronics.Neutronics" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyrk.neutronics.</code><code class="descname">Neutronics</code><span class="sig-paren">(</span><em>iso='u235'</em>, <em>e='thermal'</em>, <em>n_precursors=6</em>, <em>n_decay=11</em>, <em>n_fic=0</em>, <em>timer=&lt;timer.Timer object&gt;</em>, <em>rho_ext=None</em>, <em>feedback=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/neutronics.html#Neutronics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.neutronics.Neutronics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <p>This class handles calculations and data related to the
 neutronics subblock</p>
@@ -126,8 +126,7 @@ neutronics subblock</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>t</strong> (<em>float.</em>) &#8211; the time</li>
-<li><strong>dt</strong> (<em>float.</em>) &#8211; the timestep</li>
+<li><strong>t_idx</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; the time step index</li>
 <li><strong>components</strong> (<em>list of THComponent objects</em>) &#8211; the THComponents making up this reactor</li>
 <li><strong>power</strong> (<em>float.</em>) &#8211; the current reactor power in Watts (timestep t-1 ?)</li>
 <li><strong>zetas</strong> (<em>np.ndarray.</em>) &#8211; the current delayed neutron precursor populations, zeta_i</li>
@@ -168,7 +167,7 @@ neutronics subblock</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>t</strong> (<em>float, units of seconds</em>) &#8211; time</li>
 <li><strong>power</strong> (<em>float, in units of watts</em>) &#8211; the reactor power at this timestep</li>
-<li><strong>zeta</strong> (<em>float #TODO units?</em>) &#8211; $zeta_j$, the concentration for precursor group j</li>
+<li><strong>zeta</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; $zeta_j$, the concentration for precursor group j</li>
 <li><strong>j</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; the precursor group index</li>
 </ul>
 </td>

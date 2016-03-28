@@ -128,7 +128,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iso</span><span class="o">=</span><span class="s">&quot;u235&quot;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="s">&quot;thermal&quot;</span><span class="p">,</span> <span class="n">n_precursors</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_decay</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
-                 <span class="n">timer</span><span class="o">=</span><span class="n">Timer</span><span class="p">(),</span> <span class="n">rho_ext</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">feedback</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+                 <span class="n">n_fic</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">timer</span><span class="o">=</span><span class="n">Timer</span><span class="p">(),</span>
+                 <span class="n">rho_ext</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">feedback</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a Neutronics object that holds the neutronics simulation</span>
 <span class="sd">        information.</span>
@@ -141,6 +144,9 @@
 <span class="sd">        :type n_precursors: int.</span>
 <span class="sd">        :param n_decay: The number of decay heat groups. 11 is supported.</span>
 <span class="sd">        :type n_decay: int.</span>
+<span class="sd">        :param n_fic: number of fictitious neutron groups for &#39;two-point&#39;</span>
+<span class="sd">        point kinetics</span>
+<span class="sd">        :type n_fic: int</span>
 <span class="sd">        :param rho_ext: External reactivity, a function of time</span>
 <span class="sd">        :type rho_ext: function</span>
 <span class="sd">        :returns: A Neutronics object that holds neutronics simulation info</span>
@@ -151,14 +157,16 @@
         <span class="sd">&quot;&quot;&quot;_iso (str): Fissioning isotope. &#39;u235&#39;, &#39;pu239&#39;, or &#39;sfr&#39;, &quot;fhr&quot;</span>
 <span class="sd">        are supported.&quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_e</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;e&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;thermal&#39;</span><span class="p">,</span> <span class="s">&#39;fast&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_e</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;e&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;thermal&#39;</span><span class="p">,</span> <span class="s">&#39;fast&#39;</span><span class="p">,</span> <span class="s">&#39;multipt&#39;</span><span class="p">])</span>
         <span class="sd">&quot;&quot;&quot;_e (str): Energy spectrum &#39;thermal&#39; or &#39;fast&#39; are supported.&quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_npg</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;n_precursors&quot;</span><span class="p">,</span> <span class="n">n_precursors</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_npg</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;n_precursors&quot;</span><span class="p">,</span> <span class="n">n_precursors</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
         <span class="sd">&quot;&quot;&quot;_npg (int): Number of neutron precursor groups. 6 is supported.&quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_ndg</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">validate_supported</span><span class="p">(</span><span class="s">&quot;n_decay&quot;</span><span class="p">,</span> <span class="n">n_decay</span><span class="p">,</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
         <span class="sd">&quot;&quot;&quot;_ndg (int): Number of decay heat groups. 11 is supported.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nfic</span> <span class="o">=</span> <span class="n">n_fic</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span> <span class="o">=</span> <span class="n">pr</span><span class="o">.</span><span class="n">PrecursorData</span><span class="p">(</span><span class="n">iso</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">n_precursors</span><span class="p">)</span>
         <span class="sd">&quot;&quot;&quot;_pd (PrecursorData): A data.precursors.PrecursorData object&quot;&quot;&quot;</span>
@@ -187,10 +195,8 @@
 <div class="viewcode-block" id="Neutronics.dpdt"><a class="viewcode-back" href="../../src/pyrk.neutronics.html#pyrk.neutronics.Neutronics.dpdt">[docs]</a>    <span class="k">def</span> <span class="nf">dpdt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_idx</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">zetas</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the power term. The first in the neutronics block.</span>
 
-<span class="sd">        :param t: the time</span>
-<span class="sd">        :type t: float.</span>
-<span class="sd">        :param dt: the timestep</span>
-<span class="sd">        :type dt: float.</span>
+<span class="sd">        :param t_idx: the time step index</span>
+<span class="sd">        :type t_idx: int</span>
 <span class="sd">        :param components: the THComponents making up this reactor</span>
 <span class="sd">        :type components: list of THComponent objects</span>
 <span class="sd">        :param power: the current reactor power in Watts (timestep t-1 ?)</span>
@@ -204,6 +210,7 @@
         <span class="n">Lambda</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">Lambda</span><span class="p">()</span>
         <span class="n">precursors</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lams</span><span class="p">)):</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">lams</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">zetas</span><span class="p">)</span>
             <span class="n">precursors</span> <span class="o">+=</span> <span class="n">lams</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">zetas</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
         <span class="n">dp</span> <span class="o">=</span> <span class="n">power</span><span class="o">*</span><span class="p">(</span><span class="n">rho</span> <span class="o">-</span> <span class="n">beta</span><span class="p">)</span><span class="o">/</span><span class="n">Lambda</span> <span class="o">+</span> <span class="n">precursors</span>
         <span class="k">return</span> <span class="n">dp</span>
@@ -217,11 +224,11 @@
 <span class="sd">        :param power: the reactor power at this timestep</span>
 <span class="sd">        :type power: float, in units of watts</span>
 <span class="sd">        :param zeta: $\zeta_j$, the concentration for precursor group j</span>
-<span class="sd">        :type zeta: float #TODO units?</span>
+<span class="sd">        :type zeta: float</span>
 <span class="sd">        :param j: the precursor group index</span>
 <span class="sd">        :type j: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">Lambda</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">Lambda</span><span class="p">()</span>
+        <span class="n">Lambda</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">_Lambda</span>
         <span class="n">lambda_j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span>
         <span class="n">beta_j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">betas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">beta_j</span><span class="o">*</span><span class="n">power</span><span class="o">/</span><span class="n">Lambda</span> <span class="o">-</span> <span class="n">lambda_j</span><span class="o">*</span><span class="n">zeta</span>

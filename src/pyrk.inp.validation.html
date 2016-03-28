@@ -30,7 +30,10 @@
   
 
   
-    <link rel="top" title="pyrk  documentation" href="../index.html"/> 
+    <link rel="top" title="pyrk  documentation" href="../index.html"/>
+        <link rel="up" title="pyrk.inp package" href="pyrk.inp.html"/>
+        <link rel="next" title="pyrk.materials package" href="pyrk.materials.html"/>
+        <link rel="prev" title="pyrk.inp.sim_info module" href="pyrk.inp.sim_info.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -61,7 +64,7 @@
         
           
           
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../overview.html#the-prke">The PRKE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
@@ -74,6 +77,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">PyRK Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="index.html">PyRK API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pyrk</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pyrk.html">pyrk package</a></li>
+</ul>
+</li>
 </ul>
 
           
@@ -98,6 +105,12 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
+          <li><a href="modules.html">pyrk</a> &raquo;</li>
+      
+          <li><a href="pyrk.html">pyrk package</a> &raquo;</li>
+      
+          <li><a href="pyrk.inp.html">pyrk.inp package</a> &raquo;</li>
+      
     <li>pyrk.inp.validation module</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -111,6 +124,26 @@
             
   <div class="section" id="module-pyrk.inp.validation">
 <span id="pyrk-inp-validation-module"></span><h1>pyrk.inp.validation module<a class="headerlink" href="#module-pyrk.inp.validation" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="pyrk.inp.validation.validate_g">
+<code class="descclassname">pyrk.inp.validation.</code><code class="descname">validate_g</code><span class="sig-paren">(</span><em>valname</em>, <em>val</em>, <em>llim</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/validation.html#validate_g"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.validation.validate_g" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raises errors if the value is less than the lower limit (llim) or if it
+is of the wrong type</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>valname</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; the name of the value being validated</li>
+<li><strong>val</strong> (<em>should be a number (or pint.Quantity)</em>) &#8211; the value to be validated</li>
+<li><strong>llim</strong> (<em>the same type as val</em>) &#8211; the lower limit of acceptable value for val</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="function">
 <dt id="pyrk.inp.validation.validate_ge">
 <code class="descclassname">pyrk.inp.validation.</code><code class="descname">validate_ge</code><span class="sig-paren">(</span><em>valname</em>, <em>val</em>, <em>llim</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/inp/validation.html#validate_ge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.inp.validation.validate_ge" title="Permalink to this definition">¶</a></dt>
@@ -211,6 +244,15 @@ is of the wrong type</p>
 
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pyrk.materials.html" class="btn btn-neutral float-right" title="pyrk.materials package">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pyrk.inp.sim_info.html" class="btn btn-neutral" title="pyrk.inp.sim_info module"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pyrk.materials.sfrmetal module &mdash; pyrk  documentation</title>
+  <title>pyrk.convective_model module &mdash; pyrk  documentation</title>
   
 
   
@@ -31,9 +31,9 @@
 
   
     <link rel="top" title="pyrk  documentation" href="../index.html"/>
-        <link rel="up" title="pyrk.materials package" href="pyrk.materials.html"/>
-        <link rel="next" title="pyrk.materials.sodium module" href="pyrk.materials.sodium.html"/>
-        <link rel="prev" title="pyrk.materials.material module" href="pyrk.materials.material.html"/> 
+        <link rel="up" title="pyrk package" href="pyrk.html"/>
+        <link rel="next" title="pyrk.density_model module" href="pyrk.density_model.html"/>
+        <link rel="prev" title="pyrk.utilities.ur module" href="pyrk.utilities.ur.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -109,12 +109,10 @@
       
           <li><a href="pyrk.html">pyrk package</a> &raquo;</li>
       
-          <li><a href="pyrk.materials.html">pyrk.materials package</a> &raquo;</li>
-      
-    <li>pyrk.materials.sfrmetal module</li>
+    <li>pyrk.convective_model module</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="../_sources/src/pyrk.materials.sfrmetal.txt" rel="nofollow"> View page source</a>
+          <a href="../_sources/src/pyrk.convective_model.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
@@ -122,41 +120,50 @@
 </div>
           <div role="main" class="document">
             
-  <div class="section" id="module-pyrk.materials.sfrmetal">
-<span id="pyrk-materials-sfrmetal-module"></span><h1>pyrk.materials.sfrmetal module<a class="headerlink" href="#module-pyrk.materials.sfrmetal" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-pyrk.convective_model">
+<span id="pyrk-convective-model-module"></span><h1>pyrk.convective_model module<a class="headerlink" href="#module-pyrk.convective_model" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="pyrk.materials.sfrmetal.SFRMetal">
-<em class="property">class </em><code class="descclassname">pyrk.materials.sfrmetal.</code><code class="descname">SFRMetal</code><span class="sig-paren">(</span><em>name='sfrmetal'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/sfrmetal.html#SFRMetal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.sfrmetal.SFRMetal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">materials.material.Material</span></code></p>
-<p>This class represents SFR Metal fuel. It inherits from the material
-class and possesses attributes intrinsic to SFR metal fuel, as reported in
-T. Sofu, A review of inherent safety characteristics of metal alloy
-sfrmetal-cooled fast reactor fuel against postulated accidents</p>
-<p><a class="reference external" href="http://www.sciencedirect.com/science/article/pii/S1738573315000753">http://www.sciencedirect.com/science/article/pii/S1738573315000753</a></p>
+<dt id="pyrk.convective_model.ConvectiveModel">
+<em class="property">class </em><code class="descclassname">pyrk.convective_model.</code><code class="descname">ConvectiveModel</code><span class="sig-paren">(</span><em>h0=&lt;Quantity(0.0</em>, <em>'watt / kelvin / meter ** 2')&gt;</em>, <em>mat=&lt;materials.material.Material object&gt;</em>, <em>m_flow=None</em>, <em>a_flow=None</em>, <em>length_scale=None</em>, <em>model='constant'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/convective_model.html#ConvectiveModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.convective_model.ConvectiveModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>This class defines the model for convective heat transfer coefficient: h</p>
 <dl class="method">
-<dt id="pyrk.materials.sfrmetal.SFRMetal.density">
-<code class="descname">density</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/sfrmetal.html#SFRMetal.density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.sfrmetal.SFRMetal.density" title="Permalink to this definition">¶</a></dt>
-<dd><p>SFRMetal density as a funciton of T. [kg/m^3]</p>
+<dt id="pyrk.convective_model.ConvectiveModel.constant">
+<code class="descname">constant</code><span class="sig-paren">(</span><em>rho</em>, <em>mu</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/convective_model.html#ConvectiveModel.constant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.convective_model.ConvectiveModel.constant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a constant heat transfer coefficient: h0
+:param rho: The density of the object
+:type rho: float
+:param mu: The dynamic viscosity of the object
+:type mu: float</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyrk.materials.sfrmetal.SFRMetal.specific_heat_capacity">
-<code class="descname">specific_heat_capacity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/sfrmetal.html#SFRMetal.specific_heat_capacity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.sfrmetal.SFRMetal.specific_heat_capacity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specific heat capacity of SFRMetal [J/kg/K]
-actually depends on temperature pretty strongly.</p>
-<p>TODO, Issue #4
-The CODATA equation gives the relation:</p>
-<div class="math">
-\[\begin{split}c_p &amp;= 1.6582 - 8.4790\times10^{-4}T\\
-    &amp;+ 4.4541\times10^{-7}T^2 - 2992.6T^{-2}\end{split}\]</div>
-<p>Below is a constant estimate of sfrmetal cp at temperatures around 400C
-based on table 1.1-5 in <a class="reference external" href="http://www.ne.anl.gov/eda/ANL-RE-95-2.pdf">http://www.ne.anl.gov/eda/ANL-RE-95-2.pdf</a></p>
+<dt id="pyrk.convective_model.ConvectiveModel.h">
+<code class="descname">h</code><span class="sig-paren">(</span><em>rho=&lt;Quantity(0.0</em>, <em>'kilogram / meter ** 3')&gt;</em>, <em>mu=&lt;Quantity(0</em>, <em>'pascal * second')&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/convective_model.html#ConvectiveModel.h"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.convective_model.ConvectiveModel.h" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the convective heat transfer coefficient</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rho</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; The density of the object</li>
+<li><strong>mu</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; The dynamic viscosity of the object</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyrk.materials.sfrmetal.SFRMetal.thermal_conductivity">
-<code class="descname">thermal_conductivity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/sfrmetal.html#SFRMetal.thermal_conductivity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.sfrmetal.SFRMetal.thermal_conductivity" title="Permalink to this definition">¶</a></dt>
-<dd><p>SFRMetal thermal conductivity in [W/m-K]</p>
+<dt id="pyrk.convective_model.ConvectiveModel.wakao">
+<code class="descname">wakao</code><span class="sig-paren">(</span><em>rho</em>, <em>mu</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/convective_model.html#ConvectiveModel.wakao"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.convective_model.ConvectiveModel.wakao" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function implements the Wakao correlation for convective heat
+transfer coefficient
+:param rho: The density of the object
+:type rho: float
+:param mu: The dynamic viscosity of the object
+:type mu: float</p>
 </dd></dl>
 
 </dd></dl>
@@ -169,10 +176,10 @@ based on table 1.1-5 in <a class="reference external" href="http://www.ne.anl.go
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="pyrk.materials.sodium.html" class="btn btn-neutral float-right" title="pyrk.materials.sodium module">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="pyrk.density_model.html" class="btn btn-neutral float-right" title="pyrk.density_model module">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="pyrk.materials.material.html" class="btn btn-neutral" title="pyrk.materials.material module"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="pyrk.utilities.ur.html" class="btn btn-neutral" title="pyrk.utilities.ur module"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

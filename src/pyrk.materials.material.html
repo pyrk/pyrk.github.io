@@ -30,7 +30,10 @@
   
 
   
-    <link rel="top" title="pyrk  documentation" href="../index.html"/> 
+    <link rel="top" title="pyrk  documentation" href="../index.html"/>
+        <link rel="up" title="pyrk.materials package" href="pyrk.materials.html"/>
+        <link rel="next" title="pyrk.materials.sfrmetal module" href="pyrk.materials.sfrmetal.html"/>
+        <link rel="prev" title="pyrk.materials.kernel module" href="pyrk.materials.kernel.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -61,7 +64,7 @@
         
           
           
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../overview.html#the-prke">The PRKE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
@@ -74,6 +77,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">PyRK Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="index.html">PyRK API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pyrk</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pyrk.html">pyrk package</a></li>
+</ul>
+</li>
 </ul>
 
           
@@ -98,6 +105,12 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
+          <li><a href="modules.html">pyrk</a> &raquo;</li>
+      
+          <li><a href="pyrk.html">pyrk package</a> &raquo;</li>
+      
+          <li><a href="pyrk.materials.html">pyrk.materials package</a> &raquo;</li>
+      
     <li>pyrk.materials.material module</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -113,7 +126,7 @@
 <span id="pyrk-materials-material-module"></span><h1>pyrk.materials.material module<a class="headerlink" href="#module-pyrk.materials.material" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyrk.materials.material.Material">
-<em class="property">class </em><code class="descclassname">pyrk.materials.material.</code><code class="descname">Material</code><span class="sig-paren">(</span><em>name=None</em>, <em>k=&lt;Quantity(0.0</em>, <em>'watt / kelvin / meter')&gt;</em>, <em>cp=&lt;Quantity(0.0</em>, <em>'joule / kelvin / kilogram')&gt;</em>, <em>dm=&lt;density_model.DensityModel object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/material.html#Material"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.material.Material" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyrk.materials.material.</code><code class="descname">Material</code><span class="sig-paren">(</span><em>name=None</em>, <em>k=&lt;Quantity(0.0</em>, <em>'watt / kelvin / meter')&gt;</em>, <em>cp=&lt;Quantity(0.0</em>, <em>'joule / kelvin / kilogram')&gt;</em>, <em>mu=&lt;Quantity(0</em>, <em>'pascal * second')&gt;</em>, <em>dm=&lt;density_model.DensityModel object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/materials/material.html#Material"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.materials.material.Material" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
 <p>This class represents a material. Its attributes are material properties
 and behaviors.</p>
@@ -142,6 +155,15 @@ and behaviors.</p>
 
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pyrk.materials.sfrmetal.html" class="btn btn-neutral float-right" title="pyrk.materials.sfrmetal module">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pyrk.materials.kernel.html" class="btn btn-neutral" title="pyrk.materials.kernel module"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

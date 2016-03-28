@@ -170,6 +170,10 @@
 <span class="sd">    :type y: np.ndarray</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n_n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">n_dg</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n_n</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s">&#39;equation numbers </span><span class="si">%d</span><span class="s"> &#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="s">&#39;should be at least the number of neutronics equations </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">n_n</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="n">end_pg</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_n</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
@@ -202,7 +206,7 @@
                        <span class="s">&#39;kelvin / second&#39;</span><span class="p">)</span>
     <span class="n">power</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">t_idx</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">o_i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">+</span><span class="n">si</span><span class="o">.</span><span class="n">n_pg</span>
-    <span class="n">o_f</span> <span class="o">=</span> <span class="mi">1</span><span class="o">+</span><span class="n">si</span><span class="o">.</span><span class="n">n_pg</span><span class="o">+</span><span class="n">si</span><span class="o">.</span><span class="n">n_dg</span>
+    <span class="n">o_f</span> <span class="o">=</span> <span class="mi">1</span><span class="o">+</span><span class="n">si</span><span class="o">.</span><span class="n">n_pg</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">n_dg</span>
     <span class="n">omegas</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">t_idx</span><span class="p">][</span><span class="n">o_i</span><span class="p">:</span><span class="n">o_f</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">components</span><span class="p">):</span>
         <span class="n">f</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">th</span><span class="o">.</span><span class="n">dtempdt</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="n">comp</span><span class="p">,</span>
@@ -219,15 +223,19 @@
 <span class="sd">    :type si: SimInfo</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">end_pg</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span>
+    <span class="n">end_dg</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">n_dg</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">n_entries</span><span class="p">(),),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c"># power is normalized is 1</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span><span class="p">):</span>
         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> \
-            <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">betas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">Lambda</span><span class="p">())</span>
+            <span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">betas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">lambdas</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">si</span><span class="o">.</span><span class="n">ne</span><span class="o">.</span><span class="n">_pd</span><span class="o">.</span><span class="n">_Lambda</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">end_pg</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">n_dg</span><span class="p">):</span>
         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">end_dg</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">components</span><span class="p">):</span>
         <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">comp</span><span class="o">.</span><span class="n">T0</span><span class="o">.</span><span class="n">magnitude</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">==</span> <span class="n">si</span><span class="o">.</span><span class="n">n_entries</span><span class="p">()</span>
@@ -241,7 +249,7 @@
 <span class="sd">    :param si: the simulation info object</span>
 <span class="sd">    :type si: SimInfo</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span><span class="o">+</span><span class="n">si</span><span class="o">.</span><span class="n">n_dg</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">n_dg</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">y0</span><span class="p">(</span><span class="n">si</span><span class="p">)[:</span><span class="n">idx</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">y</span>
 
@@ -252,7 +260,7 @@
 <span class="sd">    :param si: the simulation info object</span>
 <span class="sd">    :type si: SimInfo</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">thidx</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span><span class="o">+</span><span class="n">si</span><span class="o">.</span><span class="n">n_dg</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">thidx</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">n_pg</span> <span class="o">+</span> <span class="n">si</span><span class="o">.</span><span class="n">n_dg</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">y0</span><span class="p">(</span><span class="n">si</span><span class="p">)[</span><span class="n">thidx</span><span class="p">:]</span>
     <span class="k">return</span> <span class="n">y</span>
 
@@ -328,18 +336,25 @@
     <span class="n">logger</span><span class="o">.</span><span class="n">set_up_pyrklog</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">logfile</span><span class="p">)</span>
     <span class="n">infile</span> <span class="o">=</span> <span class="n">load_infile</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">infile</span><span class="p">)</span>
     <span class="n">out_db</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="s">&#39;n_ref&#39;</span><span class="p">):</span>
+        <span class="n">n_ref</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">n_ref</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">n_ref</span>
     <span class="n">si</span> <span class="o">=</span> <span class="n">sim_info</span><span class="o">.</span><span class="n">SimInfo</span><span class="p">(</span><span class="n">timer</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">ti</span><span class="p">,</span>
                           <span class="n">components</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">components</span><span class="p">,</span>
                           <span class="n">iso</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">fission_iso</span><span class="p">,</span>
                           <span class="n">e</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">spectrum</span><span class="p">,</span>
                           <span class="n">n_precursors</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">n_pg</span><span class="p">,</span>
                           <span class="n">n_decay</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">n_dg</span><span class="p">,</span>
+                          <span class="n">n_fic</span><span class="o">=</span><span class="n">n_ref</span><span class="p">,</span>
                           <span class="n">kappa</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">kappa</span><span class="p">,</span>
                           <span class="n">feedback</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">feedback</span><span class="p">,</span>
                           <span class="n">rho_ext</span><span class="o">=</span><span class="n">infile</span><span class="o">.</span><span class="n">rho_ext</span><span class="p">,</span>
                           <span class="n">plotdir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">plotdir</span><span class="p">,</span>
                           <span class="n">infile</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">infile</span><span class="p">,</span>
                           <span class="n">db</span><span class="o">=</span><span class="n">out_db</span><span class="p">)</span>
+    <span class="c"># TODO: think about weather to add n_ref to all input files, or put n_ref in</span>
+    <span class="c"># database files</span>
     <span class="n">print_logo</span><span class="p">(</span><span class="n">curr_dir</span><span class="p">)</span>
     <span class="n">sol</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">si</span><span class="o">=</span><span class="n">si</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">si</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">infile</span><span class="o">=</span><span class="n">infile</span><span class="p">)</span>
     <span class="n">log_results</span><span class="p">(</span><span class="n">si</span><span class="p">)</span>

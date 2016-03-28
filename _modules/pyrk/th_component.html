@@ -118,6 +118,7 @@
 <span class="kn">from</span> <span class="nn">timer</span> <span class="kn">import</span> <span class="n">Timer</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">from</span> <span class="nn">materials.material</span> <span class="kn">import</span> <span class="n">Material</span>
+<span class="kn">from</span> <span class="nn">convective_model</span> <span class="kn">import</span> <span class="n">ConvectiveModel</span>
 
 
 <div class="viewcode-block" id="THComponent"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent">[docs]</a><span class="k">class</span> <span class="nc">THComponent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -279,7 +280,7 @@
 <span class="sd">        :param timestep: the timestep at which to calculate reactivity feedback</span>
 <span class="sd">        :type timestep: int</span>
 <span class="sd">        :param T0_timestep: the timestep at which the temperature is used as</span>
-<span class="sd">        reference temperature</span>
+<span class="sd">          reference temperature</span>
 <span class="sd">        :type T0_timestep: int</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">assert</span> <span class="n">timestep</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">t_idx_feedback</span><span class="p">,</span> <span class="s">&quot;timestep that feedback</span><span class="se">\</span>
@@ -297,12 +298,17 @@
 <span class="sd">        :param area: heat transfer area</span>
 <span class="sd">        :type area: float</span>
 <span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">ConvectiveModel</span><span class="p">:</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">ConvectiveModel</span><span class="p">(</span><span class="n">h0</span><span class="o">=</span><span class="n">h</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">[</span><span class="n">env</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s">&quot;h&quot;</span><span class="p">:</span> <span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;joule/second/kelvin/meter**2&#39;</span><span class="p">),</span>
+            <span class="s">&quot;h&quot;</span><span class="p">:</span> <span class="n">h</span><span class="p">,</span>
             <span class="s">&quot;area&quot;</span><span class="p">:</span> <span class="n">area</span>
         <span class="p">}</span>
 </div>
 <div class="viewcode-block" id="THComponent.add_mass_trans"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THComponent.add_mass_trans">[docs]</a>    <span class="k">def</span> <span class="nf">add_mass_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">H</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">ConvectiveModel</span><span class="p">:</span>
+            <span class="n">H</span> <span class="o">=</span> <span class="n">ConvectiveModel</span><span class="p">(</span><span class="n">h0</span><span class="o">=</span><span class="n">H</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mass</span><span class="p">[</span><span class="n">env</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;H&quot;</span><span class="p">:</span> <span class="n">H</span><span class="p">,</span>
                           <span class="s">&quot;u&quot;</span><span class="p">:</span> <span class="n">u</span><span class="p">}</span>
 </div>
@@ -313,18 +319,21 @@
         <span class="sd">&#39;&#39;&#39;add convective boundary condition</span>
 
 <span class="sd">        :param env: name of the environment for convective heat transfer</span>
-<span class="sd">        (the fluid)</span>
+<span class="sd">          (the fluid)</span>
 <span class="sd">        :type env: str</span>
 <span class="sd">        :param prev_comp: name of the component that is immediately inside the</span>
-<span class="sd">        boundary component</span>
+<span class="sd">          boundary component</span>
 <span class="sd">        :type prev_comp: str</span>
 <span class="sd">        :param h: convective heat transfer coefficient</span>
-<span class="sd">        :type h: float</span>
+<span class="sd">        :type h: float or obj of Convective Model</span>
 <span class="sd">        :param R: radius of the sphere</span>
 <span class="sd">        :type R: float</span>
 <span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">ConvectiveModel</span><span class="p">:</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">ConvectiveModel</span><span class="p">(</span><span class="n">h0</span><span class="o">=</span><span class="n">h</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">convBC</span><span class="p">[</span><span class="n">env</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s">&quot;h&quot;</span><span class="p">:</span> <span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;joule/second/kelvin/meter**2&#39;</span><span class="p">),</span>
+            <span class="s">&quot;h&quot;</span><span class="p">:</span> <span class="n">h</span><span class="p">,</span>
             <span class="s">&quot;prev_comp&quot;</span><span class="p">:</span> <span class="n">prev_comp</span><span class="p">,</span>
             <span class="s">&quot;R&quot;</span><span class="p">:</span> <span class="n">R</span>
         <span class="p">}</span>
@@ -440,18 +449,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">add_conduction_in_mesh</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alpha_temp</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">delta_k</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span>
 
-<div class="viewcode-block" id="THSuperComponent.compute_tr"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THSuperComponent.compute_tr">[docs]</a>    <span class="k">def</span> <span class="nf">compute_tr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_env</span><span class="p">,</span> <span class="n">t_innercomp</span><span class="p">):</span>
+<div class="viewcode-block" id="THSuperComponent.compute_tr"><a class="viewcode-back" href="../../src/pyrk.th_component.html#pyrk.th_component.THSuperComponent.compute_tr">[docs]</a>    <span class="k">def</span> <span class="nf">compute_tr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_env</span><span class="p">,</span> <span class="n">t_innercomp</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;compute temperature at r=R for the sphere from the temperature at r=R-dr</span>
 <span class="sd">        and the temperature of the env/fluid/coolant</span>
 
 <span class="sd">        :param t_env: temperature of the component(env) that self tranfers</span>
-<span class="sd">        heat with</span>
+<span class="sd">          heat with</span>
 <span class="sd">        :type t_env: float</span>
 <span class="sd">        :param t_innercomp: temperature of the component that is inside self</span>
 <span class="sd">        :type t_innercomp: float</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">for</span> <span class="n">envname</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">):</span>
-            <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">[</span><span class="n">envname</span><span class="p">][</span><span class="s">&quot;h&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span>
+        <span class="k">for</span> <span class="n">envname</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="c">#h = self.conv[envname][&quot;h&quot;].h(env.rho(t_env)).magnitude</span>
             <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">[</span><span class="n">envname</span><span class="p">][</span><span class="s">&quot;k&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span>
             <span class="n">dr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">[</span><span class="n">envname</span><span class="p">][</span><span class="s">&quot;dr&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">magnitude</span>
         <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="n">h</span><span class="o">/</span><span class="n">k</span><span class="o">*</span><span class="n">t_env</span><span class="o">+</span><span class="n">t_innercomp</span><span class="o">/</span><span class="n">dr</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">dr</span><span class="o">-</span><span class="n">h</span><span class="o">/</span><span class="n">k</span><span class="p">)</span>

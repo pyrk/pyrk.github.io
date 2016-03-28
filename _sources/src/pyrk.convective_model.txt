@@ -1,0 +1,7 @@
+pyrk.convective_model module
+============================
+
+.. automodule:: pyrk.convective_model
+    :members:
+    :undoc-members:
+    :show-inheritance:

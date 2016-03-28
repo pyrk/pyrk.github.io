@@ -30,7 +30,10 @@
   
 
   
-    <link rel="top" title="pyrk  documentation" href="../index.html"/> 
+    <link rel="top" title="pyrk  documentation" href="../index.html"/>
+        <link rel="up" title="pyrk package" href="pyrk.html"/>
+        <link rel="next" title="pyrk.timer module" href="pyrk.timer.html"/>
+        <link rel="prev" title="pyrk.th_component module" href="pyrk.th_component.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -61,7 +64,7 @@
         
           
           
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../overview.html#the-prke">The PRKE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../overview.html#lumped-parameter-th">Lumped Parameter TH</a></li>
@@ -74,6 +77,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">PyRK Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="index.html">PyRK API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pyrk</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pyrk.html">pyrk package</a></li>
+</ul>
+</li>
 </ul>
 
           
@@ -98,6 +105,10 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
+          <li><a href="modules.html">pyrk</a> &raquo;</li>
+      
+          <li><a href="pyrk.html">pyrk package</a> &raquo;</li>
+      
     <li>pyrk.th_system module</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -115,12 +126,14 @@
 <dt id="pyrk.th_system.THSystem">
 <em class="property">class </em><code class="descclassname">pyrk.th_system.</code><code class="descname">THSystem</code><span class="sig-paren">(</span><em>kappa</em>, <em>components</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
-<p>This class models:
-- lumped capacitance model for slab geometry
-- 1-D heat diffusion in spherical geometry, for heat
-generation at any radius in the sphere,
-- advective heat transfer by fluid
-- convective heat transfer at the solid surface to fluid.</p>
+<p>This class models:</p>
+<ul class="simple">
+<li>lumped capacitance model for slab geometry</li>
+<li>1-D heat diffusion in spherical geometry, for heat
+generation at any radius in the sphere,</li>
+<li>advective heat transfer by fluid</li>
+<li>convective heat transfer at the solid surface to fluid.</li>
+</ul>
 <dl class="method">
 <dt id="pyrk.th_system.THSystem.BC_center">
 <code class="descname">BC_center</code><span class="sig-paren">(</span><em>component</em>, <em>t_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.BC_center"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.BC_center" title="Permalink to this definition">¶</a></dt>
@@ -207,7 +220,7 @@ sphere to the first boundary
 
 <dl class="method">
 <dt id="pyrk.th_system.THSystem.conduction_slab">
-<code class="descname">conduction_slab</code><span class="sig-paren">(</span><em>component</em>, <em>env</em>, <em>t_idx</em>, <em>L</em>, <em>A=&lt;Quantity(0.0</em>, <em>'meter ** 2')&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.conduction_slab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.conduction_slab" title="Permalink to this definition">¶</a></dt>
+<code class="descname">conduction_slab</code><span class="sig-paren">(</span><em>component</em>, <em>env</em>, <em>t_idx</em>, <em>L</em>, <em>A</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrk/th_system.html#THSystem.conduction_slab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyrk.th_system.THSystem.conduction_slab" title="Permalink to this definition">¶</a></dt>
 <dd><p>compute volumetric heat transfer by conduction(watts/m3)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -368,6 +381,15 @@ used for the th/th_timeseries table</p>
 
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pyrk.timer.html" class="btn btn-neutral float-right" title="pyrk.timer module">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pyrk.th_component.html" class="btn btn-neutral" title="pyrk.th_component module"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

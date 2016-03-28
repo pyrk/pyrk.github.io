@@ -17,6 +17,7 @@ Submodules
 
 .. toctree::
 
+   pyrk.convective_model
    pyrk.density_model
    pyrk.driver
    pyrk.neutronics

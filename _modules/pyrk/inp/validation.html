@@ -135,7 +135,26 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">val</span>
+</div>
+<div class="viewcode-block" id="validate_g"><a class="viewcode-back" href="../../../src/pyrk.inp.validation.html#pyrk.inp.validation.validate_g">[docs]</a><span class="k">def</span> <span class="nf">validate_g</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">llim</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raises errors if the value is less than the lower limit (llim) or if it</span>
+<span class="sd">    is of the wrong type</span>
 
+<span class="sd">    :param valname: the name of the value being validated</span>
+<span class="sd">    :type valname: string</span>
+<span class="sd">    :param val: the value to be validated</span>
+<span class="sd">    :type val: should be a number (or pint.Quantity)</span>
+<span class="sd">    :param llim: the lower limit of acceptable value for val</span>
+<span class="sd">    :type llim: the same type as val</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">validate_num</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">llim</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">valname</span> <span class="o">+</span> <span class="s">&quot; must be greater than&quot;</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">llim</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;.</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="s">&quot;The value provided was : &quot;</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">val</span>
 </div>
 <div class="viewcode-block" id="validate_le"><a class="viewcode-back" href="../../../src/pyrk.inp.validation.html#pyrk.inp.validation.validate_le">[docs]</a><span class="k">def</span> <span class="nf">validate_le</span><span class="p">(</span><span class="n">valname</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">ulim</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Raises errors if the value is greater than the upper limit (ulim) or if it</span>
